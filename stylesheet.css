@@ -1,0 +1,27 @@
+/* Pulse effect when a row is checked */
+@keyframes pulseBlue {
+    0% {
+      background-color: initial;
+    }
+    50% {
+      background-color: #7abafd; /* A shade of blue */
+    }
+    100% {
+      background-color: initial;
+    }
+  }
+  
+  /* Style for the disabled button */
+  .btn-disabled {
+    background-color: #cccccc; /* Grey color */
+    color: #666666;
+    cursor: not-allowed;
+  }
+  
+  /* Center checkbox within its cell */
+  td > input[type="checkbox"] {
+    display: block;
+    margin: 0 auto;
+  }
+  
+
