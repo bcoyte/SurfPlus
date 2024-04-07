@@ -2595,12 +2595,6 @@ window.addEventListener('load', runModifications);
 // Attach the 'runModifications' function to document's 'click' event to catch dynamically added content
 document.addEventListener('click', runModifications);
 
-
-
-
-
-
-
 window.addEventListener('load', function () {
   // Assuming your submit button has an id of 'submit-button'
   const submitButton = document.getElementById('submit-button');
@@ -2620,7 +2614,6 @@ window.addEventListener('load', function () {
       // Here you might send the selectedUnits array to your server, or process it as needed
   });
 });
-
 
 // Function to calculate the time difference and format it as HH:MM:SS
 function calculateTimeDifference(dateOpen, timeOpen, dateClosed, timeClosed) {
@@ -2687,11 +2680,24 @@ function calculateTimeDifference(dateOpen, timeOpen, dateClosed, timeClosed) {
  
         if (leftCell) {
           leftCell.appendChild(timeOpenCounterContainer);
+          durationOpenContainer = document.getElementById('durationOpen');
         }
       }
     } else {
       // If it does exist, simply update its value
       durationOpenContainer.value = timeDifference;
+    }
+ 
+    // Check if the duration is 01:00:00 or more
+    if (timeDifference >= '01:00:00') {
+      // Toggle the background color every other second
+      if (durationOpenContainer.style.backgroundColor === 'orange') {
+        durationOpenContainer.style.backgroundColor = '';
+      } else {
+        durationOpenContainer.style.backgroundColor = 'orange';
+      }
+    } else {
+      durationOpenContainer.style.backgroundColor = '';
     }
  
     // If the closed date and time are blank, rerun the function every second
