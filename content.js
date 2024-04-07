@@ -11,6 +11,11 @@ document.addEventListener('keydown', function(event) {
       let slsContact = document.querySelector('#incidentSLSContact').value;
       let textAfterLastSlash = slsContact.split('/').pop();
       
+      // Convert locationValue to title case
+      locationValue = locationValue.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+  
+      // Convert descriptionValue to sentence case
+      descriptionValue = descriptionValue.charAt(0).toUpperCase() + descriptionValue.slice(1).toLowerCase();
   
       // Format the output
       let output = `L${incidentLevel} Incident Notification. ${incidentNumber}. ${incidentType}. ${locationValue}. ${descriptionValue}. ${textAfterLastSlash}`;
