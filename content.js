@@ -2622,15 +2622,84 @@ window.addEventListener('load', function () {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+// Function to calculate the time difference and format it as HH:MM:SS
+function calculateTimeDifference(dateOpen, timeOpen, dateClosed, timeClosed) {
+  const startDateTime = new Date(`${formatDate(dateOpen)}T${timeOpen}`);
+  
+  let endDateTime;
+  if (dateClosed && timeClosed) {
+    endDateTime = new Date(`${formatDate(dateClosed)}T${timeClosed}`);
+  } else {
+    endDateTime = new Date(); // Use current system date and time
+  }
+  
+  const timeDiff = Math.abs(endDateTime - startDateTime);
+  
+  const hours = Math.floor(timeDiff / 3600000).toString().padStart(2, '0');
+  const minutes = Math.floor((timeDiff % 3600000) / 60000).toString().padStart(2, '0');
+  const seconds = Math.floor((timeDiff % 60000) / 1000).toString().padStart(2, '0');
+  
+  return `${hours}:${minutes}:${seconds}`;
+ }
+ 
+ // Function to format the date string to YYYY-MM-DD format
+ function formatDate(dateString) {
+  const [day, month, year] = dateString.split('/');
+  return `${year}-${month}-${day}`;
+ }
+ 
+ // Function to insert or update the time open counter
+ function insertOrUpdateTimeOpenCounter() {
+  const dateOpenInput = document.getElementById('date_open');
+  const timeOpenInput = document.getElementById('time_open');
+  const dateClosedInput = document.getElementById('date_closed');
+  const timeClosedInput = document.getElementById('time_closed');
+ 
+  if (dateOpenInput && timeOpenInput) {
+    const dateOpen = dateOpenInput.value;
+    const timeOpen = timeOpenInput.value;
+    let dateClosed = '';
+    let timeClosed = '';
+    if (dateClosedInput && timeClosedInput) {
+      dateClosed = dateClosedInput.value;
+      timeClosed = timeClosedInput.value;
+    }
+    const timeDifference = calculateTimeDifference(dateOpen, timeOpen, dateClosed, timeClosed);
+ 
+    // Attempt to find an existing "Duration Open" container
+    let durationOpenContainer = document.getElementById('durationOpen');
+ 
+    if (!durationOpenContainer) {
+      // If it doesn't exist, create it
+      const timeOpenCounterContainer = document.createElement('div');
+      timeOpenCounterContainer.className = 'form-group';
+      timeOpenCounterContainer.innerHTML = `<input class="form-control" type="text" name="durationOpen" id="durationOpen" value="${timeDifference}" readonly="">`;
+ 
+      const ambulanceTimeContainer = document.querySelector('.input-group.mb-3');
+      if (ambulanceTimeContainer) {
+        const parentRow = ambulanceTimeContainer.closest('.row');
+        const leftCell = parentRow.querySelector('.col-12.col-md-6:first-child');
+ 
+        // Remove any existing content in the left cell
+        while (leftCell.firstChild) {
+          leftCell.removeChild(leftCell.firstChild);
+        }
+ 
+        if (leftCell) {
+          leftCell.appendChild(timeOpenCounterContainer);
+        }
+      }
+    } else {
+      // If it does exist, simply update its value
+      durationOpenContainer.value = timeDifference;
+    }
+ 
+    // If the closed date and time are blank, rerun the function every second
+    if (!dateClosed || !timeClosed) {
+      setTimeout(insertOrUpdateTimeOpenCounter, 1000);
+    }
+  }
+ }
+ 
+ // Call the function to insert or update the time open counter
+ insertOrUpdateTimeOpenCounter();
