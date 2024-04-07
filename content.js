@@ -2073,3 +2073,58 @@ function calculateTimeDifference(dateOpen, timeOpen, dateClosed, timeClosed) {
  
  // Call the function to insert or update the time open counter
  insertOrUpdateTimeOpenCounter();
+
+
+
+// content.js
+window.addEventListener('load', function () {
+   const resultContainerId = 'weatherapi-results';
+   if (document.getElementById(resultContainerId)) {
+       return;
+   }
+
+   const latitudeInput = document.querySelector('input#incidentLatitude');
+   const longitudeInput = document.querySelector('input#incidentLongitude');
+
+   if (latitudeInput && longitudeInput) {
+       const lat = latitudeInput.value;
+       const lon = longitudeInput.value;
+
+       if (lat && lon) {
+           chrome.runtime.sendMessage({ action: 'fetchWeatherData', lat, lon }, response => {
+               if (response.data) {
+                   displayWeatherData(response.data.weatherData, response.data.forecastData);
+               } else if (response.error) {
+                   console.error('Error fetching weather data:', response.error);
+               }
+           });
+       }
+   }
+});
+
+function displayWeatherData(weatherData, forecastData) {
+  const container = document.querySelector('.container-fluid');
+
+  if (container) {
+      const resultsDiv = document.createElement('div');
+      resultsDiv.id = 'weatherapi-results';
+      resultsDiv.className = 'weather-details';
+      resultsDiv.style.display = 'flex'; // Use flexbox to lay out children side by side
+      resultsDiv.style.flexWrap = 'wrap'; // Allow wrapping if there's not enough horizontal space
+      resultsDiv.style.justifyContent = 'space-between'; // Distribute space between items
+      resultsDiv.style.gap = '20px'; // Add some space between items for better readability
+
+      const sunriseTime = forecastData.forecast.forecastday[0].astro.sunrise;
+      const sunsetTime = forecastData.forecast.forecastday[0].astro.sunset;
+
+      resultsDiv.innerHTML = `
+          <div class="weather-detail"><strong>Current Temperature:</strong> ${weatherData.current.temp_c}°C</div>
+          <div class="weather-detail"><strong>Current Wind:</strong> ${weatherData.current.wind_kph} kph</div>
+          <div class="weather-detail"><strong>Current Wind Gusts:</strong> ${weatherData.current.gust_kph} kph</div>
+          <div class="weather-detail"><strong>Sunrise:</strong> ${sunriseTime}</div>
+          <div class="weather-detail"><strong>Sunset:</strong> ${sunsetTime}</div>
+      `;
+
+      container.insertBefore(resultsDiv, container.firstChild);
+  }
+}
