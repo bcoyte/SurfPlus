@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Location Picker</title>
     <link rel="stylesheet" href="leaflet/leaflet.css" />
     <style>
-        body, html {
-            height: 600px;
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #f2f2f2;
-        }
-        #map {
-            height: 68%;
-            width: 500px;
-            border-radius: 0px;
-            overflow: hidden;
-            box-shadow: 0 0px 0px rgba(0, 0, 0, 0.3);
-            margin: 0px auto;
-        }
-        /* .pac-card {
+      body,
+      html {
+        height: 600px;
+        margin: 0;
+        padding: 0;
+        font-family: "Arial", sans-serif;
+        background-color: #f2f2f2;
+      }
+      #map {
+        height: 68%;
+        width: 500px;
+        border-radius: 0px;
+        overflow: hidden;
+        box-shadow: 0 0px 0px rgba(0, 0, 0, 0.3);
+        margin: 0px auto;
+      }
+      /* .pac-card {
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
             border-radius: 8px;
             background-color: #ffffff;
@@ -29,58 +30,57 @@
             align-items: center;
             justify-content: space-between;
         } */
-        #title {
-            font-size: 18px;
-            color: #333;
-            margin-right: 10px;
-        }
-        #pac-input {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 10px;
-            width: 300px;
-            height: 40px;
-            font-size: 16px;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-        }
-        #pac-input:focus {
-            border-color: #4d90fe;
-            outline: none;
-        }
-        #map, .pac-card {
-            margin-top: 8px !important;
-            margin-bottom: 8px !important;
-        }
-        /* Additions to the existing styles */
-        #search-results {
-            display: none; /* Initially hidden */
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-            padding: 10px;
-            margin-top: 4px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .search-result {
-            padding: 5px;
-            cursor: pointer;
-        }
-        .search-result:hover {
-            background-color: #f0f0f0;
-        }
-
+      #title {
+        font-size: 18px;
+        color: #333;
+        margin-right: 10px;
+      }
+      #pac-input {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+        width: 300px;
+        height: 40px;
+        font-size: 16px;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+      #pac-input:focus {
+        border-color: #4d90fe;
+        outline: none;
+      }
+      #map,
+      .pac-card {
+        margin-top: 8px !important;
+        margin-bottom: 8px !important;
+      }
+      /* Additions to the existing styles */
+      #search-results {
+        display: none; /* Initially hidden */
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        margin-top: 4px;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+      .search-result {
+        padding: 5px;
+        cursor: pointer;
+      }
+      .search-result:hover {
+        background-color: #f0f0f0;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Search box -->
-    <input type="text" id="pac-input" placeholder="Search for a location">
+    <input type="text" id="pac-input" placeholder="Search for a location" />
     <!-- Search results list -->
     <div id="search-results"></div>
     <div id="map"></div>
     <script src="leaflet/leaflet.js"></script>
     <script src="../popup.js"></script>
-</body>
-
+  </body>
 </html>

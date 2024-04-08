@@ -3,10 +3,7 @@
   "name": "SurfCom+",
   "description": "Allows additional functionality within SurfCom Management System. View 'READ ME.txt' file for further info.",
   "version": "1.0",
-  "permissions": [
-    "activeTab",
-    "storage"
-  ],
+  "permissions": ["activeTab", "storage"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -31,9 +28,7 @@
     "48": "images/icon48.png",
     "128": "images/icon128.png"
   },
-  "host_permissions": [
-    "https://api.weatherapi.com/*"
-  ],
+  "host_permissions": ["https://api.weatherapi.com/*"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://api.weatherapi.com/v1/current.json https://api.weatherapi.com/v1/forecast.json;"
   }
