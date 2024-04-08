@@ -4,7 +4,7 @@ This project enhances the SurfCom Management System with additional features and
 
 ## Features
 
-1. **Hotkey Shortcuts**: Various hotkey shortcuts are defined to automate tasks and streamline workflows. For example:
+1. **Hotkey Shortcuts**: Various hotkey shortcuts are defined to automate tasks and streamline users workflow. For example:
 
 - `F1`: Extracts incident data and formats it for pager messages.
 
