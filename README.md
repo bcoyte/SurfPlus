@@ -14,7 +14,9 @@ This project enhances the SurfCom Management System with additional features and
 
 - `F7`: Creates a dropdown menu for selecting Emergency Response Beacons (ERBs).
 
-- `F8` to `F12`: Prefills caller details for specific organizations.
+- `F8`: Inserts a generic Close of Business message into the radio log screen, confirming handover.
+
+- `F9` to `F12`: Prefills caller details for specific organizations.
 
 - `Ctrl + S`: Saves the form.
 
