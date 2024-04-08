@@ -6,13 +6,4 @@ window.onload = function() {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-
-    // Add Geoapify Address Search control
-    const apiKey = 'afb090fcf0fc4423bab641745bdd3540'; // Replace with your Geoapify API key
-    const addressSearchControl = L.control.addressSearch(apiKey, {
-        position: 'topleft', // Position of the search box
-        placeholder: 'Search for places...', // Placeholder text for the search box
-        style: 'bar', // Use the "bar" style
-        resultCallback: (result) => console.log(result), // Function to call with the selected address result
-    }).addTo(map);
 };
