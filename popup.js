@@ -2035,7 +2035,7 @@ window.onload = function() {
         {name: "Pambula UAV", latLng: [-36.94185, 149.908454]}
     ];
 
-    // Function to update search results list
+// Function to update search results list
 const updateSearchResults = (filteredPoints) => {
     searchResultsDiv.innerHTML = ''; // Clear previous results
   
@@ -2060,6 +2060,10 @@ const updateSearchResults = (filteredPoints) => {
     }
   };
   
+  // Initialize search results with the first 4 options
+  const initialResults = BeachName.slice(0, 4);
+  updateSearchResults(initialResults);
+  
   // Event listener for search input
   searchInput.addEventListener('input', function() {
     const searchText = this.value.toLowerCase();
@@ -2067,4 +2071,5 @@ const updateSearchResults = (filteredPoints) => {
     // Update search results list
     updateSearchResults(filteredPoints);
   });
+
 }
