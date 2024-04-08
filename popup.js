@@ -2068,7 +2068,7 @@ const updateSearchResults = (filteredPoints) => {
   searchInput.addEventListener('input', function() {
     const searchText = this.value.toLowerCase();
     const filteredPoints = BeachName.filter(point => point.name.toLowerCase().includes(searchText));
-    // Update search results list
+    // Update search results list.
     updateSearchResults(filteredPoints);
   });
 
