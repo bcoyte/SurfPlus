@@ -38,4 +38,4 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     }
  }
 
-// a72468e1e3234dc3b0543634242403
+// a72468e1e3234dc3b0543634242403 - Weather API Key
