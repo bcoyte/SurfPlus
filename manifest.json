@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "SurfCom+",
+  "name": "SurfPlus",
   "description": "Allows additional functionality within SurfCom Management System. View 'READ ME.txt' file for further info.",
   "version": "1.0",
   "permissions": ["activeTab", "storage"],
