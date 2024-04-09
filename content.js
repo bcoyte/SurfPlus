@@ -2,36 +2,36 @@ document.addEventListener("keydown", function (event) {
   if (event.key === "F1") {
     event.preventDefault(); // Prevent the default F1 action
 
-    // Branch identifiers and their longitudinal boundaries
+    // Branch identifiers and their latitudinal boundaries
     const branches = [
-      { name: "FNC", start: 153.563497, end: 153.331002 },
-      { name: "NC", start: 153.331002, end: 152.994151 },
-      { name: "MNC", start: 152.994151, end: 152.836426 },
-      { name: "LNC", start: 152.836426, end: 152.49643 },
-      { name: "HUN", start: 152.49643, end: 151.625543 },
-      { name: "CC", start: 151.625543, end: 151.33845 },
-      { name: "SNB", start: 151.33845, end: 151.301015 },
-      { name: "SYD", start: 151.301015, end: 151.027996 },
-      { name: "ILL", start: 151.027996, end: 150.872577 },
-      { name: "SC", start: 150.872577, end: 150.302167 },
-      { name: "FSC", start: 150.302167, end: 149.967655 },
+      { name: "FNC", start: -28.164557, end: -29.610527 },
+      { name: "NC", start: -29.610527, end: -30.665687 },
+      { name: "MNC", start: -30.665687, end: -31.636052 },
+      { name: "LNC", start: -31.636052, end: -32.447837 },
+      { name: "HUN", start: -32.447837, end: -33.165642 },
+      { name: "CC", start: -33.165642, end: -33.573543 },
+      { name: "SNB", start: -33.573543, end: -33.825060 },
+      { name: "SYD", start: -33.825060, end: -34.191638 },
+      { name: "ILL", start: -34.191638, end: -34.548028 },
+      { name: "SC", start: -34.548028, end: -35.664119 },
+      { name: "FSC", start: -35.664119, end: -36.000000 }, // Adjusted end as a placeholder
     ];
 
-    // Function to determine the branch based on longitude
-    function determineBranch(longitude) {
+    // Function to determine the branch based on latitude
+    function determineBranch(latitude) {
       for (let i = 0; i < branches.length; i++) {
-        if (longitude <= branches[i].start && longitude > branches[i].end) {
+        if (latitude >= branches[i].end && latitude < branches[i].start) {
           return branches[i].name;
         }
       }
       return "Unknown"; // Return a default or error value if not found
     }
 
-    // Extract longitude value
-    let incidentLongitude = parseFloat(document.querySelector("#incidentLongitude").value);
+    // Extract latitude value
+    let incidentLatitude = parseFloat(document.querySelector("#incidentLatitude").value);
 
-    // Find the branch based on the longitude
-    let branchIdentifier = determineBranch(incidentLongitude);
+    // Find the branch based on the latitude
+    let branchIdentifier = determineBranch(incidentLatitude);
 
     // Extract data
     let incidentLevel = document.querySelector("#priority option:checked").textContent.trim().match(/\((\d+)\)/)?.[1];
