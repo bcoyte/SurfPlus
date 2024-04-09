@@ -2469,7 +2469,6 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
       resultsDiv.innerHTML = `
           <div class="weather-detail"><strong>Current Temperature:</strong> ${weatherData.current.temp_c}°C</div>
           <div class="weather-detail"><strong>Current Wind:</strong> ${weatherData.current.wind_kph} kph</div>
-          <div class="weather-detail"><strong>Current Wind Gusts:</strong> ${weatherData.current.gust_kph} kph</div>
           <div class="weather-detail"><strong>Swell Direction:</strong> ${swellDirectionFull}</div>
           <div class="weather-detail"><strong>Current Tide:</strong> ${currentTideInfo}</div>
           <div class="weather-detail"><strong>Next Tide:</strong> ${nextTideInfo}</div>
@@ -2529,3 +2528,114 @@ window.addEventListener('load', function() {
   }
 });
 
+// Assuming this is part of a larger script where API_KEY and other relevant variables are defined
+const API_KEY = "a72468e1e3234dc3b0543634242403";
+
+function createWeatherButton() {
+  const weatherButton = document.createElement("button");
+  weatherButton.classList.add("btn", "btn-app");
+  weatherButton.innerHTML = `
+    <i class="fa-solid fa-cloud-sun-rain"></i> Weather
+  `;
+  weatherButton.addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent the default action
+    openWeatherBoard();
+  });
+  
+  const buttonContainer = document.querySelector(".row.mb-4");
+  if (buttonContainer) {
+    buttonContainer.appendChild(weatherButton);
+  }
+}
+
+function openWeatherBoard() {
+  const latitude = document.getElementById("incidentLatitude").value;
+  const longitude = document.getElementById("incidentLongitude").value;
+  
+  const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${latitude},${longitude}&days=1`;
+  
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      showWeatherModal(data);
+    })
+    .catch(error => {
+      console.error("Error fetching weather data:", error);
+    });
+}
+
+function showWeatherModal(weatherData) {
+  const now = new Date();
+  const currentHour = now.getHours();
+  let hoursOptions = weatherData.forecast.forecastday[0].hour
+    .filter(hourData => new Date(hourData.time).getHours() >= currentHour)
+    .map((hourData, index) => {
+      let hour = new Date(hourData.time).getHours();
+      let isNow = hour === currentHour;
+      return `<option value="${index}" ${isNow ? "selected" : ""}>${isNow ? "Now" : `${hour}:00`}</option>`;
+    })
+    .join('');
+
+  const modalHtml = `
+    <div class="modal fade show" id="weatherModal" tabindex="-1" role="dialog" aria-labelledby="weatherModalLabel" aria-modal="true" style="display: block; z-index: 1001; margin: auto; margin-top: 70px;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="weatherModalLabel">Weather Forecast for ${weatherData.location.name}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <select id="forecastHourDropdown" class="form-control">${hoursOptions}</select>
+            <div id="weatherDetails"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const overlay = document.createElement('div');
+  overlay.id = 'modalOverlay';
+  overlay.innerHTML = modalHtml;
+  document.body.appendChild(overlay);
+
+  function updateWeatherDetails(selectedIndex) {
+    const filteredHours = weatherData.forecast.forecastday[0].hour.filter(hourData => new Date(hourData.time).getHours() >= currentHour);
+    const selectedHourData = filteredHours[selectedIndex];
+    
+    const willItRainText = selectedHourData.will_it_rain === 1 ? "Yes" : "No";
+        
+    document.getElementById('weatherDetails').innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; background-color: #f0f0f0; padding: 20px; border-radius: 10px;">
+        <div>
+          <h4>Weather Details</h4>
+          <p><strong>Temperature:</strong> ${selectedHourData.temp_c}°C</p>
+          <p><strong>Feels Like:</strong> ${selectedHourData.feelslike_c}°C</p>
+          <p><strong>Condition:</strong> ${selectedHourData.condition.text}</p>
+          <p><strong>Wind:</strong> ${selectedHourData.wind_kph} kph (${selectedHourData.wind_dir})</p>
+          <p><strong>Humidity:</strong> ${selectedHourData.humidity}%</p>
+          <p><strong>Precipitation:</strong> ${selectedHourData.precip_mm} mm</p>
+          <p><strong>Visibility:</strong> ${selectedHourData.vis_km} km</p>
+          <p><strong>Gust:</strong> ${selectedHourData.gust_kph} kph</p>
+          <p><strong>UV Index:</strong> ${selectedHourData.uv}</p>
+          <p><strong>Will it Rain?:</strong> ${willItRainText}</p>
+          <p><strong>Chance of Rain:</strong> ${selectedHourData.chance_of_rain}%</p>
+        </div>
+      </div>
+    `;
+}
+  
+  updateWeatherDetails(document.getElementById('forecastHourDropdown').selectedIndex);
+
+  document.getElementById('forecastHourDropdown').addEventListener('change', function() {
+    updateWeatherDetails(this.value);
+  });
+
+  document.querySelector('.close').addEventListener('click', function() {
+    document.body.removeChild(overlay);
+  });
+}
+
+// Example call to create the weather button
+createWeatherButton();
