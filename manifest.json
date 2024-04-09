@@ -30,6 +30,6 @@
   },
   "host_permissions": ["https://api.weatherapi.com/*"],
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://api.weatherapi.com/v1/current.json https://api.weatherapi.com/v1/forecast.json;"
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://api.weatherapi.com/v1/current.json https://api.weatherapi.com/v1/forecast.json https://api.weatherapi.com/v1/marine.json;"
   }
 }
