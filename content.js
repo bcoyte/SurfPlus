@@ -3113,3 +3113,37 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
       container.insertBefore(resultsDiv, container.firstChild);
   }
 }
+
+// EXTERNAL - NSWA Aeromedical Control (Aeromedical)
+
+
+window.addEventListener('load', function() {
+  const helicopterName = 'HELICOPTER - Lifesaver 22 (Relief)';
+  const externalControlName = 'EXTERNAL - NSWA Aeromedical Control';
+  const buttonParentDiv = document.getElementById('post_comment').parentNode.parentNode; // Traverse up to find the right container
+  
+  const helicopterExists = Array.from(document.querySelectorAll('#servicesTable tbody tr td:nth-child(2)'))
+      .some(td => td.textContent.includes(helicopterName));
+  
+  // Check if the external control name exists anywhere in the .row div
+  const externalControlExists = Array.from(document.querySelectorAll('.row .direct-chat-name'))
+      .some(name => name.textContent.includes(externalControlName));
+
+  if (helicopterExists && !externalControlExists && buttonParentDiv) {
+      const alertDiv = document.createElement('div');
+      alertDiv.style.position = 'relative';
+      alertDiv.style.width = '100%';
+      alertDiv.style.textAlign = 'center';
+      alertDiv.style.padding = '10px 0';
+      alertDiv.style.background = 'red';
+      alertDiv.style.color = 'white';
+      alertDiv.style.fontSize = '16px';
+      alertDiv.textContent = 'Notify RLTC / NSWA Aeromedical Control (and radio log)';
+      alertDiv.className = 'pulsate';
+
+      // Insert before the button's parent div
+      buttonParentDiv.parentNode.insertBefore(alertDiv, buttonParentDiv);
+
+      // Adding keyframes for pulsating effect not shown for brevity
+  }
+});
