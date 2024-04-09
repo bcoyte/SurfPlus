@@ -2,38 +2,57 @@ document.addEventListener("keydown", function (event) {
   if (event.key === "F1") {
     event.preventDefault(); // Prevent the default F1 action
 
+    // Branch identifiers and their longitudinal boundaries
+    const branches = [
+      { name: "FNC", start: 153.563497, end: 153.331002 },
+      { name: "NC", start: 153.331002, end: 152.994151 },
+      { name: "MNC", start: 152.994151, end: 152.836426 },
+      { name: "LNC", start: 152.836426, end: 152.49643 },
+      { name: "HUN", start: 152.49643, end: 151.625543 },
+      { name: "CC", start: 151.625543, end: 151.33845 },
+      { name: "SNB", start: 151.33845, end: 151.301015 },
+      { name: "SYD", start: 151.301015, end: 151.027996 },
+      { name: "ILL", start: 151.027996, end: 150.872577 },
+      { name: "SC", start: 150.872577, end: 150.302167 },
+      { name: "FSC", start: 150.302167, end: 149.967655 },
+    ];
+
+    // Function to determine the branch based on longitude
+    function determineBranch(longitude) {
+      for (let i = 0; i < branches.length; i++) {
+        if (longitude <= branches[i].start && longitude > branches[i].end) {
+          return branches[i].name;
+        }
+      }
+      return "Unknown"; // Return a default or error value if not found
+    }
+
+    // Extract longitude value
+    let incidentLongitude = parseFloat(document.querySelector("#incidentLongitude").value);
+
+    // Find the branch based on the longitude
+    let branchIdentifier = determineBranch(incidentLongitude);
+
     // Extract data
-    let incidentLevel = document
-      .querySelector("#priority option:checked")
-      .textContent.trim()
-      .match(/\((\d+)\)/)?.[1];
-    let incidentNumber = document
-      .querySelector("small.text-muted")
-      .textContent.trim()
-      .match(/#(L\d+)/)?.[1];
+    let incidentLevel = document.querySelector("#priority option:checked").textContent.trim().match(/\((\d+)\)/)?.[1];
+    let incidentNumber = document.querySelector("small.text-muted").textContent.trim().match(/#(L\d+)/)?.[1];
     let locationValue = document.querySelector("#incidentLocation").value;
-    let descriptionValue = document.querySelector(
-      "#incidentBriefDescription"
-    ).value;
-    let incidentType = document
-      .querySelector("#incidentType option:checked")
-      .textContent.trim();
+    let descriptionValue = document.querySelector("#incidentBriefDescription").value;
+    let incidentType = document.querySelector("#incidentType option:checked").textContent.trim();
     let slsContact = document.querySelector("#incidentSLSContact").value;
     let textAfterLastSlash = slsContact.split("/").pop();
 
+    // Extract username and convert it to uppercase
+    let username = document.querySelector(".dropdown-menu .dropdown-item small").textContent.toUpperCase();
+
     // Convert locationValue to title case
-    locationValue = locationValue
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
+    locationValue = locationValue.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ");
 
     // Convert descriptionValue to sentence case
-    descriptionValue =
-      descriptionValue.charAt(0).toUpperCase() +
-      descriptionValue.slice(1).toLowerCase();
+    descriptionValue = descriptionValue.charAt(0).toUpperCase() + descriptionValue.slice(1).toLowerCase();
 
-    // Format the output
-    let output = `L${incidentLevel}. ${locationValue} (SYD). ${incidentType}. ${textAfterLastSlash}. https://surfcom.sls.com.au/incidents/export-pdf/${incidentNumber}`;
+    // Format the output including the branch identifier dynamically
+    let output = `L${incidentLevel}. ${incidentNumber}. ${locationValue} (${branchIdentifier}). ${incidentType}. ${username}. https://surfcom.sls.com.au/incidents/xls/${incidentNumber}`;
 
     // Insert into the textarea
     document.querySelector("#pager_message").value = output;
