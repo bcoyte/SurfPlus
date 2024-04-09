@@ -33,7 +33,7 @@ document.addEventListener("keydown", function (event) {
       descriptionValue.slice(1).toLowerCase();
 
     // Format the output
-    let output = `L${incidentLevel} Incident Notification. ${incidentNumber}. ${incidentType}. ${locationValue}. ${descriptionValue}. ${textAfterLastSlash}`;
+    let output = `L${incidentLevel}. ${locationValue} (SYD). ${incidentType}. ${textAfterLastSlash}. https://surfcom.sls.com.au/incidents/export-pdf/${incidentNumber}`;
 
     // Insert into the textarea
     document.querySelector("#pager_message").value = output;
