@@ -3,7 +3,6 @@
   "name": "SurfPlus",
   "description": "Allows additional functionality within SurfCom Management System. View 'READ ME.txt' file for further info.",
   "version": "1.0",
-  "permissions": ["activeTab", "storage"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

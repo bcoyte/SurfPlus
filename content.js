@@ -14,7 +14,7 @@ document.addEventListener("keydown", function (event) {
       { name: "SYD", start: -33.825060, end: -34.191638 },
       { name: "ILL", start: -34.191638, end: -34.548028 },
       { name: "SC", start: -34.548028, end: -35.664119 },
-      { name: "FSC", start: -35.664119, end: -36.000000 }, // Adjusted end as a placeholder
+      { name: "FSC", start: -35.664119, end: -36.000000 },
     ];
 
     // Function to determine the branch based on latitude
@@ -42,8 +42,9 @@ document.addEventListener("keydown", function (event) {
     let slsContact = document.querySelector("#incidentSLSContact").value;
     let textAfterLastSlash = slsContact.split("/").pop();
 
-    // Extract username and convert it to uppercase
-    let username = document.querySelector(".dropdown-menu .dropdown-item small").textContent.toUpperCase();
+    // Extract username from email
+    let email = document.querySelector(".dropdown-menu .dropdown-item small:nth-of-type(2)").textContent;
+    let username = email.substring(0, email.indexOf('@')).toUpperCase();
 
     // Convert locationValue to title case
     locationValue = locationValue.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ");
@@ -52,7 +53,7 @@ document.addEventListener("keydown", function (event) {
     descriptionValue = descriptionValue.charAt(0).toUpperCase() + descriptionValue.slice(1).toLowerCase();
 
     // Format the output including the branch identifier dynamically
-    let output = `L${incidentLevel}. ${incidentNumber}. ${locationValue} (${branchIdentifier}). ${incidentType}. ${username}. https://surfcom.sls.com.au/incidents/xls/${incidentNumber}`;
+    let output = `L${incidentLevel}. ${incidentNumber}. ${locationValue} (${branchIdentifier}). ${incidentType}. ${descriptionValue}. ${username}.`;
 
     // Insert into the textarea
     document.querySelector("#pager_message").value = output;
@@ -2375,6 +2376,7 @@ insertOrUpdateTimeOpenCounter();
 
 
 // content.js
+// content.js
 window.addEventListener("load", function () {
   const resultContainerId = "weatherapi-results";
   if (document.getElementById(resultContainerId)) {
@@ -2457,8 +2459,8 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
           }
       }
 
-      const nextTideInfo = nextTide ? `${nextTide.tide_type} at ${nextTide.tide_time.split(" ")[1]} (Height: ${nextTide.tide_height_mt} mt)` : "Not available";
-      const currentTideInfo = currentTide ? `${currentTide.tide_type} at ${currentTide.tide_time.split(" ")[1]} (Height: ${currentTide.tide_height_mt} mt)` : "Not available";
+      const nextTideInfo = nextTide ? `${nextTide.tide_type} at ${nextTide.tide_time.split(" ")[1]} (${nextTide.tide_height_mt}m)` : "Not available";
+      const currentTideInfo = currentTide ? `${currentTide.tide_type} at ${currentTide.tide_time.split(" ")[1]} (${currentTide.tide_height_mt}m)` : "Not available";
 
       const swellDirection = marineData.forecast.forecastday[0].hour[0].swell_dir_16_point;
       const swellDirectionFull = convertCompassPoint(swellDirection);
@@ -2482,53 +2484,50 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
 
 // EXTERNAL - NSWA Aeromedical Control (Aeromedical)
 
-
 window.addEventListener('load', function() {
-  const helicopterName = 'HELICOPTER - Lifesaver 22 (Relief)';
-  const externalControlName = 'EXTERNAL - NSWA Aeromedical Control';
-  const buttonParentDiv = document.getElementById('post_comment').parentNode.parentNode; // Traverse up to find the right container
-  
+  const helicopterNames = ['Lifesaver 21', 'Lifesaver 22', 'Lifesaver 23', 'Lifesaver 45', 'Lifesaver 46']; // List of possible helicopter names
+  const externalControlName = 'Aeromedical Control';
+  const buttonParentDiv = document.getElementById('post_comment').parentNode.parentNode;
+
   const helicopterExists = Array.from(document.querySelectorAll('#servicesTable tbody tr td:nth-child(2)'))
-      .some(td => td.textContent.includes(helicopterName));
+      .some(td => helicopterNames.some(helicopterName => td.textContent.includes(helicopterName)));
   
   const externalControlExists = Array.from(document.querySelectorAll('.row .direct-chat-name'))
       .some(name => name.textContent.includes(externalControlName));
 
   if (helicopterExists && !externalControlExists && buttonParentDiv) {
-      const alertDiv = document.createElement('div');
-      alertDiv.style.position = 'relative';
-      alertDiv.style.width = '100%';
-      alertDiv.style.textAlign = 'center';
-      alertDiv.style.padding = '10px 0';
-      alertDiv.style.background = 'red';
-      alertDiv.style.color = 'white';
-      alertDiv.style.fontSize = '16px';
-      alertDiv.textContent = 'Notify RLTC / NSWA Aeromedical Control (and radio log)';
-      alertDiv.className = 'pulsate';
-      
-      buttonParentDiv.parentNode.insertBefore(alertDiv, buttonParentDiv);
+    const alertDiv = document.createElement('div');
+    alertDiv.style.position = 'relative';
+    alertDiv.style.width = '100%';
+    alertDiv.style.textAlign = 'center';
+    alertDiv.style.padding = '10px 0';
+    alertDiv.style.background = 'red';
+    alertDiv.style.color = 'white';
+    alertDiv.style.fontSize = '16px';
+    alertDiv.textContent = 'Notify RLTC / NSWA Aeromedical Control (and radio log)';
+    alertDiv.className = 'pulsate';
+    
+    buttonParentDiv.parentNode.insertBefore(alertDiv, buttonParentDiv);
 
-      // Check if the styleSheet already exists
-      if (!document.getElementById('pulsateStyle')) {
-          const styleSheet = document.createElement("style");
-          styleSheet.id = 'pulsateStyle'; // Add an ID to the style element
-          styleSheet.type = "text/css";
-          styleSheet.innerText = `
-              @keyframes pulsate {
-                  0% { background-color: red; }
-                  50% { background-color: darkred; }
-                  100% { background-color: red; }
-              }
-              .pulsate {
-                  animation: pulsate 2s ease-in-out infinite;
-              }
-          `;
-          document.head.appendChild(styleSheet); // Append the style sheet to <head>
-      }
+    if (!document.getElementById('pulsateStyle')) {
+      const styleSheet = document.createElement("style");
+      styleSheet.id = 'pulsateStyle';
+      styleSheet.type = "text/css";
+      styleSheet.innerText = `
+          @keyframes pulsate {
+              0% { background-color: red; }
+              50% { background-color: darkred; }
+              100% { background-color: red; }
+          }
+          .pulsate {
+              animation: pulsate 2s ease-in-out infinite;
+          }
+      `;
+      document.head.appendChild(styleSheet);
+    }
   }
 });
 
-// Assuming this is part of a larger script where API_KEY and other relevant variables are defined
 const API_KEY = "a72468e1e3234dc3b0543634242403";
 
 function createWeatherButton() {
@@ -2582,7 +2581,7 @@ function showWeatherModal(weatherData) {
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="weatherModalLabel">Weather Forecast for ${weatherData.location.name}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" id="closeWeather" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -2632,10 +2631,68 @@ function showWeatherModal(weatherData) {
     updateWeatherDetails(this.value);
   });
 
-  document.querySelector('.close').addEventListener('click', function() {
-    document.body.removeChild(overlay);
+  const closeModal = function() {
+    const overlay = document.getElementById('modalOverlay');
+    overlay.style.opacity = '0';
+    setTimeout(function() {
+      document.body.removeChild(overlay);
+    }, 300);
+  };
+
+  document.getElementById('closeWeather').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      closeModal();
+    }
   });
 }
 
-// Example call to create the weather button
 createWeatherButton();
+
+window.addEventListener('load', function() {
+  // Move the "Responding Services" card above the "Response SMS Notification" card
+  const respondingServicesCard = document.querySelector('.responding-services');
+  const smsNotificationCard = document.getElementById('response-sms-notification');
+  if (respondingServicesCard && smsNotificationCard) {
+      smsNotificationCard.parentNode.insertBefore(respondingServicesCard, smsNotificationCard);
+  }
+
+  // Adjust the width of Select2 containers to be 100% for responsive design
+  document.querySelectorAll('.select2-container').forEach(function(selectContainer) {
+      selectContainer.style.width = '135%'; // Make Select2 dropdowns responsive
+  });
+
+  // Positioning adjustments for buttons, setting them to float right with margin
+  document.querySelectorAll('.add_unit_quick, #sendSMSResponse').forEach(function(button) {
+      button.classList.add('float-right'); // Adjust button positioning
+      button.style.marginLeft = '40px'; // Move the Add Unit button 20px to the right
+  });
+
+  // Ensure consistent styling for textareas and select elements using Bootstrap's form-control class
+  document.querySelectorAll('textarea, select').forEach(function(element) {
+      element.classList.add('form-control'); // Apply consistent styling
+  });
+
+  // Adjust table to zoom in/out with its container
+  const tableResponsive = document.querySelector('.table-responsive');
+  if (tableResponsive) {
+      tableResponsive.style.overflowX = 'auto';
+      tableResponsive.style.maxHeight = 'none';
+
+      // Listen for changes in the container's size to adjust table font size dynamically
+      new ResizeObserver(function(entries) {
+          for (let entry of entries) {
+              const containerWidth = entry.contentRect.width;
+              if (containerWidth < 768) {
+                  document.querySelectorAll('#servicesTable').forEach(function(table) {
+                      table.style.fontSize = '0.8em'; // Smaller font size for smaller containers
+                  });
+              } else {
+                  document.querySelectorAll('#servicesTable').forEach(function(table) {
+                      table.style.fontSize = '1em'; // Default font size for larger containers
+                  });
+              }
+          }
+      }).observe(tableResponsive);
+  }
+});
