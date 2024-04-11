@@ -6,25 +6,16 @@ This project enhances the SurfCom Management System with additional features and
 
 1. **Hotkey Shortcuts**: Various hotkey shortcuts are defined to automate tasks and streamline users workflow. For example:
 
-- `F1`: Extracts incident data and formats it for pager messages.
-
-- `F2`: Extracts incident data, formats it for further information, and saves the form.
-
-- `F3`: Formats a standdown message and inserts it into the pager message field.
-
-- `F7`: Creates a dropdown menu for selecting Emergency Response Beacons (ERBs).
-
-- `F8`: Inserts a generic Close of Business message into the radio log screen, confirming handover.
-
-- `F9` to `F12`: Prefills caller details for specific organizations.
-
-- `Ctrl + S`: Saves the form.
-
-- `Ctrl + R`: Switches between record and edit mode.
-
-- `Ctrl + I`: Navigates to the incident view page.
-
-- `Ctrl + B`: Navigates to the incident add page.
+  - `F1`: Extracts incident data and formats it for pager messages.
+  - `F2`: Extracts incident data, formats it for further information, and saves the form.
+  - `F3`: Formats a standdown message and inserts it into the pager message field.
+  - `F7`: Creates a dropdown menu for selecting Emergency Response Beacons (ERBs).
+  - `F8`: Inserts a generic Close of Business message into the radio log screen, confirming handover.
+  - `F9` to `F12`: Prefills caller details for specific organizations.
+  - `Ctrl + S`: Saves the form.
+  - `Ctrl + R`: Switches between record and edit mode.
+  - `Ctrl + I`: Navigates to the incident view page.
+  - `Ctrl + B`: Navigates to the incident add page.
 
 2. **Bulk Sign Off**: Adds a "Bulk Sign Off All" button to the support services page, allowing users to sign off all services in bulk.
 
@@ -43,6 +34,22 @@ This project enhances the SurfCom Management System with additional features and
 9. **Incident Table Enhancements**: Adds additional buttons to the incident table, such as "Reopen", "Download PDF", and "Download CSV", and applies color formatting to the status column.
 
 10. **Radio Buttons for Communication Method**: Adds radio buttons above the message textarea to select the communication method (e.g., radio, phone, email).
+
+11. **Weather and Marine Data Integration**: Fetches and displays current weather, marine, and forecast data based on the incident's latitude and longitude.
+
+12. **Time Open Counter**: Calculates and displays the duration an incident has been open, updating in real-time.
+
+13. **Helicopter Notification Alert**: Displays a prominent alert when a helicopter service is involved in the incident, reminding the user to notify relevant authorities.
+
+14. **Weather Button**: Adds a "Weather" button that opens a modal displaying detailed weather information for the incident location.
+
+15. **Responsive Design Improvements**: Adjusts the layout and styling of various elements to improve responsiveness and readability on different screen sizes.
+
+16. **Visual Counter for Service Statuses**: Displays a visual counter showing the count of services in each status (e.g., Notified, Enroute, Arrived).
+
+17. **Collapsible Responding Services**: Makes the "Responding Services" section collapsible, automatically collapsing it if there are more than 10 rows in the table.
+
+18. **Card Title Renaming**: Renames the "Response SMS Notification" card title to "Response SMS Notification (Callout SMS)" and the "Generate Message" card title to "Generate Message (Notification SMSs and SitReps)".
 
 ## Installation
 
