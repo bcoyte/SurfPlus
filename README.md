@@ -21,35 +21,33 @@ This project enhances the SurfCom Management System with additional features and
 
 3. **Prefill and Sign Off**: Adds a "Prefill & Signoff" button to the log service off page, prefilling the current location and automatically submitting the form.
 
-4. **Contact Book Modal**: Adds a contact book modal to the caller details section, allowing users to search and select contact details.
+4. **Message Direction Swapping**: Adds a swapping functionality to the message direction dropdowns, allowing users to easily swap the "From" and "To" values.
 
-5. **Message Direction Swapping**: Adds a swapping functionality to the message direction dropdowns, allowing users to easily swap the "From" and "To" values.
+5. **Closest Location Finder**: Implements a feature to find the closest service location based on the provided latitude and longitude.
 
-6. **Closest Location Finder**: Implements a feature to find the closest service location based on the provided latitude and longitude.
+6. **Uppercase Conversion**: Converts the text in the message textarea to uppercase as the user types.
 
-7. **Uppercase Conversion**: Converts the text in the message textarea to uppercase as the user types.
+7. **Message Log Coloring**: Applies color coding to the message logs based on specific keywords or phrases.
 
-8. **Message Log Coloring**: Applies color coding to the message logs based on specific keywords or phrases.
+8. **Incident Table Enhancements**: Adds additional buttons to the incident table, such as "Reopen", "Download PDF", and "Download CSV", and applies color formatting to the status column.
 
-9. **Incident Table Enhancements**: Adds additional buttons to the incident table, such as "Reopen", "Download PDF", and "Download CSV", and applies color formatting to the status column.
+9. **Radio Buttons for Communication Method**: Adds radio buttons above the message textarea to select the communication method (e.g., radio, phone, email).
 
-10. **Radio Buttons for Communication Method**: Adds radio buttons above the message textarea to select the communication method (e.g., radio, phone, email).
+10. **Weather and Marine Data Integration**: Fetches and displays current weather, marine, and forecast data based on the incident's latitude and longitude.
 
-11. **Weather and Marine Data Integration**: Fetches and displays current weather, marine, and forecast data based on the incident's latitude and longitude.
+11. **Time Open Counter**: Calculates and displays the duration an incident has been open, updating in real-time.
 
-12. **Time Open Counter**: Calculates and displays the duration an incident has been open, updating in real-time.
+12. **Helicopter Notification Alert**: Displays a prominent alert when a helicopter service is involved in the incident, reminding the user to notify relevant authorities.
+  
+13. **Weather Button**: Adds a "Weather" button that opens a modal displaying detailed weather information for the incident location.
 
-13. **Helicopter Notification Alert**: Displays a prominent alert when a helicopter service is involved in the incident, reminding the user to notify relevant authorities.
+14. **Responsive Design Improvements**: Adjusts the layout and styling of various elements to improve responsiveness and readability on different screen sizes.
 
-14. **Weather Button**: Adds a "Weather" button that opens a modal displaying detailed weather information for the incident location.
+15. **Visual Counter for Service Statuses**: Displays a visual counter showing the count of services in each status (e.g., Notified, Enroute, Arrived).
 
-15. **Responsive Design Improvements**: Adjusts the layout and styling of various elements to improve responsiveness and readability on different screen sizes.
+16. **Collapsible Responding Services**: Makes the "Responding Services" section collapsible, automatically collapsing it if there are more than 10 rows in the table.
 
-16. **Visual Counter for Service Statuses**: Displays a visual counter showing the count of services in each status (e.g., Notified, Enroute, Arrived).
-
-17. **Collapsible Responding Services**: Makes the "Responding Services" section collapsible, automatically collapsing it if there are more than 10 rows in the table.
-
-18. **Card Title Renaming**: Renames the "Response SMS Notification" card title to "Response SMS Notification (Callout SMS)" and the "Generate Message" card title to "Generate Message (Notification SMSs and SitReps)".
+17. **Card Title Renaming**: Renames the "Response SMS Notification" card title to "Response SMS Notification (Callout SMS)" and the "Generate Message" card title to "Generate Message (Notification SMSs and SitReps)".
 
 ## Installation
 
