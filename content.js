@@ -2741,73 +2741,73 @@ window.addEventListener('load', function () {
   }
 });
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
   function countStatuses() {
-      const statuses = { "Notified": 0, "Enroute": 0, "Arrived": 0, "Returning": 0, "Stood Down": 0 };
-      document.querySelectorAll("#servicesTable tbody tr").forEach(row => {
-          const status = row.cells[2].textContent.trim();
-          if (status in statuses) {
-              statuses[status]++;
-          }
-      });
-      return statuses;
+    const statuses = { "Notified": 0, "Enroute": 0, "Arrived": 0, "Returning": 0, "Stood Down": 0 };
+    document.querySelectorAll("#servicesTable tbody tr").forEach(row => {
+      const status = row.cells[2].textContent.trim();
+      if (status in statuses) {
+        statuses[status]++;
+      }
+    });
+    return statuses;
   }
 
   function countResponding() {
-      let respondingCount = 0;
-      document.querySelectorAll("#sms-members-content tr").forEach(row => {
-          const response = row.cells[2].textContent.trim();
-          if (response && response !== "Unavailable") {
-              respondingCount++;
-          }
-      });
-      return respondingCount;
+    let respondingCount = 0;
+    document.querySelectorAll("#sms-members-content tr").forEach(row => {
+      const response = row.cells[2].textContent.trim();
+      if (response && response !== "Unavailable") {
+        respondingCount++;
+      }
+    });
+    return respondingCount;
   }
 
   function createStatusCard(title, count) {
-      const card = document.createElement("div");
-      card.style.margin = "0 3px";
-      card.style.padding = "6px 12px";
-      card.style.backgroundColor = "#f0f0f0";
-      card.style.borderRadius = "5px";
-      card.style.display = "flex";
-      card.style.flexDirection = "column";
-      card.style.alignItems = "center";
-      card.style.boxShadow = "0 1px 2px rgba(0, 0, 0, 0.1)";
+    const card = document.createElement("div");
+    card.style.margin = "0 3px";
+    card.style.padding = "6px 12px";
+    card.style.backgroundColor = "#f0f0f0";
+    card.style.borderRadius = "5px";
+    card.style.display = "flex";
+    card.style.flexDirection = "column";
+    card.style.alignItems = "center";
+    card.style.boxShadow = "0 1px 2px rgba(0, 0, 0, 0.1)";
 
-      const statusElement = document.createElement("div");
-      statusElement.textContent = title;
-      statusElement.style.fontSize = "14px";
-      statusElement.style.marginBottom = "2px";
-      statusElement.style.fontWeight = "600";
+    const statusElement = document.createElement("div");
+    statusElement.textContent = title;
+    statusElement.style.fontSize = "14px";
+    statusElement.style.marginBottom = "2px";
+    statusElement.style.fontWeight = "600";
 
-      const countElement = document.createElement("div");
-      countElement.textContent = count;
-      countElement.style.fontSize = "16px";
-      countElement.style.fontWeight = "bold";
-      countElement.style.color = "#007bff";
+    const countElement = document.createElement("div");
+    countElement.textContent = count;
+    countElement.style.fontSize = "16px";
+    countElement.style.fontWeight = "bold";
+    countElement.style.color = "#007bff";
 
-      card.appendChild(statusElement);
-      card.appendChild(countElement);
+    card.appendChild(statusElement);
+    card.appendChild(countElement);
 
-      return card;
+    return card;
   }
 
   function appendStatusesToContainer(container, statuses, respondingCount) {
-      Object.entries(statuses).forEach(([status, count]) => {
-          const statusCard = createStatusCard(status, count);
-          container.appendChild(statusCard);
-      });
+    Object.entries(statuses).forEach(([status, count]) => {
+      const statusCard = createStatusCard(status, count);
+      container.appendChild(statusCard);
+    });
 
-      const verticalLine = document.createElement("div");
-      verticalLine.style.borderLeft = "2px solid #ccc";
-      verticalLine.style.height = "40px";
-      verticalLine.style.margin = "0 8px";
-      container.appendChild(verticalLine);
+    const verticalLine = document.createElement("div");
+    verticalLine.style.borderLeft = "2px solid #ccc";
+    verticalLine.style.height = "40px";
+    verticalLine.style.margin = "0 8px";
+    container.appendChild(verticalLine);
 
-      const respondingCard = createStatusCard("Responding", respondingCount);
-      respondingCard.style.marginRight = "8px"; // Add 5px margin to the right
-      container.appendChild(respondingCard);
+    const respondingCard = createStatusCard("Responding", respondingCount);
+    respondingCard.style.marginRight = "8px"; // Add 5px margin to the right
+    container.appendChild(respondingCard);
   }
 
   const statusCounts = countStatuses();
@@ -2842,14 +2842,14 @@ window.addEventListener('load', function () {
   let isCardBodyVisible = true;
 
   toggleArrow.addEventListener('click', () => {
-      if (isCardBodyVisible) {
-          respondingServicesBody.style.display = 'none';
-          toggleArrow.innerHTML = '▲'; // Change to up arrow symbol
-      } else {
-          respondingServicesBody.style.display = '';
-          toggleArrow.innerHTML = '▼'; // Change to down arrow symbol
-      }
-      isCardBodyVisible = !isCardBodyVisible;
+    if (isCardBodyVisible) {
+      respondingServicesBody.style.display = 'none';
+      toggleArrow.innerHTML = '▲'; // Change to up arrow symbol
+    } else {
+      respondingServicesBody.style.display = '';
+      toggleArrow.innerHTML = '▼'; // Change to down arrow symbol
+    }
+    isCardBodyVisible = !isCardBodyVisible;
   });
 
   respondingServicesHeader.appendChild(toggleArrow);
@@ -2859,19 +2859,19 @@ window.addEventListener('load', function () {
 
   // Collapsing the element if there are more than 10 rows in the table
   if (tableRows.length > 10) {
-      respondingServicesBody.style.display = 'none';
-      toggleArrow.innerHTML = '▲';
-      isCardBodyVisible = false;
+    respondingServicesBody.style.display = 'none';
+    toggleArrow.innerHTML = '▲';
+    isCardBodyVisible = false;
   }
 });
 
 // This script waits for the DOM to be fully loaded before attempting to modify it.
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
   // Looks for the element with class 'card-title' that is a descendant of the div with ID 'response-sms-notification'.
   var cardTitleElement = document.querySelector('#response-sms-notification .card-title');
   if (cardTitleElement) {
-      // If the element is found, change its text content.
-      cardTitleElement.textContent = 'Response SMS Notification (Callout SMS)';
+    // If the element is found, change its text content.
+    cardTitleElement.textContent = 'Response SMS Notification (Callout SMS)';
   }
 });
 
@@ -2881,14 +2881,14 @@ window.addEventListener('load', function() {
 function changeCardTitle(newTitle) {
   // Select the card title element
   var cardTitleElement = document.querySelector('.card.card-primary.card-outline.generate-message .card-header .card-title');
-  
+
   // Check if the card title element exists
   if (cardTitleElement) {
-      // Change the inner text of the card title element to the new title
-      cardTitleElement.innerText = newTitle;
+    // Change the inner text of the card title element to the new title
+    cardTitleElement.innerText = newTitle;
   } else {
-      // Log an error if the card title element is not found
-      console.error('Card title element not found.');
+    // Log an error if the card title element is not found
+    console.error('Card title element not found.');
   }
 }
 
