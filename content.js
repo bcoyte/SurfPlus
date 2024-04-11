@@ -2766,7 +2766,7 @@ window.addEventListener("load", function() {
 
   function createStatusCard(title, count) {
       const card = document.createElement("div");
-      card.style.margin = "0 2px";
+      card.style.margin = "0 3px";
       card.style.padding = "6px 12px";
       card.style.backgroundColor = "#f0f0f0";
       card.style.borderRadius = "5px";
@@ -2806,6 +2806,7 @@ window.addEventListener("load", function() {
       container.appendChild(verticalLine);
 
       const respondingCard = createStatusCard("Responding", respondingCount);
+      respondingCard.style.marginRight = "8px"; // Add 5px margin to the right
       container.appendChild(respondingCard);
   }
 
@@ -2824,6 +2825,7 @@ window.addEventListener("load", function() {
   const targetDiv = document.querySelector(".row.mb-4");
   targetDiv.appendChild(container);
 });
+
 
 window.addEventListener('load', function () {
   const respondingServicesHeader = document.querySelector('.responding-services .card-header');
