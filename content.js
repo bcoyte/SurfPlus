@@ -1025,9 +1025,9 @@ function haversineDistance(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(toRad(lat1)) *
-      Math.cos(toRad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(toRad(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c;
   return d;
@@ -1166,8 +1166,7 @@ function initializeButtonAddition() {
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
                   console.log(
-                    `Row ${
-                      index + 1
+                    `Row ${index + 1
                     }: Creating new button for incidentId: ${incidentId}`
                   );
 
@@ -1197,8 +1196,7 @@ function initializeButtonAddition() {
 
                   actionsCell.appendChild(newButton);
                   console.log(
-                    `Row ${
-                      index + 1
+                    `Row ${index + 1
                     }: New 'Reopen' button added with confirmation dialog.`
                   );
                 } else {
@@ -1268,8 +1266,7 @@ function initializeButtonAddition22() {
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
                   console.log(
-                    `Row ${
-                      index + 1
+                    `Row ${index + 1
                     }: Creating new button for incidentId: ${incidentId}`
                   );
 
@@ -1298,8 +1295,7 @@ function initializeButtonAddition22() {
               }
             } else {
               console.log(
-                `Row ${
-                  index + 1
+                `Row ${index + 1
                 }: 'Download PDF' button already exists, skipping.`
               );
             }
@@ -1360,8 +1356,7 @@ function initializeButtonAddition12() {
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
                   console.log(
-                    `Row ${
-                      index + 1
+                    `Row ${index + 1
                     }: Creating new button for incidentId: ${incidentId}`
                   );
 
@@ -1389,8 +1384,7 @@ function initializeButtonAddition12() {
               }
             } else {
               console.log(
-                `Row ${
-                  index + 1
+                `Row ${index + 1
                 }: 'Download CSV' button already exists, skipping.`
               );
             }
@@ -1450,8 +1444,7 @@ function initializeButtonAddition3() {
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
                   console.log(
-                    `Row ${
-                      index + 1
+                    `Row ${index + 1
                     }: Creating new button for incidentId: ${incidentId}`
                   );
 
@@ -1476,8 +1469,7 @@ function initializeButtonAddition3() {
 
                   actionsCell.appendChild(newButton);
                   console.log(
-                    `Row ${
-                      index + 1
+                    `Row ${index + 1
                     }: New 'Reopen' button added with confirmation dialog.`
                   );
                 } else {
@@ -1547,8 +1539,7 @@ function initializeButtonAddition2() {
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
                   console.log(
-                    `Row ${
-                      index + 1
+                    `Row ${index + 1
                     }: Creating new button for incidentId: ${incidentId}`
                   );
 
@@ -1573,8 +1564,7 @@ function initializeButtonAddition2() {
 
                   actionsCell.appendChild(newButton);
                   console.log(
-                    `Row ${
-                      index + 1
+                    `Row ${index + 1
                     }: New 'Reopen' button added with confirmation dialog.`
                   );
                 } else {
@@ -1633,15 +1623,13 @@ function initializeStatusFormatting() {
           const statusText = statusCell.textContent.trim();
           if (statusText === "Open") {
             console.log(
-              `Row ${
-                index + 1
+              `Row ${index + 1
               }: Status is 'Open'. Formatting with pastel green.`
             );
             statusCell.innerHTML = `<span style="display: block; padding: 2px 5px; margin: 0; background-color: #b8d8b8; color: #3a5335; border-radius: 4px;">Open</span>`;
           } else if (statusText === "CLOSED") {
             console.log(
-              `Row ${
-                index + 1
+              `Row ${index + 1
               }: Status is 'CLOSED'. Formatting with pastel red.`
             );
             statusCell.innerHTML = `<span style="display: block; padding: 2px 5px; margin: 0; background-color: #f4bfbf; color: #7c2a2a; border-radius: 4px;">CLOSED</span>`;
@@ -2379,53 +2367,53 @@ insertOrUpdateTimeOpenCounter();
 window.addEventListener("load", function () {
   const resultContainerId = "weatherapi-results";
   if (document.getElementById(resultContainerId)) {
-      return;
+    return;
   }
 
   const latitudeInput = document.querySelector("input#incidentLatitude");
   const longitudeInput = document.querySelector("input#incidentLongitude");
 
   if (latitudeInput && longitudeInput) {
-      const lat = latitudeInput.value;
-      const lon = longitudeInput.value;
+    const lat = latitudeInput.value;
+    const lon = longitudeInput.value;
 
-      if (lat && lon) {
-          chrome.runtime.sendMessage(
-              { action: "fetchWeatherData", lat, lon },
-              (response) => {
-                  if (response.data) {
-                      displayWeatherAndMarineData(
-                          response.data.weatherData,
-                          response.data.marineData,
-                          response.data.forecastData
-                      );
-                  } else if (response.error) {
-                      console.error("Error fetching weather data:", response.error);
-                  }
-              }
-          );
-      }
+    if (lat && lon) {
+      chrome.runtime.sendMessage(
+        { action: "fetchWeatherData", lat, lon },
+        (response) => {
+          if (response.data) {
+            displayWeatherAndMarineData(
+              response.data.weatherData,
+              response.data.marineData,
+              response.data.forecastData
+            );
+          } else if (response.error) {
+            console.error("Error fetching weather data:", response.error);
+          }
+        }
+      );
+    }
   }
 });
 
 function convertCompassPoint(abbreviatedDirection) {
   const compassPoints = {
-      N: 'North',
-      NE: 'North-East',
-      E: 'East',
-      SE: 'South-East',
-      S: 'South',
-      SW: 'South-West',
-      W: 'West',
-      NW: 'North-West',
-      NNE: 'North-North-East',
-      ENE: 'East-North-East',
-      ESE: 'East-South-East',
-      SSE: 'South-South-East',
-      SSW: 'South-South-West',
-      WSW: 'West-South-West',
-      WNW: 'West-North-West',
-      NNW: 'North-North-West'
+    N: 'North',
+    NE: 'North-East',
+    E: 'East',
+    SE: 'South-East',
+    S: 'South',
+    SW: 'South-West',
+    W: 'West',
+    NW: 'North-West',
+    NNE: 'North-North-East',
+    ENE: 'East-North-East',
+    ESE: 'East-South-East',
+    SSE: 'South-South-East',
+    SSW: 'South-South-West',
+    WSW: 'West-South-West',
+    WNW: 'West-North-West',
+    NNW: 'North-North-West'
   };
 
   return compassPoints[abbreviatedDirection] || abbreviatedDirection;
@@ -2442,42 +2430,42 @@ function adjustToUTC10(date) {
 function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
   const container = document.querySelector(".container-fluid");
   if (container) {
-      const resultsDiv = document.createElement("div");
-      resultsDiv.id = "weatherapi-results";
-      resultsDiv.className = "weather-details";
-      resultsDiv.style.display = "flex";
-      resultsDiv.style.flexWrap = "wrap";
-      resultsDiv.style.justifyContent = "space-between";
-      resultsDiv.style.gap = "15px";
+    const resultsDiv = document.createElement("div");
+    resultsDiv.id = "weatherapi-results";
+    resultsDiv.className = "weather-details";
+    resultsDiv.style.display = "flex";
+    resultsDiv.style.flexWrap = "wrap";
+    resultsDiv.style.justifyContent = "space-between";
+    resultsDiv.style.gap = "15px";
 
-      // Adjust currentTime to UTC+10
-      const currentTime = adjustToUTC10(new Date(marineData.location.localtime.replace(" ", "T")));
-      let nextTide = null;
-      let currentTide = null;
+    // Adjust currentTime to UTC+10
+    const currentTime = adjustToUTC10(new Date(marineData.location.localtime.replace(" ", "T")));
+    let nextTide = null;
+    let currentTide = null;
 
-      const tides = marineData.forecast.forecastday[0].day.tides[0].tide;
+    const tides = marineData.forecast.forecastday[0].day.tides[0].tide;
 
-      for (let tide of tides) {
-          // Adjust tideTime to UTC+10
-          const tideTime = adjustToUTC10(new Date(tide.tide_time.replace(" ", "T")));
-          if (tideTime > currentTime && !nextTide) {
-              nextTide = tide;
-          }
-          if (tideTime < currentTime) {
-              currentTide = tide;
-          }
+    for (let tide of tides) {
+      // Adjust tideTime to UTC+10
+      const tideTime = adjustToUTC10(new Date(tide.tide_time.replace(" ", "T")));
+      if (tideTime > currentTime && !nextTide) {
+        nextTide = tide;
       }
+      if (tideTime < currentTime) {
+        currentTide = tide;
+      }
+    }
 
-      const nextTideInfo = nextTide ? `${nextTide.tide_type} at ${nextTide.tide_time.split(" ")[1]} (${nextTide.tide_height_mt}m)` : "Not available";
-      const currentTideInfo = currentTide ? `${currentTide.tide_type} at ${currentTide.tide_time.split(" ")[1]} (${currentTide.tide_height_mt}m)` : "Not available";
+    const nextTideInfo = nextTide ? `${nextTide.tide_type} at ${nextTide.tide_time.split(" ")[1]} (${nextTide.tide_height_mt}m)` : "Not available";
+    const currentTideInfo = currentTide ? `${currentTide.tide_type} at ${currentTide.tide_time.split(" ")[1]} (${currentTide.tide_height_mt}m)` : "Not available";
 
-      const swellDirection = marineData.forecast.forecastday[0].hour[0].swell_dir_16_point;
-      const swellDirectionFull = convertCompassPoint(swellDirection);
+    const swellDirection = marineData.forecast.forecastday[0].hour[0].swell_dir_16_point;
+    const swellDirectionFull = convertCompassPoint(swellDirection);
 
-      const sunriseTime = forecastData.forecast.forecastday[0].astro.sunrise;
-      const sunsetTime = forecastData.forecast.forecastday[0].astro.sunset;
+    const sunriseTime = forecastData.forecast.forecastday[0].astro.sunrise;
+    const sunsetTime = forecastData.forecast.forecastday[0].astro.sunset;
 
-      resultsDiv.innerHTML = `
+    resultsDiv.innerHTML = `
           <div class="weather-detail"><strong>Current Temperature:</strong> <a href="#" style="color: blue;">${weatherData.current.temp_c}°C</a></div>
           <div class="weather-detail"><strong>Current Wind:</strong> <a href="#" style="color: blue;">${weatherData.current.wind_kph} kph</a></div>
           <div class="weather-detail"><strong>Swell Direction:</strong> <a href="#" style="color: blue;">${swellDirectionFull}</a></div>
@@ -2487,75 +2475,70 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
           <div class="weather-detail"><strong>Sunset:</strong> <a href="#" style="color: blue;">${sunsetTime}</a></div>
       `;
 
-      container.insertBefore(resultsDiv, container.firstChild);
+    container.insertBefore(resultsDiv, container.firstChild);
   }
 }
-
-
-
-
-
-
-
-
 
 // Add event listener to the document for a click event
 document.addEventListener('click', function (event) {
   // Check if the clicked element or its parent has the class 'weather-details'
   let targetElement = event.target;
   while (targetElement != null) {
-      if (targetElement.matches('.weather-details') || targetElement.matches('.weather-detail')) {
-          // Fetch latitude and longitude values
-          const latitude = document.querySelector("#incidentLatitude").value;
-          const longitude = document.querySelector("#incidentLongitude").value;
+    if (targetElement.matches('.weather-details') || targetElement.matches('.weather-detail')) {
+      // Fetch latitude and longitude values
+      const latitude = document.querySelector("#incidentLatitude").value;
+      const longitude = document.querySelector("#incidentLongitude").value;
 
-          // Find the textarea to insert the weather data into
-          const messageTextArea = document.querySelector("textarea#message");
-          if (messageTextArea) {
-              // Format the introduction text with the fetched latitude and longitude
-              let weatherDetailsText = `Current Weather at ${latitude}, ${longitude} - `;
+      // Find the textarea to insert the weather data into
+      const messageTextArea = document.querySelector("textarea#message");
+      if (messageTextArea) {
+        // Format the introduction text with the fetched latitude and longitude
+        let weatherDetailsText = `Current Weather at ${latitude}, ${longitude} - `;
 
-              // Collect each weather detail and join them with a comma and a space
-              const details = Array.from(document.querySelectorAll('.weather-detail')).map(detail => detail.innerText);
-              weatherDetailsText += details.join(', ');
+        // Collect each weather detail and join them with a comma and a space
+        const details = Array.from(document.querySelectorAll('.weather-detail')).map(detail => detail.innerText);
+        weatherDetailsText += details.join(', ');
 
-              // Insert the formatted weather data into the textarea
-              messageTextArea.value = weatherDetailsText;
+        // Insert the formatted weather data into the textarea
+        messageTextArea.value = weatherDetailsText;
 
-              // Set 'Surfcom' as the value for both 'To' and 'From' select fields and dispatch change events
-              ['msg_to', 'msg_from'].forEach(selectId => {
-                  const selectElement = document.querySelector(`select#${selectId}`);
-                  if (selectElement) {
-                      selectElement.value = "Surfcom";
-                      selectElement.dispatchEvent(new Event('change', { 'bubbles': true }));
-                  }
-              });
+        // Set 'Surfcom' as the value for both 'To' and 'From' select fields and dispatch change events
+        ['msg_to', 'msg_from'].forEach(selectId => {
+          const selectElement = document.querySelector(`select#${selectId}`);
+          if (selectElement) {
+            selectElement.value = "Surfcom";
+            selectElement.dispatchEvent(new Event('change', { 'bubbles': true }));
           }
-          break; // Stop the loop once the relevant action is performed
+        });
+
+        // Use the ID or name of the button to correctly identify the 'Record' button and click it
+        // Assuming the button has a unique ID "post_comment"
+        const recordButtonById = document.getElementById("post_comment");
+        if (recordButtonById) {
+          recordButtonById.click();
+        }
+        // If you prefer to use the name attribute, uncomment and use the following:
+        // const recordButtonByName = document.querySelector("input[name='post_comment']");
+        // if (recordButtonByName) {
+        //     recordButtonByName.click();
+        // }
       }
-      targetElement = targetElement.parentElement; // Move up to the parent element
+      break; // Stop the loop once the relevant action is performed
+    }
+    targetElement = targetElement.parentElement; // Move up to the parent element
   }
 }, false);
 
-
-
-
-
-
-
-
-
-
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
   const helicopterNames = ['Lifesaver 21', 'Lifesaver 22', 'Lifesaver 23', 'Lifesaver 45', 'Lifesaver 46']; // List of possible helicopter names
   const externalControlName = 'Aeromedical Control';
   const buttonParentDiv = document.getElementById('post_comment').parentNode.parentNode;
 
   const helicopterExists = Array.from(document.querySelectorAll('#servicesTable tbody tr td:nth-child(2)'))
-      .some(td => helicopterNames.some(helicopterName => td.textContent.includes(helicopterName)));
-  
+    .some(td => helicopterNames.some(helicopterName => td.textContent.includes(helicopterName)));
+
   const externalControlExists = Array.from(document.querySelectorAll('.row .direct-chat-name'))
-      .some(name => name.textContent.includes(externalControlName));
+    .some(name => name.textContent.includes(externalControlName));
 
   if (helicopterExists && !externalControlExists && buttonParentDiv) {
     const alertDiv = document.createElement('div');
@@ -2568,7 +2551,7 @@ window.addEventListener('load', function() {
     alertDiv.style.fontSize = '16px';
     alertDiv.textContent = 'Notify RLTC / NSWA Aeromedical Control (and radio log)';
     alertDiv.className = 'pulsate';
-    
+
     buttonParentDiv.parentNode.insertBefore(alertDiv, buttonParentDiv);
 
     if (!document.getElementById('pulsateStyle')) {
@@ -2598,11 +2581,11 @@ function createWeatherButton() {
   weatherButton.innerHTML = `
     <i class="fa-solid fa-cloud-sun-rain"></i> Weather
   `;
-  weatherButton.addEventListener("click", function(event) {
+  weatherButton.addEventListener("click", function (event) {
     event.preventDefault(); // Prevent the default action
     openWeatherBoard();
   });
-  
+
   const buttonContainer = document.querySelector(".row.mb-4");
   if (buttonContainer) {
     buttonContainer.appendChild(weatherButton);
@@ -2612,9 +2595,9 @@ function createWeatherButton() {
 function openWeatherBoard() {
   const latitude = document.getElementById("incidentLatitude").value;
   const longitude = document.getElementById("incidentLongitude").value;
-  
+
   const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${latitude},${longitude}&days=1`;
-  
+
   fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
@@ -2664,9 +2647,9 @@ function showWeatherModal(weatherData) {
   function updateWeatherDetails(selectedIndex) {
     const filteredHours = weatherData.forecast.forecastday[0].hour.filter(hourData => new Date(hourData.time).getHours() >= currentHour);
     const selectedHourData = filteredHours[selectedIndex];
-    
+
     const willItRainText = selectedHourData.will_it_rain === 1 ? "Yes" : "No";
-        
+
     document.getElementById('weatherDetails').innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center; background-color: #f0f0f0; padding: 20px; border-radius: 10px;">
         <div>
@@ -2685,24 +2668,24 @@ function showWeatherModal(weatherData) {
         </div>
       </div>
     `;
-}
-  
+  }
+
   updateWeatherDetails(document.getElementById('forecastHourDropdown').selectedIndex);
 
-  document.getElementById('forecastHourDropdown').addEventListener('change', function() {
+  document.getElementById('forecastHourDropdown').addEventListener('change', function () {
     updateWeatherDetails(this.value);
   });
 
-  const closeModal = function() {
+  const closeModal = function () {
     const overlay = document.getElementById('modalOverlay');
     overlay.style.opacity = '0';
-    setTimeout(function() {
+    setTimeout(function () {
       document.body.removeChild(overlay);
     }, 300);
   };
 
   document.getElementById('closeWeather').addEventListener('click', closeModal);
-  document.addEventListener('keydown', function(event) {
+  document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
       closeModal();
     }
@@ -2711,7 +2694,7 @@ function showWeatherModal(weatherData) {
 
 createWeatherButton();
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
   // Move the "Responding Services" card above the "Response SMS Notification" card
   const respondingServicesCard = document.querySelector('.responding-services');
   const smsNotificationCard = document.getElementById('response-sms-notification');
@@ -2720,7 +2703,7 @@ window.addEventListener('load', function() {
   }
 
   // Adjust the width of all Select2 containers to be 100% for responsive design
-  document.querySelectorAll('.select2-container').forEach(function(selectContainer) {
+  document.querySelectorAll('.select2-container').forEach(function (selectContainer) {
     selectContainer.style.width = '100%'; // Ensure Select2 dropdowns fit their containers exactly
   });
 
@@ -2731,13 +2714,13 @@ window.addEventListener('load', function() {
   }
 
   // Correct positioning adjustments for buttons
-  document.querySelectorAll('.add_unit_quick, #sendSMSResponse').forEach(function(button) {
+  document.querySelectorAll('.add_unit_quick, #sendSMSResponse').forEach(function (button) {
     button.classList.add('float-right'); // Adjust button positioning to the right
     button.style.marginLeft = '20px'; // Correctly adjust the button positioning with a margin to the left
   });
 
   // Consistent styling for textareas and select elements
-  document.querySelectorAll('textarea, select').forEach(function(element) {
+  document.querySelectorAll('textarea, select').forEach(function (element) {
     element.classList.add('form-control'); // Apply Bootstrap's form-control class for styling
   });
 
@@ -2747,13 +2730,144 @@ window.addEventListener('load', function() {
     tableResponsive.style.overflowX = 'auto';
     tableResponsive.style.maxHeight = 'none';
 
-    new ResizeObserver(function(entries) {
+    new ResizeObserver(function (entries) {
       for (let entry of entries) {
         const containerWidth = entry.contentRect.width;
-        document.querySelectorAll('#servicesTable').forEach(function(table) {
+        document.querySelectorAll('#servicesTable').forEach(function (table) {
           table.style.fontSize = containerWidth < 768 ? '0.8em' : '1em';
         });
       }
     }).observe(tableResponsive);
   }
 });
+
+window.addEventListener("load", function() {
+  function countStatuses() {
+      const statuses = { "Notified": 0, "Enroute": 0, "Arrived": 0, "Returning": 0, "Stood Down": 0 };
+      document.querySelectorAll("#servicesTable tbody tr").forEach(row => {
+          const status = row.cells[2].textContent.trim();
+          if (status in statuses) {
+              statuses[status]++;
+          }
+      });
+      return statuses;
+  }
+
+  function createVisualCounter(statusCounts) {
+      const visualContainer = document.createElement("div");
+      visualContainer.style.display = "inline-flex";
+      visualContainer.style.flexDirection = "row";
+      visualContainer.style.alignItems = "center";
+      visualContainer.style.marginLeft = "auto";
+      visualContainer.style.marginBottom = "0px";
+      visualContainer.style.marginRight = "9px"; // Add a 5px buffer to the right
+
+      Object.entries(statusCounts).forEach(([status, count]) => {
+          const card = document.createElement("div");
+          card.style.marginLeft = "10px";
+          card.style.padding = "6px 12px";
+          card.style.backgroundColor = "#f0f0f0";
+          card.style.borderRadius = "5px";
+          card.style.display = "flex";
+          card.style.flexDirection = "column";
+          card.style.alignItems = "center";
+          card.style.boxShadow = "0 1px 2px rgba(0, 0, 0, 0.1)";
+
+          const statusElement = document.createElement("div");
+          statusElement.textContent = status;
+          statusElement.style.fontSize = "14px";
+          statusElement.style.marginBottom = "2px";
+          statusElement.style.fontWeight = "600";
+
+          const countElement = document.createElement("div");
+          countElement.textContent = count;
+          countElement.style.fontSize = "16px";
+          countElement.style.fontWeight = "bold";
+          countElement.style.color = "#007bff";
+
+          card.appendChild(statusElement);
+          card.appendChild(countElement);
+          visualContainer.appendChild(card);
+      });
+
+      const targetContainer = document.querySelector(".row.mb-4");
+      if (targetContainer) {
+          targetContainer.style.display = "flex";
+          targetContainer.style.alignItems = "center";
+          targetContainer.style.flexWrap = "wrap";
+          targetContainer.style.marginBottom = "-10px";
+          targetContainer.appendChild(visualContainer);
+      }
+  }
+
+  const statusCounts = countStatuses();
+  createVisualCounter(statusCounts);
+});
+
+window.addEventListener('load', function () {
+  const respondingServicesHeader = document.querySelector('.responding-services .card-header');
+  const respondingServicesBody = document.querySelector('.responding-services .card-body');
+  const toggleArrow = document.createElement('div');
+
+  // Style for the toggle arrow
+  toggleArrow.style.cursor = 'pointer';
+  toggleArrow.style.fontSize = '24px';
+  toggleArrow.style.float = 'right'; // Position to the right of the header text
+  toggleArrow.innerHTML = '▼'; // Down arrow symbol
+
+  // Initially, the card body is shown, so the arrow points down
+  let isCardBodyVisible = true;
+
+  toggleArrow.addEventListener('click', () => {
+      if (isCardBodyVisible) {
+          respondingServicesBody.style.display = 'none';
+          toggleArrow.innerHTML = '▲'; // Change to up arrow symbol
+      } else {
+          respondingServicesBody.style.display = '';
+          toggleArrow.innerHTML = '▼'; // Change to down arrow symbol
+      }
+      isCardBodyVisible = !isCardBodyVisible;
+  });
+
+  respondingServicesHeader.appendChild(toggleArrow);
+
+  const servicesTable = document.getElementById('servicesTable');
+  const tableRows = servicesTable.querySelectorAll('tbody tr');
+
+  // Collapsing the element if there are more than 10 rows in the table
+  if (tableRows.length > 10) {
+      respondingServicesBody.style.display = 'none';
+      toggleArrow.innerHTML = '▲';
+      isCardBodyVisible = false;
+  }
+});
+
+// This script waits for the DOM to be fully loaded before attempting to modify it.
+window.addEventListener('load', function() {
+  // Looks for the element with class 'card-title' that is a descendant of the div with ID 'response-sms-notification'.
+  var cardTitleElement = document.querySelector('#response-sms-notification .card-title');
+  if (cardTitleElement) {
+      // If the element is found, change its text content.
+      cardTitleElement.textContent = 'Response SMS Notification (Callout SMS)';
+  }
+});
+
+// Content.js for Chrome Extension to change the title of the card
+
+// Function to change the title of the card
+function changeCardTitle(newTitle) {
+  // Select the card title element
+  var cardTitleElement = document.querySelector('.card.card-primary.card-outline.generate-message .card-header .card-title');
+  
+  // Check if the card title element exists
+  if (cardTitleElement) {
+      // Change the inner text of the card title element to the new title
+      cardTitleElement.innerText = newTitle;
+  } else {
+      // Log an error if the card title element is not found
+      console.error('Card title element not found.');
+  }
+}
+
+// Call the function to change the card title with the desired new title
+changeCardTitle('Generate Message (Notification SMSs and SitReps)');
