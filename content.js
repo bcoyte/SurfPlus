@@ -2753,55 +2753,76 @@ window.addEventListener("load", function() {
       return statuses;
   }
 
-  function createVisualCounter(statusCounts) {
-      const visualContainer = document.createElement("div");
-      visualContainer.style.display = "inline-flex";
-      visualContainer.style.flexDirection = "row";
-      visualContainer.style.alignItems = "center";
-      visualContainer.style.marginLeft = "auto";
-      visualContainer.style.marginBottom = "0px";
-      visualContainer.style.marginRight = "9px"; // Add a 5px buffer to the right
+  function countResponding() {
+      let respondingCount = 0;
+      document.querySelectorAll("#sms-members-content tr").forEach(row => {
+          const response = row.cells[2].textContent.trim();
+          if (response && response !== "Unavailable") {
+              respondingCount++;
+          }
+      });
+      return respondingCount;
+  }
 
-      Object.entries(statusCounts).forEach(([status, count]) => {
-          const card = document.createElement("div");
-          card.style.marginLeft = "10px";
-          card.style.padding = "6px 12px";
-          card.style.backgroundColor = "#f0f0f0";
-          card.style.borderRadius = "5px";
-          card.style.display = "flex";
-          card.style.flexDirection = "column";
-          card.style.alignItems = "center";
-          card.style.boxShadow = "0 1px 2px rgba(0, 0, 0, 0.1)";
+  function createStatusCard(title, count) {
+      const card = document.createElement("div");
+      card.style.margin = "0 2px";
+      card.style.padding = "6px 12px";
+      card.style.backgroundColor = "#f0f0f0";
+      card.style.borderRadius = "5px";
+      card.style.display = "flex";
+      card.style.flexDirection = "column";
+      card.style.alignItems = "center";
+      card.style.boxShadow = "0 1px 2px rgba(0, 0, 0, 0.1)";
 
-          const statusElement = document.createElement("div");
-          statusElement.textContent = status;
-          statusElement.style.fontSize = "14px";
-          statusElement.style.marginBottom = "2px";
-          statusElement.style.fontWeight = "600";
+      const statusElement = document.createElement("div");
+      statusElement.textContent = title;
+      statusElement.style.fontSize = "14px";
+      statusElement.style.marginBottom = "2px";
+      statusElement.style.fontWeight = "600";
 
-          const countElement = document.createElement("div");
-          countElement.textContent = count;
-          countElement.style.fontSize = "16px";
-          countElement.style.fontWeight = "bold";
-          countElement.style.color = "#007bff";
+      const countElement = document.createElement("div");
+      countElement.textContent = count;
+      countElement.style.fontSize = "16px";
+      countElement.style.fontWeight = "bold";
+      countElement.style.color = "#007bff";
 
-          card.appendChild(statusElement);
-          card.appendChild(countElement);
-          visualContainer.appendChild(card);
+      card.appendChild(statusElement);
+      card.appendChild(countElement);
+
+      return card;
+  }
+
+  function appendStatusesToContainer(container, statuses, respondingCount) {
+      Object.entries(statuses).forEach(([status, count]) => {
+          const statusCard = createStatusCard(status, count);
+          container.appendChild(statusCard);
       });
 
-      const targetContainer = document.querySelector(".row.mb-4");
-      if (targetContainer) {
-          targetContainer.style.display = "flex";
-          targetContainer.style.alignItems = "center";
-          targetContainer.style.flexWrap = "wrap";
-          targetContainer.style.marginBottom = "-10px";
-          targetContainer.appendChild(visualContainer);
-      }
+      const verticalLine = document.createElement("div");
+      verticalLine.style.borderLeft = "2px solid #ccc";
+      verticalLine.style.height = "40px";
+      verticalLine.style.margin = "0 8px";
+      container.appendChild(verticalLine);
+
+      const respondingCard = createStatusCard("Responding", respondingCount);
+      container.appendChild(respondingCard);
   }
 
   const statusCounts = countStatuses();
-  createVisualCounter(statusCounts);
+  const respondingCount = countResponding();
+  const container = document.createElement("div");
+  container.style.display = "flex";
+  container.style.alignItems = "center";
+  container.style.justifyContent = "flex-end";
+  container.style.flexGrow = "1";
+  container.style.position = "relative";
+  container.style.top = "-7px"; // Move up by 6px
+
+  appendStatusesToContainer(container, statusCounts, respondingCount);
+
+  const targetDiv = document.querySelector(".row.mb-4");
+  targetDiv.appendChild(container);
 });
 
 window.addEventListener('load', function () {
