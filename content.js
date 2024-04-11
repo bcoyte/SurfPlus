@@ -2376,7 +2376,6 @@ insertOrUpdateTimeOpenCounter();
 
 
 // content.js
-// content.js
 window.addEventListener("load", function () {
   const resultContainerId = "weatherapi-results";
   if (document.getElementById(resultContainerId)) {
@@ -2432,6 +2431,14 @@ function convertCompassPoint(abbreviatedDirection) {
   return compassPoints[abbreviatedDirection] || abbreviatedDirection;
 }
 
+function adjustToUTC10(date) {
+  // Get the UTC time in milliseconds
+  const utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
+  // Adjust to UTC+10
+  const utc10Time = new Date(utcTime + (3600000 * 10));
+  return utc10Time;
+}
+
 function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
   const container = document.querySelector(".container-fluid");
   if (container) {
@@ -2443,14 +2450,16 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
       resultsDiv.style.justifyContent = "space-between";
       resultsDiv.style.gap = "15px";
 
-      const currentTime = new Date(marineData.location.localtime.replace(" ", "T"));
+      // Adjust currentTime to UTC+10
+      const currentTime = adjustToUTC10(new Date(marineData.location.localtime.replace(" ", "T")));
       let nextTide = null;
       let currentTide = null;
 
       const tides = marineData.forecast.forecastday[0].day.tides[0].tide;
 
       for (let tide of tides) {
-          const tideTime = new Date(tide.tide_time.replace(" ", "T"));
+          // Adjust tideTime to UTC+10
+          const tideTime = adjustToUTC10(new Date(tide.tide_time.replace(" ", "T")));
           if (tideTime > currentTime && !nextTide) {
               nextTide = tide;
           }
@@ -2481,6 +2490,16 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
       container.insertBefore(resultsDiv, container.firstChild);
   }
 }
+
+
+
+
+
+
+
+
+
+
 
 // EXTERNAL - NSWA Aeromedical Control (Aeromedical)
 
@@ -2654,45 +2673,44 @@ window.addEventListener('load', function() {
   const respondingServicesCard = document.querySelector('.responding-services');
   const smsNotificationCard = document.getElementById('response-sms-notification');
   if (respondingServicesCard && smsNotificationCard) {
-      smsNotificationCard.parentNode.insertBefore(respondingServicesCard, smsNotificationCard);
+    smsNotificationCard.parentNode.insertBefore(respondingServicesCard, smsNotificationCard);
   }
 
-  // Adjust the width of Select2 containers to be 100% for responsive design
+  // Adjust the width of all Select2 containers to be 100% for responsive design
   document.querySelectorAll('.select2-container').forEach(function(selectContainer) {
-      selectContainer.style.width = '135%'; // Make Select2 dropdowns responsive
+    selectContainer.style.width = '100%'; // Ensure Select2 dropdowns fit their containers exactly
   });
 
-  // Positioning adjustments for buttons, setting them to float right with margin
+  // Specifically fix the "Select Mailing Group:" element to not be oversized
+  const mailingGroupSelect2 = document.querySelector('.mailinggroup_id').nextElementSibling; // Target the Select2 container generated for the "mailinggroup_id" select
+  if (mailingGroupSelect2) {
+    mailingGroupSelect2.style.width = '100%'; // Correct the width to match its container
+  }
+
+  // Correct positioning adjustments for buttons
   document.querySelectorAll('.add_unit_quick, #sendSMSResponse').forEach(function(button) {
-      button.classList.add('float-right'); // Adjust button positioning
-      button.style.marginLeft = '40px'; // Move the Add Unit button 20px to the right
+    button.classList.add('float-right'); // Adjust button positioning to the right
+    button.style.marginLeft = '20px'; // Correctly adjust the button positioning with a margin to the left
   });
 
-  // Ensure consistent styling for textareas and select elements using Bootstrap's form-control class
+  // Consistent styling for textareas and select elements
   document.querySelectorAll('textarea, select').forEach(function(element) {
-      element.classList.add('form-control'); // Apply consistent styling
+    element.classList.add('form-control'); // Apply Bootstrap's form-control class for styling
   });
 
-  // Adjust table to zoom in/out with its container
+  // Dynamic font size adjustment for the table based on container size
   const tableResponsive = document.querySelector('.table-responsive');
   if (tableResponsive) {
-      tableResponsive.style.overflowX = 'auto';
-      tableResponsive.style.maxHeight = 'none';
+    tableResponsive.style.overflowX = 'auto';
+    tableResponsive.style.maxHeight = 'none';
 
-      // Listen for changes in the container's size to adjust table font size dynamically
-      new ResizeObserver(function(entries) {
-          for (let entry of entries) {
-              const containerWidth = entry.contentRect.width;
-              if (containerWidth < 768) {
-                  document.querySelectorAll('#servicesTable').forEach(function(table) {
-                      table.style.fontSize = '0.8em'; // Smaller font size for smaller containers
-                  });
-              } else {
-                  document.querySelectorAll('#servicesTable').forEach(function(table) {
-                      table.style.fontSize = '1em'; // Default font size for larger containers
-                  });
-              }
-          }
-      }).observe(tableResponsive);
+    new ResizeObserver(function(entries) {
+      for (let entry of entries) {
+        const containerWidth = entry.contentRect.width;
+        document.querySelectorAll('#servicesTable').forEach(function(table) {
+          table.style.fontSize = containerWidth < 768 ? '0.8em' : '1em';
+        });
+      }
+    }).observe(tableResponsive);
   }
 });
