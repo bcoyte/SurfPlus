@@ -2359,6 +2359,22 @@ function insertOrUpdateTimeOpenCounter() {
 // Call the function to insert or update the time open counter
 insertOrUpdateTimeOpenCounter();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // content.js
 window.addEventListener("load", function () {
   const resultContainerId = "weatherapi-results";
@@ -2462,18 +2478,73 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
       const sunsetTime = forecastData.forecast.forecastday[0].astro.sunset;
 
       resultsDiv.innerHTML = `
-          <div class="weather-detail"><strong>Current Temperature:</strong> ${weatherData.current.temp_c}°C</div>
-          <div class="weather-detail"><strong>Current Wind:</strong> ${weatherData.current.wind_kph} kph</div>
-          <div class="weather-detail"><strong>Swell Direction:</strong> ${swellDirectionFull}</div>
-          <div class="weather-detail"><strong>Current Tide:</strong> ${currentTideInfo}</div>
-          <div class="weather-detail"><strong>Next Tide:</strong> ${nextTideInfo}</div>
-          <div class="weather-detail"><strong>Sunrise:</strong> ${sunriseTime}</div>
-          <div class="weather-detail"><strong>Sunset:</strong> ${sunsetTime}</div>
+          <div class="weather-detail"><strong>Current Temperature:</strong> <a href="#" style="color: blue;">${weatherData.current.temp_c}°C</a></div>
+          <div class="weather-detail"><strong>Current Wind:</strong> <a href="#" style="color: blue;">${weatherData.current.wind_kph} kph</a></div>
+          <div class="weather-detail"><strong>Swell Direction:</strong> <a href="#" style="color: blue;">${swellDirectionFull}</a></div>
+          <div class="weather-detail"><strong>Current Tide:</strong> <a href="#" style="color: blue;">${currentTideInfo}</a></div>
+          <div class="weather-detail"><strong>Next Tide:</strong> <a href="#" style="color: blue;">${nextTideInfo}</a></div>
+          <div class="weather-detail"><strong>Sunrise:</strong> <a href="#" style="color: blue;">${sunriseTime}</a></div>
+          <div class="weather-detail"><strong>Sunset:</strong> <a href="#" style="color: blue;">${sunsetTime}</a></div>
       `;
 
       container.insertBefore(resultsDiv, container.firstChild);
   }
 }
+
+
+
+
+
+
+
+
+
+// Add event listener to the document for a click event
+document.addEventListener('click', function (event) {
+  // Check if the clicked element or its parent has the class 'weather-details'
+  let targetElement = event.target;
+  while (targetElement != null) {
+      if (targetElement.matches('.weather-details') || targetElement.matches('.weather-detail')) {
+          // Fetch latitude and longitude values
+          const latitude = document.querySelector("#incidentLatitude").value;
+          const longitude = document.querySelector("#incidentLongitude").value;
+
+          // Find the textarea to insert the weather data into
+          const messageTextArea = document.querySelector("textarea#message");
+          if (messageTextArea) {
+              // Format the introduction text with the fetched latitude and longitude
+              let weatherDetailsText = `Current Weather at ${latitude}, ${longitude} - `;
+
+              // Collect each weather detail and join them with a comma and a space
+              const details = Array.from(document.querySelectorAll('.weather-detail')).map(detail => detail.innerText);
+              weatherDetailsText += details.join(', ');
+
+              // Insert the formatted weather data into the textarea
+              messageTextArea.value = weatherDetailsText;
+
+              // Set 'Surfcom' as the value for both 'To' and 'From' select fields and dispatch change events
+              ['msg_to', 'msg_from'].forEach(selectId => {
+                  const selectElement = document.querySelector(`select#${selectId}`);
+                  if (selectElement) {
+                      selectElement.value = "Surfcom";
+                      selectElement.dispatchEvent(new Event('change', { 'bubbles': true }));
+                  }
+              });
+          }
+          break; // Stop the loop once the relevant action is performed
+      }
+      targetElement = targetElement.parentElement; // Move up to the parent element
+  }
+}, false);
+
+
+
+
+
+
+
+
+
 
 window.addEventListener('load', function() {
   const helicopterNames = ['Lifesaver 21', 'Lifesaver 22', 'Lifesaver 23', 'Lifesaver 45', 'Lifesaver 46']; // List of possible helicopter names
