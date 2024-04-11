@@ -2359,22 +2359,6 @@ function insertOrUpdateTimeOpenCounter() {
 // Call the function to insert or update the time open counter
 insertOrUpdateTimeOpenCounter();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // content.js
 window.addEventListener("load", function () {
   const resultContainerId = "weatherapi-results";
@@ -2490,18 +2474,6 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
       container.insertBefore(resultsDiv, container.firstChild);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-// EXTERNAL - NSWA Aeromedical Control (Aeromedical)
 
 window.addEventListener('load', function() {
   const helicopterNames = ['Lifesaver 21', 'Lifesaver 22', 'Lifesaver 23', 'Lifesaver 45', 'Lifesaver 46']; // List of possible helicopter names
