@@ -2741,12 +2741,19 @@ window.addEventListener('load', function () {
   }
 });
 
+
+
+
+
+
 window.addEventListener("load", function () {
   function countStatuses() {
     const statuses = { "Notified": 0, "Enroute": 0, "Arrived": 0, "Returning": 0, "Stood Down": 0 };
-    document.querySelectorAll("#servicesTable tbody tr").forEach(row => {
-      const status = row.cells[2].textContent.trim();
-      if (status in statuses) {
+    const rows = document.querySelectorAll("#servicesTable tbody tr");
+    if (!rows.length) return statuses; // If no rows found, return default counts
+    rows.forEach(row => {
+      const status = row.cells[2]?.textContent.trim();
+      if (status && status in statuses) {
         statuses[status]++;
       }
     });
@@ -2755,8 +2762,10 @@ window.addEventListener("load", function () {
 
   function countResponding() {
     let respondingCount = 0;
-    document.querySelectorAll("#sms-members-content tr").forEach(row => {
-      const response = row.cells[2].textContent.trim();
+    const rows = document.querySelectorAll("#sms-members-content tr");
+    if (!rows.length) return respondingCount; // If no rows found, return 0
+    rows.forEach(row => {
+      const response = row.cells[2]?.textContent.trim();
       if (response && response !== "Unavailable") {
         respondingCount++;
       }
@@ -2823,8 +2832,19 @@ window.addEventListener("load", function () {
   appendStatusesToContainer(container, statusCounts, respondingCount);
 
   const targetDiv = document.querySelector(".row.mb-4");
-  targetDiv.appendChild(container);
+  if (targetDiv) {
+    targetDiv.appendChild(container);
+  } else {
+    document.body.appendChild(container); // If targetDiv not found, append to body
+  }
 });
+
+
+
+
+
+
+
 
 
 window.addEventListener('load', function () {
