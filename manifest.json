@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
   "name": "SurfPlus",
-  "description": "Allows additional functionality within SurfCom Management System. View 'READ ME.txt' file for further info.",
+  "description": "Allows additional functionality within SurfCom Management System.",
   "version": "1.0",
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "Install.html",
     "default_icon": {
       "16": "images/icon16.png",
       "48": "images/icon48.png",
