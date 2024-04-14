@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 async function fetchWeatherData(lat, lon) {
   const weatherApiUrl = `https://api.weatherapi.com/v1/current.json?key=a72468e1e3234dc3b0543634242403&q=${lat},${lon}&aqi=no`;
-  const marineApiUrl = `https://api.weatherapi.com/v1/marine.json?key=a72468e1e3234dc3b0543634242403&q=${lat},${lon}`;
+  const marineApiUrl = `https://api.weatherapi.com/v1/marine.json?key=a72468e1e3234dc3b0543634242403&q=${lat},${lon}&days=2`;
   const todayDate = new Date().toISOString().split("T")[0];
   const forecastApiUrl = `https://api.weatherapi.com/v1/forecast.json?key=a72468e1e3234dc3b0543634242403&q=${lat},${lon}&dt=${todayDate}&days=1&aqi=no&alerts=no`;
 

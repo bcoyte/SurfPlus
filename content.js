@@ -2367,35 +2367,36 @@ insertOrUpdateTimeOpenCounter();
 
 
 // content.js
-const resultContainerId = "weatherapi-results";
-if (document.getElementById(resultContainerId)) {
-  return;
-}
-
-const latitudeInput = document.querySelector("input#incidentLatitude");
-const longitudeInput = document.querySelector("input#incidentLongitude");
-
-if (latitudeInput && longitudeInput) {
-  const lat = latitudeInput.value;
-  const lon = longitudeInput.value;
-
-  if (lat && lon) {
-    chrome.runtime.sendMessage(
-      { action: "fetchWeatherData", lat, lon },
-      (response) => {
-        if (response.data) {
-          displayWeatherAndMarineData(
-            response.data.weatherData,
-            response.data.marineData,
-            response.data.forecastData
-          );
-        } else if (response.error) {
-          console.error("Error fetching weather data:", response.error);
-        }
-      }
-    );
+window.addEventListener("load", function () {
+  const resultContainerId = "weatherapi-results";
+  if (document.getElementById(resultContainerId)) {
+    return;
   }
-}
+
+  const latitudeInput = document.querySelector("input#incidentLatitude");
+  const longitudeInput = document.querySelector("input#incidentLongitude");
+
+  if (latitudeInput && longitudeInput) {
+    const lat = latitudeInput.value;
+    const lon = longitudeInput.value;
+
+    if (lat && lon) {
+      chrome.runtime.sendMessage(
+        { action: "fetchWeatherData", lat, lon },
+        (response) => {
+          if (response.data) {
+            displayWeatherAndMarineData(
+              response.data.weatherData,
+              response.data.marineData,
+              response.data.forecastData
+            );
+          } else if (response.error) {
+            console.error("Error fetching weather data:", response.error);
+          }
+        }
+      );
+    }
+  }
 });
 
 function convertCompassPoint(abbreviatedDirection) {
@@ -2421,8 +2422,11 @@ function convertCompassPoint(abbreviatedDirection) {
   return compassPoints[abbreviatedDirection] || abbreviatedDirection;
 }
 
-function getCurrentTime(date) {
-  return date;
+function adjustToUTC10(date) {
+  // Convert local time to UTC, then add 10 hours to adjust for UTC+10
+  const utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
+  const utc10Time = new Date(utcTime + (3600000 * 10));
+  return utc10Time;
 }
 
 function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
@@ -2436,21 +2440,33 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
     resultsDiv.style.justifyContent = "space-between";
     resultsDiv.style.gap = "15px";
 
-    // Use system's local time
-    const currentTime = getCurrentTime(new Date(marineData.location.localtime.replace(" ", "T")));
+    // Convert marine API local time to JavaScript Date object
+    const currentTime = adjustToUTC10(new Date(marineData.location.localtime.replace(" ", "T")));
     let nextTide = null;
     let currentTide = null;
 
-    const tides = marineData.forecast.forecastday[0].day.tides[0].tide;
+    const forecastDays = marineData.forecast.forecastday;
+    let nextDayFirstTide = null;
 
-    for (let tide of tides) {
-      const tideTime = getCurrentTime(new Date(tide.tide_time.replace(" ", "T")));
-      if (tideTime > currentTime && !nextTide) {
-        nextTide = tide;
+    forecastDays.forEach(day => {
+      day.day.tides[0].tide.forEach(tide => {
+        const tideTime = adjustToUTC10(new Date(tide.tide_time.replace(" ", "T")));
+        if (tideTime > currentTime && !nextTide) {
+          nextTide = tide;
+        }
+        if (tideTime < currentTime && (!currentTide || tideTime > new Date(currentTide.tide_time.replace(" ", "T")))) {
+          currentTide = tide;
+        }
+      });
+
+      // If next tide not found and next day's first tide is not set, set it
+      if (!nextTide && !nextDayFirstTide && day.day.tides[0].tide.length > 0) {
+        nextDayFirstTide = day.day.tides[0].tide[0];
       }
-      if (tideTime < currentTime) {
-        currentTide = tide;
-      }
+    });
+
+    if (!nextTide && nextDayFirstTide) {
+      nextTide = nextDayFirstTide;
     }
 
     const nextTideInfo = nextTide ? `${nextTide.tide_type} at ${nextTide.tide_time.split(" ")[1]} (${nextTide.tide_height_mt}m)` : "Not available";
@@ -2463,18 +2479,39 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
     const sunsetTime = forecastData.forecast.forecastday[0].astro.sunset;
 
     resultsDiv.innerHTML = `
-      <div class="weather-detail"><strong>Current Temperature:</strong> <a href="#" style="color: blue;">${weatherData.current.temp_c}°C</a></div>
-      <div class="weather-detail"><strong>Current Wind:</strong> <a href="#" style="color: blue;">${weatherData.current.wind_kph} kph</a></div>
-      <div class="weather-detail"><strong>Swell Direction:</strong> <a href="#" style="color: blue;">${swellDirectionFull}</a></div>
-      <div class="weather-detail"><strong>Current Tide:</strong> <a href="#" style="color: blue;">${currentTideInfo}</a></div>
-      <div class="weather-detail"><strong>Next Tide:</strong> <a href="#" style="color: blue;">${nextTideInfo}</a></div>
-      <div class="weather-detail"><strong>Sunrise:</strong> <a href="#" style="color: blue;">${sunriseTime}</a></div>
-      <div class="weather-detail"><strong>Sunset:</strong> <a href="#" style="color: blue;">${sunsetTime}</a></div>
-    `;
+          <div class="weather-detail"><strong>Current Temperature:</strong> ${weatherData.current.temp_c}°C</div>
+          <div class="weather-detail"><strong>Current Wind:</strong> ${weatherData.current.wind_kph} kph</div>
+          <div class="weather-detail"><strong>Swell Direction:</strong> ${swellDirectionFull}</div>
+          <div class="weather-detail"><strong>Current Tide:</strong> ${currentTideInfo}</div>
+          <div class="weather-detail"><strong>Next Tide:</strong> ${nextTideInfo}</div>
+          <div class="weather-detail"><strong>Sunrise:</strong> ${sunriseTime}</div>
+          <div class="weather-detail"><strong>Sunset:</strong> ${sunsetTime}</div>
+      `;
 
     container.insertBefore(resultsDiv, container.firstChild);
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Add event listener to the document for a click event
 document.addEventListener('click', function (event) {
