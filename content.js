@@ -2094,7 +2094,10 @@ function addRadioButtonsAboveTextarea() {
         <input type="radio" name="options" id="option5"> TEXT
       </label>
       <label class="btn btn-secondary">
-        <input type="radio" name="options" id="option6"> OTHER
+        <input type="radio" name="options" id="option6"> ICEMS
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="options" id="option7"> OTHER
       </label>
     </div>
   </div>
@@ -2746,98 +2749,87 @@ window.addEventListener('load', function () {
 
 
 
-window.addEventListener("load", function () {
-  function countStatuses() {
-    const statuses = { "Notified": 0, "Enroute": 0, "Arrived": 0, "Returning": 0, "Stood Down": 0 };
-    const rows = document.querySelectorAll("#servicesTable tbody tr");
-    if (!rows.length) return statuses; // If no rows found, return default counts
-    rows.forEach(row => {
-      const status = row.cells[2]?.textContent.trim();
-      if (status && status in statuses) {
-        statuses[status]++;
-      }
+if (window.location.href.startsWith("https://surfcom.sls.com.au/incidents/edit/")) {
+    window.addEventListener("load", function () {
+        // Function to count statuses from table rows
+        function countStatuses() {
+            const statuses = { "Notified": 0, "Enroute": 0, "Arrived": 0, "Returning": 0, "Stood Down": 0 };
+            const rows = document.querySelectorAll("#servicesTable tbody tr");
+            if (!rows.length) return statuses; // If no rows found, return default counts
+            rows.forEach(row => {
+                const status = row.cells[2]?.textContent.trim();
+                if (status && status in statuses) {
+                    statuses[status]++;
+                }
+            });
+            return statuses;
+        }
+
+        // Function to count responding members
+        function countResponding() {
+            let respondingCount = 0;
+            const rows = document.querySelectorAll("#sms-members-content tr");
+            if (!rows.length) return respondingCount; // If no rows found, return 0
+            rows.forEach(row => {
+                const response = row.cells[2]?.textContent.trim();
+                if (response && response !== "Unavailable") {
+                    respondingCount++;
+                }
+            });
+            return respondingCount;
+        }
+
+        // Function to create a card element for displaying a status
+        function createStatusCard(title, count) {
+            const card = document.createElement("div");
+            card.style.cssText = "margin: 0 3px; padding: 6px 12px; background-color: #f0f0f0; border-radius: 5px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);";
+            
+            const statusElement = document.createElement("div");
+            statusElement.textContent = title;
+            statusElement.style.cssText = "font-size: 14px; margin-bottom: 2px; font-weight: 600;";
+            
+            const countElement = document.createElement("div");
+            countElement.textContent = count;
+            countElement.style.cssText = "font-size: 16px; font-weight: bold; color: #007bff;";
+            
+            card.appendChild(statusElement);
+            card.appendChild(countElement);
+
+            return card;
+        }
+
+        // Function to append status cards to a container
+        function appendStatusesToContainer(container, statuses, respondingCount) {
+            Object.entries(statuses).forEach(([status, count]) => {
+                const statusCard = createStatusCard(status, count);
+                container.appendChild(statusCard);
+            });
+
+            const verticalLine = document.createElement("div");
+            verticalLine.style.cssText = "border-left: 2px solid #ccc; height: 40px; margin: 0 8px;";
+            container.appendChild(verticalLine);
+
+            const respondingCard = createStatusCard("Responding", respondingCount);
+            container.appendChild(respondingCard);
+        }
+
+        // Main execution block to create status container and append it to the DOM
+        const statusCounts = countStatuses();
+        const respondingCount = countResponding();
+        const container = document.createElement("div");
+        container.style.cssText = "display: flex; align-items: center; justify-content: flex-end; flex-grow: 1; position: relative; top: -7px;";
+
+        appendStatusesToContainer(container, statusCounts, respondingCount);
+
+        const targetDiv = document.querySelector(".row.mb-4");
+        if (targetDiv) {
+            targetDiv.appendChild(container);
+        } else {
+            document.body.appendChild(container); // If targetDiv not found, append to body
+        }
     });
-    return statuses;
-  }
+}
 
-  function countResponding() {
-    let respondingCount = 0;
-    const rows = document.querySelectorAll("#sms-members-content tr");
-    if (!rows.length) return respondingCount; // If no rows found, return 0
-    rows.forEach(row => {
-      const response = row.cells[2]?.textContent.trim();
-      if (response && response !== "Unavailable") {
-        respondingCount++;
-      }
-    });
-    return respondingCount;
-  }
-
-  function createStatusCard(title, count) {
-    const card = document.createElement("div");
-    card.style.margin = "0 3px";
-    card.style.padding = "6px 12px";
-    card.style.backgroundColor = "#f0f0f0";
-    card.style.borderRadius = "5px";
-    card.style.display = "flex";
-    card.style.flexDirection = "column";
-    card.style.alignItems = "center";
-    card.style.boxShadow = "0 1px 2px rgba(0, 0, 0, 0.1)";
-
-    const statusElement = document.createElement("div");
-    statusElement.textContent = title;
-    statusElement.style.fontSize = "14px";
-    statusElement.style.marginBottom = "2px";
-    statusElement.style.fontWeight = "600";
-
-    const countElement = document.createElement("div");
-    countElement.textContent = count;
-    countElement.style.fontSize = "16px";
-    countElement.style.fontWeight = "bold";
-    countElement.style.color = "#007bff";
-
-    card.appendChild(statusElement);
-    card.appendChild(countElement);
-
-    return card;
-  }
-
-  function appendStatusesToContainer(container, statuses, respondingCount) {
-    Object.entries(statuses).forEach(([status, count]) => {
-      const statusCard = createStatusCard(status, count);
-      container.appendChild(statusCard);
-    });
-
-    const verticalLine = document.createElement("div");
-    verticalLine.style.borderLeft = "2px solid #ccc";
-    verticalLine.style.height = "40px";
-    verticalLine.style.margin = "0 8px";
-    container.appendChild(verticalLine);
-
-    const respondingCard = createStatusCard("Responding", respondingCount);
-    respondingCard.style.marginRight = "8px"; // Add 5px margin to the right
-    container.appendChild(respondingCard);
-  }
-
-  const statusCounts = countStatuses();
-  const respondingCount = countResponding();
-  const container = document.createElement("div");
-  container.style.display = "flex";
-  container.style.alignItems = "center";
-  container.style.justifyContent = "flex-end";
-  container.style.flexGrow = "1";
-  container.style.position = "relative";
-  container.style.top = "-7px"; // Move up by 6px
-
-  appendStatusesToContainer(container, statusCounts, respondingCount);
-
-  const targetDiv = document.querySelector(".row.mb-4");
-  if (targetDiv) {
-    targetDiv.appendChild(container);
-  } else {
-    document.body.appendChild(container); // If targetDiv not found, append to body
-  }
-});
 
 
 
