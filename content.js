@@ -2530,7 +2530,7 @@ document.addEventListener('click', function (event) {
 }, false);
 
 window.addEventListener('load', function () {
-  const helicopterNames = ['Lifesaver 21', 'Lifesaver 22', 'Lifesaver 23', 'Lifesaver 45', 'Lifesaver 46']; // List of possible helicopter names
+  const helicopterNames = ['Lifesaver 21', 'Lifesaver 22', 'Lifesaver 23', 'Lifesaver 36', 'Lifesaver 45', 'Lifesaver 46']; // List of possible helicopter names
   const externalControlName = 'Aeromedical Control';
   const buttonParentDiv = document.getElementById('post_comment').parentNode.parentNode;
 
