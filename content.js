@@ -2367,36 +2367,35 @@ insertOrUpdateTimeOpenCounter();
 
 
 // content.js
-window.addEventListener("load", function () {
-  const resultContainerId = "weatherapi-results";
-  if (document.getElementById(resultContainerId)) {
-    return;
-  }
+const resultContainerId = "weatherapi-results";
+if (document.getElementById(resultContainerId)) {
+  return;
+}
 
-  const latitudeInput = document.querySelector("input#incidentLatitude");
-  const longitudeInput = document.querySelector("input#incidentLongitude");
+const latitudeInput = document.querySelector("input#incidentLatitude");
+const longitudeInput = document.querySelector("input#incidentLongitude");
 
-  if (latitudeInput && longitudeInput) {
-    const lat = latitudeInput.value;
-    const lon = longitudeInput.value;
+if (latitudeInput && longitudeInput) {
+  const lat = latitudeInput.value;
+  const lon = longitudeInput.value;
 
-    if (lat && lon) {
-      chrome.runtime.sendMessage(
-        { action: "fetchWeatherData", lat, lon },
-        (response) => {
-          if (response.data) {
-            displayWeatherAndMarineData(
-              response.data.weatherData,
-              response.data.marineData,
-              response.data.forecastData
-            );
-          } else if (response.error) {
-            console.error("Error fetching weather data:", response.error);
-          }
+  if (lat && lon) {
+    chrome.runtime.sendMessage(
+      { action: "fetchWeatherData", lat, lon },
+      (response) => {
+        if (response.data) {
+          displayWeatherAndMarineData(
+            response.data.weatherData,
+            response.data.marineData,
+            response.data.forecastData
+          );
+        } else if (response.error) {
+          console.error("Error fetching weather data:", response.error);
         }
-      );
-    }
+      }
+    );
   }
+}
 });
 
 function convertCompassPoint(abbreviatedDirection) {
@@ -2422,12 +2421,8 @@ function convertCompassPoint(abbreviatedDirection) {
   return compassPoints[abbreviatedDirection] || abbreviatedDirection;
 }
 
-function adjustToUTC10(date) {
-  // Get the UTC time in milliseconds
-  const utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
-  // Adjust to UTC+10
-  const utc10Time = new Date(utcTime + (3600000 * 10));
-  return utc10Time;
+function getCurrentTime(date) {
+  return date;
 }
 
 function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
@@ -2441,16 +2436,15 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
     resultsDiv.style.justifyContent = "space-between";
     resultsDiv.style.gap = "15px";
 
-    // Adjust currentTime to UTC+10
-    const currentTime = adjustToUTC10(new Date(marineData.location.localtime.replace(" ", "T")));
+    // Use system's local time
+    const currentTime = getCurrentTime(new Date(marineData.location.localtime.replace(" ", "T")));
     let nextTide = null;
     let currentTide = null;
 
     const tides = marineData.forecast.forecastday[0].day.tides[0].tide;
 
     for (let tide of tides) {
-      // Adjust tideTime to UTC+10
-      const tideTime = adjustToUTC10(new Date(tide.tide_time.replace(" ", "T")));
+      const tideTime = getCurrentTime(new Date(tide.tide_time.replace(" ", "T")));
       if (tideTime > currentTime && !nextTide) {
         nextTide = tide;
       }
@@ -2469,18 +2463,53 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
     const sunsetTime = forecastData.forecast.forecastday[0].astro.sunset;
 
     resultsDiv.innerHTML = `
-          <div class="weather-detail"><strong>Current Temperature:</strong> <a href="#" style="color: blue;">${weatherData.current.temp_c}°C</a></div>
-          <div class="weather-detail"><strong>Current Wind:</strong> <a href="#" style="color: blue;">${weatherData.current.wind_kph} kph</a></div>
-          <div class="weather-detail"><strong>Swell Direction:</strong> <a href="#" style="color: blue;">${swellDirectionFull}</a></div>
-          <div class="weather-detail"><strong>Current Tide:</strong> <a href="#" style="color: blue;">${currentTideInfo}</a></div>
-          <div class="weather-detail"><strong>Next Tide:</strong> <a href="#" style="color: blue;">${nextTideInfo}</a></div>
-          <div class="weather-detail"><strong>Sunrise:</strong> <a href="#" style="color: blue;">${sunriseTime}</a></div>
-          <div class="weather-detail"><strong>Sunset:</strong> <a href="#" style="color: blue;">${sunsetTime}</a></div>
-      `;
+      <div class="weather-detail"><strong>Current Temperature:</strong> <a href="#" style="color: blue;">${weatherData.current.temp_c}°C</a></div>
+      <div class="weather-detail"><strong>Current Wind:</strong> <a href="#" style="color: blue;">${weatherData.current.wind_kph} kph</a></div>
+      <div class="weather-detail"><strong>Swell Direction:</strong> <a href="#" style="color: blue;">${swellDirectionFull}</a></div>
+      <div class="weather-detail"><strong>Current Tide:</strong> <a href="#" style="color: blue;">${currentTideInfo}</a></div>
+      <div class="weather-detail"><strong>Next Tide:</strong> <a href="#" style="color: blue;">${nextTideInfo}</a></div>
+      <div class="weather-detail"><strong>Sunrise:</strong> <a href="#" style="color: blue;">${sunriseTime}</a></div>
+      <div class="weather-detail"><strong>Sunset:</strong> <a href="#" style="color: blue;">${sunsetTime}</a></div>
+    `;
 
     container.insertBefore(resultsDiv, container.firstChild);
   }
 }
+
+// Add event listener to the document for a click event
+document.addEventListener('click', function (event) {
+  let targetElement = event.target;
+  while (targetElement != null) {
+    if (targetElement.matches('.weather-details') || targetElement.matches('.weather-detail')) {
+      const latitude = document.querySelector("#incidentLatitude").value;
+      const longitude = document.querySelector("#incidentLongitude").value;
+
+      const messageTextArea = document.querySelector("textarea#message");
+      if (messageTextArea) {
+        let weatherDetailsText = `Current Weather at ${latitude}, ${longitude} - `;
+        const details = Array.from(document.querySelectorAll('.weather-detail')).map(detail => detail.innerText);
+        weatherDetailsText += details.join(', ');
+        messageTextArea.value = weatherDetailsText;
+
+        ['msg_to', 'msg_from'].forEach(selectId => {
+          const selectElement = document.querySelector(`select#${selectId}`);
+          if (selectElement) {
+            selectElement.value = "Surfcom";
+            selectElement.dispatchEvent(new Event('change', { 'bubbles': true }));
+          }
+        });
+
+        const recordButtonById = document.getElementById("post_comment");
+        if (recordButtonById) {
+          recordButtonById.click();
+        }
+      }
+      break;
+    }
+    targetElement = targetElement.parentElement;
+  }
+}, false);
+
 
 // Add event listener to the document for a click event
 document.addEventListener('click', function (event) {
