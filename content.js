@@ -2423,10 +2423,20 @@ function convertCompassPoint(abbreviatedDirection) {
 }
 
 function adjustToUTC10(date) {
-  // Convert local time to UTC, then add 10 hours to adjust for UTC+10
   const utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
   const utc10Time = new Date(utcTime + (3600000 * 10));
   return utc10Time;
+}
+
+function findNextTide(tides, currentTime) {
+  let nextTide = null;
+  tides.forEach((tide) => {
+    const tideTime = adjustToUTC10(new Date(tide.tide_time.replace(" ", "T")));
+    if (tideTime > currentTime && (!nextTide || tideTime < new Date(nextTide.tide_time.replace(" ", "T")))) {
+      nextTide = tide;
+    }
+  });
+  return nextTide;
 }
 
 function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
@@ -2440,58 +2450,47 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
     resultsDiv.style.justifyContent = "space-between";
     resultsDiv.style.gap = "15px";
 
-    // Convert marine API local time to JavaScript Date object
     const currentTime = adjustToUTC10(new Date(marineData.location.localtime.replace(" ", "T")));
-    let nextTide = null;
     let currentTide = null;
+    let nextTide = null;
+    let forecastDays = marineData.forecast.forecastday;
 
-    const forecastDays = marineData.forecast.forecastday;
-    let nextDayFirstTide = null;
+    forecastDays.some(forecastDay => {
+      const tides = forecastDay.day.tides[0].tide;
+      nextTide = findNextTide(tides, currentTime);
+      return !!nextTide;
+    });
 
-    forecastDays.forEach(day => {
-      day.day.tides[0].tide.forEach(tide => {
-        const tideTime = adjustToUTC10(new Date(tide.tide_time.replace(" ", "T")));
-        if (tideTime > currentTime && !nextTide) {
-          nextTide = tide;
-        }
-        if (tideTime < currentTime && (!currentTide || tideTime > new Date(currentTide.tide_time.replace(" ", "T")))) {
-          currentTide = tide;
-        }
-      });
-
-      // If next tide not found and next day's first tide is not set, set it
-      if (!nextTide && !nextDayFirstTide && day.day.tides[0].tide.length > 0) {
-        nextDayFirstTide = day.day.tides[0].tide[0];
+    const tidesToday = forecastDays[0].day.tides[0].tide;
+    tidesToday.forEach(tide => {
+      const tideTime = adjustToUTC10(new Date(tide.tide_time.replace(" ", "T")));
+      if (tideTime < currentTime && (!currentTide || tideTime > new Date(currentTide.tide_time.replace(" ", "T")))) {
+        currentTide = tide;
       }
     });
 
-    if (!nextTide && nextDayFirstTide) {
-      nextTide = nextDayFirstTide;
-    }
+    const currentTideInfo = currentTide ? `<span title='Date: ${currentTide.tide_time.split(" ")[0]}'>${currentTide.tide_type} at ${currentTide.tide_time.split(" ")[1]} (${currentTide.tide_height_mt}m)</span>` : "Not available";
+    const nextTideInfo = nextTide ? `<span title='Date: ${nextTide.tide_time.split(" ")[0]}'>${nextTide.tide_type} at ${nextTide.tide_time.split(" ")[1]} (${nextTide.tide_height_mt}m)</span>` : "Not available";
 
-    const nextTideInfo = nextTide ? `${nextTide.tide_type} at ${nextTide.tide_time.split(" ")[1]} (${nextTide.tide_height_mt}m)` : "Not available";
-    const currentTideInfo = currentTide ? `${currentTide.tide_type} at ${currentTide.tide_time.split(" ")[1]} (${currentTide.tide_height_mt}m)` : "Not available";
-
-    const swellDirection = marineData.forecast.forecastday[0].hour[0].swell_dir_16_point;
+    const swellDirection = forecastDays[0].hour[0].swell_dir_16_point;
     const swellDirectionFull = convertCompassPoint(swellDirection);
 
     const sunriseTime = forecastData.forecast.forecastday[0].astro.sunrise;
     const sunsetTime = forecastData.forecast.forecastday[0].astro.sunset;
 
     resultsDiv.innerHTML = `
-          <div class="weather-detail"><strong>Current Temperature:</strong> ${weatherData.current.temp_c}°C</div>
-          <div class="weather-detail"><strong>Current Wind:</strong> ${weatherData.current.wind_kph} kph</div>
-          <div class="weather-detail"><strong>Swell Direction:</strong> ${swellDirectionFull}</div>
-          <div class="weather-detail"><strong>Current Tide:</strong> ${currentTideInfo}</div>
-          <div class="weather-detail"><strong>Next Tide:</strong> ${nextTideInfo}</div>
-          <div class="weather-detail"><strong>Sunrise:</strong> ${sunriseTime}</div>
-          <div class="weather-detail"><strong>Sunset:</strong> ${sunsetTime}</div>
+          <div class="weather-detail"><strong>Current Temperature:</strong> <a href="#" style="color: blue;">${weatherData.current.temp_c}°C</a></div>
+          <div class="weather-detail"><strong>Current Wind:</strong> <a href="#" style="color: blue;">${weatherData.current.wind_kph} kph</a></div>
+          <div class="weather-detail"><strong>Swell Direction:</strong> <a href="#" style="color: blue;">${swellDirectionFull}</a></div>
+          <div class="weather-detail"><strong>Current Tide:</strong> <a href="#" style="color: blue;">${currentTideInfo}</a></div>
+          <div class="weather-detail"><strong>Next Tide:</strong> <a href="#" style="color: blue;">${nextTideInfo}</a></div>
+          <div class="weather-detail"><strong>Sunrise:</strong> <a href="#" style="color: blue;">${sunriseTime}</a></div>
+          <div class="weather-detail"><strong>Sunset:</strong> <a href="#" style="color: blue;">${sunsetTime}</a></div>
       `;
 
     container.insertBefore(resultsDiv, container.firstChild);
   }
 }
-
 
 
 
