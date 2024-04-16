@@ -30,14 +30,14 @@ This project enhances the SurfCom Management System with additional features and
 
   | Condition                                        | Colour           |
   |--------------------------------------------------|------------------|
-  | Unit Added/Status Change/Cleared from incident  |     [SlateGrey](images/RespondingUnitModified.png)    |
-  | Attachment added to Incident                     | PapayaWhip       |
-  | Incident Notification SMS                        | MediumAquaMarine |
-  | Callout SMS                                      | Salmon           |
-  | Unavailable for Callout                          | RosyBrown        |
-  | Available for Callout                            | PaleTurquoise    |
-  | Further Information Log                          | MediumSlateBlue  |
-  | System Message (Open/Closed/Reopened)            | Black            |
+  | Unit Added/Status Change/Cleared from incident   | [SlateGrey](images/RespondingUnitModified.png)    |
+  | Attachment added to Incident                     | [PapayaWhip](images/AttachmentAdded.png)     |
+  | Incident Notification SMS                        | [MediumAquaMarine](images/NotificationSMS.png)|
+  | Callout SMS                                      | [Salmon](images/CalloutSMS.png)   |
+  | Unavailable for Callout                          | [RosyBrown](images/ECOTAvailable.png)    |
+  | Available for Callout                            | [PaleTurquoise](images/ECOTUnavailable.png)  |
+  | Further Information Log                          | [MediumSlateBlue](images/FurtherInformation.png) |
+  | System Message (Open/Closed/Reopened)            | [Black](images/SystemMessage.png)  |
 
 8. **Incident Table Enhancements**: Adds additional buttons to the incident table, such as "Reopen", "Download PDF", and "Download CSV", and applies color formatting to the status column.
 
