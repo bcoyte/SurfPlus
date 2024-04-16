@@ -30,7 +30,7 @@ This project enhances the SurfCom Management System with additional features and
 
   | Condition                                        | Colour           |
   |--------------------------------------------------|------------------|
-  | Unit Added/Status Change/Cleared from incident  | SlateGrey        |
+  | Unit Added/Status Change/Cleared from incident  |     [SlateGrey](images/RespondingUnitModified.png)    |
   | Attachment added to Incident                     | PapayaWhip       |
   | Incident Notification SMS                        | MediumAquaMarine |
   | Callout SMS                                      | Salmon           |
