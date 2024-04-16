@@ -2972,25 +2972,6 @@ function changeCardTitle(newTitle) {
 // Call the function to change the card title with the desired new title
 changeCardTitle('Generate Message (Notification SMSs and SitReps)');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Function to parse date from timestamp string
 function parseDate(timestamp) {
   const parts = timestamp.match(/(\d+)(?:th|nd|rd|st) (\w+) (\d+) (\d+):(\d+)/);
