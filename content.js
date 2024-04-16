@@ -2972,6 +2972,8 @@ function changeCardTitle(newTitle) {
 // Call the function to change the card title with the desired new title
 changeCardTitle('Generate Message (Notification SMSs and SitReps)');
 
+
+
 // Function to parse date from timestamp string
 function parseDate(timestamp) {
   const parts = timestamp.match(/(\d+)(?:th|nd|rd|st) (\w+) (\d+) (\d+):(\d+)/);
@@ -2988,6 +2990,22 @@ function parseDate(timestamp) {
       return new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
   }
   return null;
+}
+
+// Function to format time duration in days, hours, and minutes
+function formatDuration(durationInMinutes) {
+  const days = Math.floor(durationInMinutes / (60 * 24));
+  const hours = Math.floor((durationInMinutes % (60 * 24)) / 60);
+  const minutes = durationInMinutes % 60;
+  let formattedDuration = '';
+  if (days > 0) {
+      formattedDuration += `${days} day${days !== 1 ? 's' : ''}, `;
+  }
+  if (hours > 0 || days > 0) {
+      formattedDuration += `${hours} hour${hours !== 1 ? 's' : ''}, `;
+  }
+  formattedDuration += `${minutes} minute${minutes !== 1 ? 's' : ''}`;
+  return formattedDuration;
 }
 
 // Function to get the most recent "SITUATION REPORT" timestamp
@@ -3050,8 +3068,9 @@ function displayTimeSinceLastReport() {
   const differenceInMinutes = (currentTime - lastReportTime) / (1000 * 60);
 
   if (differenceInMinutes > 60) {
+      const formattedDifference = formatDuration(Math.floor(differenceInMinutes));
       const counterElement = document.createElement('div');
-      counterElement.textContent = `SitRep is due, last sent ${Math.floor(differenceInMinutes)} minutes ago`;
+      counterElement.textContent = `SitRep is due, last sent ${formattedDifference} ago`;
       counterElement.style.padding = '10px';
       counterElement.style.marginTop = '5px';
       counterElement.style.backgroundColor = 'orange';
