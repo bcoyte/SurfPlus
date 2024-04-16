@@ -2331,10 +2331,10 @@ function insertOrUpdateTimeOpenCounter() {
     // Check if the duration is 01:00:00 or more
     if (timeDifference >= "01:00:00") {
       // Toggle the background color every other second
-      if (durationOpenContainer.style.backgroundColor === "orange") {
+      if (durationOpenContainer.style.backgroundColor === "lightgray") {
         durationOpenContainer.style.backgroundColor = "";
       } else {
-        durationOpenContainer.style.backgroundColor = "orange";
+        durationOpenContainer.style.backgroundColor = "lightgray";
       }
     } else {
       durationOpenContainer.style.backgroundColor = "";
@@ -2971,3 +2971,158 @@ function changeCardTitle(newTitle) {
 
 // Call the function to change the card title with the desired new title
 changeCardTitle('Generate Message (Notification SMSs and SitReps)');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to parse date from timestamp string
+function parseDate(timestamp) {
+  const parts = timestamp.match(/(\d+)(?:th|nd|rd|st) (\w+) (\d+) (\d+):(\d+)/);
+  const months = {
+      Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
+      Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
+  };
+  if (parts && months[parts[2]]) {
+      const year = parts[3];
+      const month = months[parts[2]];
+      const day = parts[1].padStart(2, '0');
+      const hour = parts[4];
+      const minute = parts[5];
+      return new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
+  }
+  return null;
+}
+
+// Function to get the most recent "SITUATION REPORT" timestamp
+function getLastSitRepTimestamp() {
+  const messages = Array.from(document.querySelectorAll('.direct-chat-msg'));
+  for (let i = 0; i < messages.length; i++) {
+      const message = messages[i];
+      const messageText = message.querySelector('.direct-chat-text').textContent;
+      if (messageText.includes('SITUATION REPORT')) {
+          const timestampText = message.querySelector('.direct-chat-timestamp').textContent;
+          return parseDate(timestampText);
+      }
+  }
+  return null;
+}
+
+// Function to replace an existing element if it exists
+function replaceIfExists(parentElement, newElement) {
+  const existingElement = parentElement.querySelector(`.${newElement.className}`);
+  if (existingElement) {
+      parentElement.replaceChild(newElement, existingElement);
+  } else {
+      parentElement.appendChild(newElement);
+  }
+}
+
+// Function to display the time since the last "SITUATION REPORT"
+function displayTimeSinceLastReport() {
+  const prioritySelect = document.getElementById('priority');
+  if (!prioritySelect || prioritySelect.value !== '3') {
+      return; // Only run if priority is 3
+  }
+
+  const durationOpenElement = document.getElementById('durationOpen');
+  const openDuration = durationOpenElement.value.split(':');
+  const openHours = parseInt(openDuration[0], 10);
+  const openMinutes = parseInt(openDuration[1], 10);
+  const totalOpenMinutes = openHours * 60 + openMinutes;
+
+  if (totalOpenMinutes < 60) {
+      return; // Do not display if open time is less than 60 minutes
+  }
+
+  const lastReportTime = getLastSitRepTimestamp();
+  const cardBodyDiv = document.querySelector('.card-body');
+  if (!lastReportTime) {
+      const counterElement = document.createElement('div');
+      counterElement.textContent = `SitRep Due, None sent yet.`;
+      counterElement.style.padding = '10px';
+      counterElement.style.marginTop = '5px';
+      counterElement.style.backgroundColor = 'orange';
+      counterElement.style.textAlign = 'center';
+      counterElement.style.fontWeight = 'bold';
+      counterElement.className = 'pulsate';
+      replaceIfExists(cardBodyDiv, counterElement);
+      return;
+  }
+
+  const currentTime = new Date();
+  const differenceInMinutes = (currentTime - lastReportTime) / (1000 * 60);
+
+  if (differenceInMinutes > 60) {
+      const counterElement = document.createElement('div');
+      counterElement.textContent = `SitRep is due, last sent ${Math.floor(differenceInMinutes)} minutes ago`;
+      counterElement.style.padding = '10px';
+      counterElement.style.marginTop = '5px';
+      counterElement.style.backgroundColor = 'orange';
+      counterElement.style.textAlign = 'center';
+      counterElement.style.fontWeight = 'bold';
+      counterElement.className = 'pulsate';
+      replaceIfExists(cardBodyDiv, counterElement);
+  }
+}
+
+// CSS for pulsating effect
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes pulsate {
+  0% { background-color: orange; }
+  50% { background-color: darkorange; }
+  100% { background-color: orange; }
+}
+.pulsate {
+  animation: pulsate 2s infinite;
+}
+`;
+document.head.appendChild(style);
+
+// Setup MutationObserver to update the display when new chat messages are added
+function observeChatChanges() {
+  const prioritySelect = document.getElementById('priority');
+  if (!prioritySelect || prioritySelect.value !== '3') {
+      return; // Only set up observer if priority is 3
+  }
+
+  const chatMessagesContainer = document.querySelector('.direct-chat-messages');
+  const observer = new MutationObserver(() => {
+      displayTimeSinceLastReport();
+  });
+  observer.observe(chatMessagesContainer, { childList: true });
+}
+
+// Initialize the script after DOM is fully loaded
+window.addEventListener('load', () => {
+  const prioritySelect = document.getElementById('priority');
+  if (prioritySelect) {
+      prioritySelect.addEventListener('change', () => {
+          if (prioritySelect.value === '3') {
+              displayTimeSinceLastReport();
+              observeChatChanges();
+          }
+      });
+
+      if (prioritySelect.value === '3') {
+          displayTimeSinceLastReport();
+          observeChatChanges();
+      }
+  }
+});
