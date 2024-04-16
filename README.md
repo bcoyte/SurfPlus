@@ -34,8 +34,8 @@ This project enhances the SurfCom Management System with additional features and
   | Attachment added to Incident                     | [PapayaWhip](images/AttachmentAdded.png)     |
   | Incident Notification SMS                        | [MediumAquaMarine](images/NotificationSMS.png)|
   | Callout SMS                                      | [Salmon](images/CalloutSMS.png)   |
-  | Unavailable for Callout                          | [RosyBrown](images/ECOTAvailable.png)    |
-  | Available for Callout                            | [PaleTurquoise](images/ECOTUnavailable.png)  |
+  | Unavailable for Callout                          | [RosyBrown](images/ECOTUnavailable.png)    |
+  | Available for Callout                            | [PaleTurquoise](images/ECOTAvailable.png)  |
   | Further Information Log                          | [MediumSlateBlue](images/FurtherInformation.png) |
   | System Message (Open/Closed/Reopened)            | [Black](images/SystemMessage.png)  |
 
