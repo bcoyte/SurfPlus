@@ -1,106 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SurfPlus</title>
     <style>
-        /* Dark mode color scheme */
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #121212;
-            color: #e0e0e0;
-            min-width: 500px;
-        }
-        h1, h2 {
-            border-bottom: 1px solid #444;
-            padding-bottom: 10px;
-        }
-        h1 {
-            color: #fff;
-        }
-        h2 {
-            color: #bbb;
-        }
-        ul, ol {
-            padding-left: 20px;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-        code {
-            background-color: #282828;
-            padding: 2px 4px;
-            border-radius: 4px;
-            color: #f4f4f4;
-        }
-        a {
-            color: #81d4fa;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        /* Improve visibility of note sections */
-        .note {
-            background-color: #333;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
+      /* Dark mode color scheme */
+      body {
+        font-family: "Arial", sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        background-color: #121212;
+        color: #e0e0e0;
+        min-width: 500px;
+      }
+      h1,
+      h2 {
+        border-bottom: 1px solid #444;
+        padding-bottom: 10px;
+      }
+      h1 {
+        color: #fff;
+      }
+      h2 {
+        color: #bbb;
+      }
+      ul,
+      ol {
+        padding-left: 20px;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+      code {
+        background-color: #282828;
+        padding: 2px 4px;
+        border-radius: 4px;
+        color: #f4f4f4;
+      }
+      a {
+        color: inherit;
+        text-decoration: underline;
+      }
+      a:hover {
+        text-decoration: none;
+      } /* Improve visibility of note sections */
+      .note {
+        background-color: #333;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      th,
+      td {
+        border: 2px solid white;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #333;
+        font-weight: bold;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="note">
-        <p><strong>Note:</strong> Click on the extension logo at any time to bring this page back up!</p>
+      <p>
+        <strong>Note:</strong> Click on the extension logo at any time to bring
+        this page back up!
+      </p>
     </div>
 
     <h1>SurfCom Management System Enhancements</h1>
-    <p>This project enhances the SurfCom Management System with additional features and functionality. The enhancements are implemented using JavaScript code that interacts with the existing web application.</p>
+    <p>
+      This project enhances the SurfCom Management System with additional
+      features and functionality. The enhancements are implemented using
+      JavaScript code that interacts with the existing web application.
+    </p>
 
     <h2>Features</h2>
     <ol>
-        <li><strong>Hotkey Shortcuts</strong>: Various hotkey shortcuts are defined to automate tasks and streamline users workflow. For example:
-            <ul>
-                <li><code>F1</code>: Extracts incident data and formats it for pager messages.</li>
-                <li><code>F2</code>: Extracts incident data, formats it for further information, and saves the form.</li>
-                <li><code>F3</code>: Formats a standdown message and inserts it into the pager message field.</li>
-                <li><code>F7</code>: Creates a dropdown menu for selecting Emergency Response Beacons (ERBs).</li>
-                <li><code>F8</code>: Inserts a generic Close of Business message into the radio log screen, confirming handover.</li>
-                <li><code>F9</code> to <code>F12</code>: Prefills caller details for specific organizations.</li>
-                <li><code>Ctrl + S</code>: Saves the form.</li>
-                <li><code>Ctrl + R</code>: Switches between record and edit mode.</li>
-                <li><code>Ctrl + I</code>: Navigates to the incident view page.</li>
-                <li><code>Ctrl + B</code>: Navigates to the incident add page.</li>
-            </ul>
-        </li>
-        <li><strong>Bulk Sign Off</strong>: Adds a "Bulk Sign Off All" button to the support services page, allowing users to sign off all services in bulk.</li>
-        <li><strong>Prefill and Sign Off</strong>: Adds a "Prefill &amp; Signoff" button to the log service off page, prefilling the current location and automatically submitting the form.</li>
-        <li><strong>Message Direction Swapping</strong>: Adds a swapping functionality to the message direction dropdowns, allowing users to easily swap the "From" and "To" values.</li>
-        <li><strong>Closest Location Finder</strong>: Implements a feature to find the closest service location based on the provided latitude and longitude.</li>
-        <li><strong>Uppercase Conversion</strong>: Converts the text in the message textarea to uppercase as the user types.</li>
-        <li><strong>Message Log Coloring</strong>: Applies color coding to the message logs based on specific keywords or phrases.</li>
-        <li><strong>Incident Table Enhancements</strong>: Adds additional buttons to the incident table, such as "Reopen", "Download PDF", and "Download CSV", and applies color formatting to the status column.</li>
-        <li><strong>Radio Buttons for Communication Method</strong>: Adds radio buttons above the message textarea to select the communication method (e.g., radio, phone, email).</li>
-        <li><strong>Weather and Marine Data Integration</strong>: Fetches and displays current weather, marine, and forecast data based on the incident's latitude and longitude.</li>
-        <li><strong>Time Open Counter</strong>: Calculates and displays the duration an incident has been open, updating in real-time.</li>
-        <li><strong>Helicopter Notification Alert</strong>: Displays a prominent alert when a helicopter service is involved in the incident, reminding the user to notify relevant authorities.</li>
-        <li><strong>Weather Button</strong>: Adds a "Weather" button that opens a modal displaying detailed weather information for the incident location.</li>
-        <li><strong>Responsive Design Improvements</strong>: Adjusts the layout and styling of various elements to improve responsiveness and readability on different screen sizes.</li>
-        <li><strong>Visual Counter for Service Statuses</strong>: Displays a visual counter showing the count of services in each status (e.g., Notified, Enroute, Arrived).</li>
-        <li><strong>Collapsible Responding Services</strong>: Makes the "Responding Services" section collapsible, automatically collapsing it if there are more than 10 rows in the table.</li>
-        <li><strong>Card Title Renaming</strong>: Renames the "Response SMS Notification" card title to "Response SMS Notification (Callout SMS)" and the "Generate Message" card title to "Generate Message (Notification SMSs and SitReps)".</li>
-        <li><strong>Situation Report Reminder</strong>: Displays a reminder to send a situation report (SitRep) based on the time elapsed since the last report for High (3) priority incidents.</li>
+      <li>
+        <strong>Hotkey Shortcuts</strong>: Various hotkey shortcuts are defined
+        to automate tasks and streamline users workflow. For example:
+        <ul>
+          <li>
+            <code>F1</code>: Extracts incident data and formats it for pager
+            messages.
+          </li>
+          <li>
+            <code>F2</code>: Extracts incident data, formats it for further
+            information, and saves the form.
+          </li>
+          <li>
+            <code>F3</code>: Formats a standdown message and inserts it into the
+            pager message field.
+          </li>
+          <li>
+            <code>F7</code>: Creates a dropdown menu for selecting Emergency
+            Response Beacons (ERBs).
+          </li>
+          <li>
+            <code>F8</code>: Inserts a generic Close of Business message into
+            the radio log screen, confirming handover.
+          </li>
+          <li>
+            <code>F9</code> to <code>F12</code>: Prefills caller details for
+            specific organizations.
+          </li>
+          <li><code>Ctrl + S</code>: Saves the form.</li>
+          <li><code>Ctrl + R</code>: Switches between record and edit mode.</li>
+          <li><code>Ctrl + I</code>: Navigates to the incident view page.</li>
+          <li><code>Ctrl + B</code>: Navigates to the incident add page.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Bulk Sign Off</strong>: Adds a "Bulk Sign Off All" button to the
+        support services page, allowing users to sign off all services in bulk.
+      </li>
+      <li>
+        <strong>Prefill and Sign Off</strong>: Adds a "Prefill &amp; Signoff"
+        button to the log service off page, prefilling the current location and
+        automatically submitting the form.
+      </li>
+      <li>
+        <strong>Message Direction Swapping</strong>: Adds a swapping
+        functionality to the message direction dropdowns, allowing users to
+        easily swap the "From" and "To" values.
+      </li>
+      <li>
+        <strong>Closest Location Finder</strong>: Implements a feature to find
+        the closest service location based on the provided latitude and
+        longitude.
+      </li>
+      <li>
+        <strong>Uppercase Conversion</strong>: Converts the text in the message
+        textarea to uppercase as the user types.
+      </li>
+      <li>
+        <strong>Message Log Coloring</strong>: Applies color coding to the
+        message logs based on specific keywords or phrases. The color scheme is
+        as follows:
+        <table>
+          <tr>
+            <th>Condition</th>
+            <th>Colour</th>
+          </tr>
+          <tr>
+            <td style="background-color: SlateGrey; color: white">
+              Unit Added/Status Change/Cleared from incident
+            </td>
+            <td style="background-color: SlateGrey; color: white">
+              <a
+                href="images/RespondingUnitModified.png"
+                target="_blank"
+                >SlateGrey</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: PapayaWhip; color: black">
+              Attachment added to Incident
+            </td>
+            <td style="background-color: PapayaWhip; color: black">
+              <a
+                href="/images/AttachmentAdded.png"
+                target="_blank"
+                >PapayaWhip</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: MediumAquaMarine; color: white">
+              Incident Notification SMS
+            </td>
+            <td style="background-color: MediumAquaMarine; color: white">
+              <a
+                href="/images/NotificationSMS.png"
+                target="_blank"
+                >MediumAquaMarine</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: Salmon; color: white">Callout SMS</td>
+            <td style="background-color: Salmon; color: white">
+              <a
+                href="/images/CalloutSMS.png"
+                target="_blank"
+                >Salmon</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: RosyBrown; color: white">
+              Unavailable for Callout
+            </td>
+            <td style="background-color: RosyBrown; color: white">
+              <a
+                href="/images/ECOTUnavailable.png"
+                target="_blank"
+                >RosyBrown</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: PaleTurquoise; color: black">
+              Available for Callout
+            </td>
+            <td style="background-color: PaleTurquoise; color: black">
+              <a
+                href="/images/ECOTAvailable.png"
+                target="_blank"
+                >PaleTurquoise</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: MediumSlateBlue; color: white">
+              Further Information Log
+            </td>
+            <td style="background-color: MediumSlateBlue; color: white">
+              <a
+                href="/images/FurtherInformation.png"
+                target="_blank"
+                >MediumSlateBlue</a
+              >
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: Black; color: white">
+              System Message (Open/Closed/Reopened)
+            </td>
+            <td style="background-color: Black; color: white">
+              <a
+                href="/images/SystemMessage.png"
+                target="_blank"
+                >Black</a
+              >
+            </td>
+          </tr>
+        </table>
+      </li>
+      <li>
+        <strong>Incident Table Enhancements</strong>: Adds additional buttons to
+        the incident table, such as "Reopen", "Download PDF", and "Download
+        CSV", and applies color formatting to the status column.
+      </li>
+      <li>
+        <strong>Radio Buttons for Communication Method</strong>: Adds radio
+        buttons above the message textarea to select the communication method
+        (e.g., radio, phone, email).
+      </li>
+      <li>
+        <strong>Weather and Marine Data Integration</strong>: Fetches and
+        displays current weather, marine, and forecast data based on the
+        incident's latitude and longitude.
+      </li>
+      <li>
+        <strong>Time Open Counter</strong>: Calculates and displays the duration
+        an incident has been open, updating in real-time.
+      </li>
+      <li>
+        <strong>Helicopter Notification Alert</strong>: Displays a prominent
+        alert when a helicopter service is involved in the incident, reminding
+        the user to notify relevant authorities.
+      </li>
+      <li>
+        <strong>Weather Button</strong>: Adds a "Weather" button that opens a
+        modal displaying detailed weather information for the incident location.
+      </li>
+      <li>
+        <strong>Responsive Design Improvements</strong>: Adjusts the layout and
+        styling of various elements to improve responsiveness and readability on
+        different screen sizes.
+      </li>
+      <li>
+        <strong>Visual Counter for Service Statuses</strong>: Displays a visual
+        counter showing the count of services in each status (e.g., Notified,
+        Enroute, Arrived).
+      </li>
+      <li>
+        <strong>Collapsible Responding Services</strong>: Makes the "Responding
+        Services" section collapsible, automatically collapsing it if there are
+        more than 10 rows in the table.
+      </li>
+      <li>
+        <strong>Card Title Renaming</strong>: Renames the "Response SMS
+        Notification" card title to "Response SMS Notification (Callout SMS)"
+        and the "Generate Message" card title to "Generate Message (Notification
+        SMSs and SitReps)".
+      </li>
+      <li>
+        <strong>Situation Report Reminder</strong>: Displays a reminder to send
+        a situation report (SitRep) based on the time elapsed since the last
+        report for High (3) priority incidents.
+      </li>
     </ol>
 
     <h2>Disclaimer</h2>
-    <p>Please note that these enhancements are provided as-is and may require modifications to work with future updates of the SurfCom Management System. It is recommended to thoroughly test the code before using it in a production environment.</p>
+    <p>
+      Please note that these enhancements are provided as-is and may require
+      modifications to work with future updates of the SurfCom Management
+      System. It is recommended to thoroughly test the code before using it in a
+      production environment.
+    </p>
 
     <h2>License</h2>
-    <p>This project is open-source and available under the <a href="LICENSE">MIT License</a>.</p>
-    <p>Feel free to contribute, report issues, or suggest improvements by creating a pull request or opening an issue on the project's repository.</p>
-</body>
+    <p>
+      This project is open-source and available under the
+      <a href="LICENSE">MIT License</a>.
+    </p>
+    <p>
+      Feel free to contribute, report issues, or suggest improvements by
+      creating a pull request or opening an issue on the project's repository.
+    </p>
+  </body>
 </html>

@@ -5,7 +5,6 @@ This project enhances the SurfCom Management System with additional features and
 ## Features
 
 1. **Hotkey Shortcuts**: Various hotkey shortcuts are defined to automate tasks and streamline users workflow. For example:
-
   - `F1`: Extracts incident data and formats it for pager messages.
   - `F2`: Extracts incident data, formats it for further information, and saves the form.
   - `F3`: Formats a standdown message and inserts it into the pager message field.
@@ -27,7 +26,18 @@ This project enhances the SurfCom Management System with additional features and
 
 6. **Uppercase Conversion**: Converts the text in the message textarea to uppercase as the user types.
 
-7. **Message Log Coloring**: Applies color coding to the message logs based on specific keywords or phrases.
+7. **Message Log Coloring**: Applies color coding to the message logs based on specific keywords or phrases. The color scheme is as follows:
+
+  | Condition                                        | Colour           |
+  |--------------------------------------------------|------------------|
+  | Unit Added/Status Change/Cleared from incident  | SlateGrey        |
+  | Attachment added to Incident                     | PapayaWhip       |
+  | Incident Notification SMS                        | MediumAquaMarine |
+  | Callout SMS                                      | Salmon           |
+  | Unavailable for Callout                          | RosyBrown        |
+  | Available for Callout                            | PaleTurquoise    |
+  | Further Information Log                          | MediumSlateBlue  |
+  | System Message (Open/Closed/Reopened)            | Black            |
 
 8. **Incident Table Enhancements**: Adds additional buttons to the incident table, such as "Reopen", "Download PDF", and "Download CSV", and applies color formatting to the status column.
 
@@ -38,7 +48,7 @@ This project enhances the SurfCom Management System with additional features and
 11. **Time Open Counter**: Calculates and displays the duration an incident has been open, updating in real-time.
 
 12. **Helicopter Notification Alert**: Displays a prominent alert when a helicopter service is involved in the incident, reminding the user to notify relevant authorities.
-  
+
 13. **Weather Button**: Adds a "Weather" button that opens a modal displaying detailed weather information for the incident location.
 
 14. **Responsive Design Improvements**: Adjusts the layout and styling of various elements to improve responsiveness and readability on different screen sizes.
@@ -48,6 +58,8 @@ This project enhances the SurfCom Management System with additional features and
 16. **Collapsible Responding Services**: Makes the "Responding Services" section collapsible, automatically collapsing it if there are more than 10 rows in the table.
 
 17. **Card Title Renaming**: Renames the "Response SMS Notification" card title to "Response SMS Notification (Callout SMS)" and the "Generate Message" card title to "Generate Message (Notification SMSs and SitReps)".
+
+18. **Situation Report Reminder**: Displays a reminder to send a situation report (SitRep) based on the time elapsed since the last report for High (3) priority incidents.
 
 ## Installation
 
