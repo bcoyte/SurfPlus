@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "SurfPlus",
   "description": "Allows additional functionality within the SurfCom Management System.",
-  "version": "1.0",
+  "version": "2.0",
   "action": {
     "default_popup": "Install.html",
     "default_icon": {

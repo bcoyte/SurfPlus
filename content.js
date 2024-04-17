@@ -2895,15 +2895,6 @@ if (window.location.href.startsWith("https://surfcom.sls.com.au/incidents/edit/"
     });
 }
 
-
-
-
-
-
-
-
-
-
 window.addEventListener('load', function () {
   const respondingServicesHeader = document.querySelector('.responding-services .card-header');
   const respondingServicesBody = document.querySelector('.responding-services .card-body');
@@ -2971,8 +2962,6 @@ function changeCardTitle(newTitle) {
 
 // Call the function to change the card title with the desired new title
 changeCardTitle('Generate Message (Notification SMSs and SitReps)');
-
-
 
 // Function to parse date from timestamp string
 function parseDate(timestamp) {
@@ -3126,3 +3115,100 @@ window.addEventListener('load', () => {
       }
   }
 });
+
+// Function to update the time every second
+function updateTime() {
+  const now = new Date();
+  const utcTime = now.toUTCString().slice(17, 25); // Extracting UTC time in HH:MM:SS format
+  const utcSeconds = now.toUTCString().slice(23, 25); // Extracting seconds from UTC time
+  const aestTime = formatTime(now.toLocaleString('en-AU', { timeZone: 'Australia/Brisbane', hour12: false }), utcSeconds);
+  const aedtTime = formatTime(now.toLocaleString('en-AU', { timeZone: 'Australia/Sydney', hour12: false }), utcSeconds);
+
+  const clockElement = document.getElementById('clock');
+  clockElement.innerHTML = `
+    <div class="clock-container">
+      <div class="clock-box">
+        <div class="clock-label">UTC/ZULU</div>
+        <div class="clock-time">${utcTime}</div>
+      </div>
+      <div class="clock-box">
+        <div class="clock-label">AEST</div>
+        <div class="clock-time">${aestTime}</div>
+      </div>
+      <div class="clock-box">
+        <div class="clock-label">AEDT</div>
+        <div class="clock-time">${aedtTime}</div>
+      </div>
+    </div>
+  `;
+}
+
+// Helper function to format time strings and append UTC seconds
+function formatTime(timeString, utcSeconds) {
+  const baseTime = timeString.split(' ')[1].slice(0, 5); // Extracts HH:MM format
+  return `${baseTime}:${utcSeconds}`; // Appends UTC seconds to local time in HH:MM:SS format
+}
+
+// Function to create and insert the clock element into the navbar
+function createClockElement() {
+  const clockItem = document.createElement('div');
+  clockItem.id = 'clock';
+  clockItem.style.cssText = `
+    text-align: center;
+    flex: 1 1 auto;
+    padding: 5px 0;
+    pointer-events: none; // Allows click events to pass through
+  `;
+
+  // Find the navbar and insert the clock in the center
+  const navbar = document.querySelector('.navbar');
+  const navContainer = document.createElement('li');
+  navContainer.classList.add('nav-item');
+  navContainer.style.cssText = `
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+  `;
+  navContainer.appendChild(clockItem);
+  navbar.insertBefore(navContainer, navbar.querySelector('.navbar-nav.ml-auto'));
+
+  // Style the clock containers and labels
+  const style = document.createElement('style');
+  style.textContent = `
+    .clock-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .clock-box {
+      margin: 0 10px;
+      padding: 5px 10px;
+      background-color: #fff; // Only the clock boxes have a background
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 80px; // Adjusted for longer times including seconds
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); // subtle shadow for better visibility
+      pointer-events: auto; // Restores click functionality within the box
+      height: 20px; // Fixed height for each box
+    }
+    .clock-label {
+      font-weight: bold;
+      font-size: 10px;
+      margin-bottom: 2px;
+    }
+    .clock-time {
+      font-size: 14px;
+    }
+  `;
+  document.head.appendChild(style);
+
+  updateTime();
+  setInterval(updateTime, 1000);
+}
+
+// Add the clock when the window loads
+window.addEventListener('load', createClockElement);
