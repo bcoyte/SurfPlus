@@ -60,6 +60,109 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
+// content.js for Chrome Extension to handle F1 key press to update SMS mailing groups
+window.addEventListener('load', function () {
+  const emailTemplateSelect = document.getElementById('email_template');
+  const mailingGroupSelect = document.querySelector('.mailinggroup_id');
+  const servicesTable = document.getElementById('servicesTable');
+
+  if (!emailTemplateSelect || !mailingGroupSelect || !servicesTable) {
+      console.error('Required elements not found on the page.');
+      return;
+  }
+
+
+  // Define groups for SMS
+  const smsGroups = [
+    { name: "66118_01-1 FNC Serious Incident Notification SMS", start: -28.164557, end: -29.610527 },
+    { name: "66120_02-1 NC Serious Incident Notification SMS", start: -29.610527, end: -30.665687 },
+    { name: "66122_03-1 MNC Serious Incident Notification SMS", start: -30.665687, end: -31.636052 },
+    { name: "66124_04-1 LNC Serious Incident Notification SMS", start: -31.636052, end: -32.447837 },
+    { name: "66146_05-1 HUN Serious Incident Notification SMS", start: -32.447837, end: -33.165642 },
+    { name: "66148_06-1 CC Serious Incident Notification SMS", start: -33.165642, end: -33.573543 },
+    { name: "66151_07-1 SNB Serious Incident Notification SMS", start: -33.573543, end: -33.825060 },
+    { name: "66153_08-1 SYD Serious Incident Notification SMS", start: -33.825060, end: -34.191638 },
+    { name: "66155_09-1 ILL Serious Incident Notification SMS", start: -34.191638, end: -34.548028 },
+    { name: "66157_10-1 SC Serious Incident Notification SMS", start: -34.548028, end: -35.664119 },
+    { name: "66159_11-1 FSC Serious Incident Notification SMS", start: -35.664119, end: -36.000000 }
+  ];
+
+ // Function to update mailing group options based on the template selected
+ function updateMailingGroupOptions() {
+  const groups = smsGroups;
+  setOptions(groups);
+}
+
+// Function to set options based on current latitude and table content
+function setOptions(groups) {
+  const currentLatitude = getCurrentLatitude();
+  const isLifesaverPresent = checkTableForLifesaver();
+  let selectedGroups = [];
+
+  if (currentLatitude !== null) {
+      const branchName = getMailingGroupId(groups, currentLatitude);
+      if (branchName) {
+          selectedGroups.push(branchName);
+      }
+  }
+
+  if (isLifesaverPresent) {
+      selectedGroups.push("82296_00-8 Westpac Notifications");
+  }
+
+  // Apply all selected groups
+  selectedGroups.forEach(branchName => selectMailingGroup(branchName));
+}
+
+// Get current latitude from the latitude input field
+function getCurrentLatitude() {
+  const latitudeInput = document.getElementById('incidentLatitude');
+  return latitudeInput ? parseFloat(latitudeInput.value) : null;
+}
+
+// Determine the appropriate mailing group ID based on latitude
+function getMailingGroupId(groups, latitude) {
+  for (let group of groups) {
+      if (latitude >= group.end && latitude < group.start) {
+          return group.name;
+      }
+  }
+  return null;
+}
+
+// Check table for specific Lifesaver units
+function checkTableForLifesaver() {
+  const rows = servicesTable.getElementsByTagName('tr');
+  for (let row of rows) {
+      const serviceCell = row.cells[1]; // assuming the service name is in the second column
+      if (serviceCell && (serviceCell.textContent.includes("Lifesaver 10") || serviceCell.textContent.includes("Lifesaver 21"))) {
+          return true;
+      }
+  }
+  return false;
+}
+
+// Select the mailing group in the dropdown
+function selectMailingGroup(branchName) {
+  const options = mailingGroupSelect.options;
+  for (let i = 0; i < options.length; i++) {
+      if (options[i].value.includes(branchName) && !options[i].selected) {
+          options[i].selected = true;
+      }
+  }
+  // Trigger a change event on the mailing group select element
+  mailingGroupSelect.dispatchEvent(new Event('change'));
+}
+
+// Attach an event listener for F1 keydown to handle updating mailing groups
+window.addEventListener('keydown', function (event) {
+  if (event.key === 'F1') {
+      event.preventDefault();  // Prevent the default F1 help screen
+      updateMailingGroupOptions();
+  }
+});
+});
+
 document.addEventListener("keydown", function (event) {
   if (event.key === "F2") {
     event.preventDefault(); // Prevent the default F2 action
@@ -2136,44 +2239,44 @@ function addRadioButtonsAboveTextarea() {
 // Call the function to add radio buttons and setup their functionality
 addRadioButtonsAboveTextarea();
 
-// Function to attempt setting the dropdown value
-function setDropdownValue() {
-  var statusDropdown = document.getElementById("select-status");
-  if (statusDropdown) {
-    statusDropdown.value = "Online";
-    console.log("Dropdown value set to Online");
-    // Optional: submit the form
-    document.status_form.submit();
-  } else {
-    console.log("Dropdown not found.");
-  }
-}
+// // Function to attempt setting the dropdown value
+// function setDropdownValue() {
+//   var statusDropdown = document.getElementById("select-status");
+//   if (statusDropdown) {
+//     statusDropdown.value = "Online";
+//     console.log("Dropdown value set to Online");
+//     // Optional: submit the form
+//     document.status_form.submit();
+//   } else {
+//     console.log("Dropdown not found.");
+//   }
+// }
 
-// Create an observer instance linked to a callback function
-var observer = new MutationObserver(function (mutations) {
-  mutations.forEach(function (mutation) {
-    if (!mutation.addedNodes) return;
-    for (var i = 0; i < mutation.addedNodes.length; i++) {
-      // Check if the added node is our target dropdown or contains it
-      var node = mutation.addedNodes[i];
-      if (node.id === "select-status" || node.querySelector("#select-status")) {
-        setDropdownValue();
-        // Optional: Disconnect observer if no longer needed
-        // observer.disconnect();
-        break;
-      }
-    }
-  });
-});
+// // Create an observer instance linked to a callback function
+// var observer = new MutationObserver(function (mutations) {
+//   mutations.forEach(function (mutation) {
+//     if (!mutation.addedNodes) return;
+//     for (var i = 0; i < mutation.addedNodes.length; i++) {
+//       // Check if the added node is our target dropdown or contains it
+//       var node = mutation.addedNodes[i];
+//       if (node.id === "select-status" || node.querySelector("#select-status")) {
+//         setDropdownValue();
+//         // Optional: Disconnect observer if no longer needed
+//         // observer.disconnect();
+//         break;
+//       }
+//     }
+//   });
+// });
 
-// Start observing the document body for DOM changes
-observer.observe(document.body, {
-  childList: true,
-  subtree: true,
-});
+// // Start observing the document body for DOM changes
+// observer.observe(document.body, {
+//   childList: true,
+//   subtree: true,
+// });
 
-// Fallback to ensure the dropdown is set upon initial load if it exists
-window.addEventListener("load", setDropdownValue);
+// // Fallback to ensure the dropdown is set upon initial load if it exists
+// window.addEventListener("load", setDropdownValue);
 
 // Function to handle the right-click event on the button
 function handleRightClick(event) {
@@ -2211,7 +2314,7 @@ function updateButtonStyles() {
 
 // Main function to run the modifications
 function runModifications() {
-  convertDropdownToMultiple();
+  // convertDropdownToMultiple();
   updateButtonStyles();
 }
 
