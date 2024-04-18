@@ -4,7 +4,6 @@
   "description": "Allows additional functionality within the SurfCom Management System.",
   "version": "2.0",
   "action": {
-    "default_popup": "Install.html",
     "default_icon": {
       "16": "images/icon16.png",
       "48": "images/icon48.png",
@@ -28,6 +27,10 @@
     "128": "images/icon128.png"
   },
   "host_permissions": ["https://api.weatherapi.com/*"],
+  "permissions": ["sidePanel"],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://api.weatherapi.com/v1/current.json https://api.weatherapi.com/v1/forecast.json https://api.weatherapi.com/v1/marine.json;"
   }

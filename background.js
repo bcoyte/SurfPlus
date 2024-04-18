@@ -57,3 +57,39 @@ chrome.runtime.onStartup.addListener(function() {
 });
 
 // a72468e1e3234dc3b0543634242403 - Weather API Key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.sidePanel.setOptions({
+    path: 'sidepanel.html',
+    enabled: true
+  });
+});
+
+chrome.action.onClicked.addListener((tab) => {
+  chrome.sidePanel.open({ tabId: tab.id });
+});

@@ -3106,7 +3106,7 @@ function getLastSitRepTimestamp() {
   for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
       const messageText = message.querySelector('.direct-chat-text').textContent;
-      if (messageText.includes('SITUATION REPORT')) {
+      if (messageText.includes('Situation Report')) {
           const timestampText = message.querySelector('.direct-chat-timestamp').textContent;
           return parseDate(timestampText);
       }
