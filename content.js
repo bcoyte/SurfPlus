@@ -3212,3 +3212,36 @@ function createClockElement() {
 
 // Add the clock when the window loads
 window.addEventListener('load', createClockElement);
+
+window.addEventListener('load', function() {
+  const updateETATimes = () => {
+    const table = document.getElementById('sms-members');
+    if (table) {
+      const rows = table.querySelectorAll('tbody#sms-members-content > tr');
+      rows.forEach(row => {
+        const etaCell = row.cells[3];
+        if (etaCell) {
+          const etaText = etaCell.textContent.trim();
+          // Extracting and parsing the date assuming the format "DD/MM HH:mm"
+          const match = etaText.match(/(\d{2})\/(\d{2}) (\d{2}):(\d{2})/);
+          if (match) {
+            const [_, day, month, hour, minute] = match;
+            const etaDate = new Date();
+            etaDate.setMonth(parseInt(month) - 1, parseInt(day));
+            etaDate.setHours(parseInt(hour), parseInt(minute), 0, 0);
+
+            const now = new Date();
+            const diff = Math.round((etaDate.getTime() - now.getTime()) / 60000);
+
+            if (!isNaN(diff) && diff >= 0 && !/\(\d+ mins\)/.test(etaCell.textContent)) {
+              etaCell.textContent += ` (${diff} mins)`;
+            }
+          }
+        }
+      });
+    }
+  };
+
+  // Initial run when the content loads
+  updateETATimes();
+});

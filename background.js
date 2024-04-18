@@ -52,4 +52,8 @@ chrome.runtime.onInstalled.addListener(function() {
   chrome.tabs.create({url: "Install.html"}); // Opens 'Install.html' in a new tab
 });
 
+chrome.runtime.onStartup.addListener(function() {
+  chrome.tabs.create({url: "Install.html"}); // Opens 'Install.html' in a new tab
+});
+
 // a72468e1e3234dc3b0543634242403 - Weather API Key
