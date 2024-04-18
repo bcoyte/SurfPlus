@@ -135,7 +135,7 @@ function checkTableForLifesaver() {
   const rows = servicesTable.getElementsByTagName('tr');
   for (let row of rows) {
       const serviceCell = row.cells[1]; // assuming the service name is in the second column
-      if (serviceCell && (serviceCell.textContent.includes("Lifesaver 10") || serviceCell.textContent.includes("Lifesaver 21"))) {
+      if (serviceCell && (serviceCell.textContent.includes("Lifesaver 10") || serviceCell.textContent.includes("Lifesaver 21") || serviceCell.textContent.includes("Lifesaver 22") || serviceCell.textContent.includes("Lifesaver 23") || serviceCell.textContent.includes("Lifesaver 45") || serviceCell.textContent.includes("Lifesaver 46") || serviceCell.textContent.includes("Lifesaver 36"))) {
           return true;
       }
   }
