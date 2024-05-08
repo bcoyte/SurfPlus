@@ -2699,7 +2699,7 @@ window.addEventListener('load', function () {
     alertDiv.style.background = 'red';
     alertDiv.style.color = 'white';
     alertDiv.style.fontSize = '16px';
-    alertDiv.textContent = 'Notify RLTC / NSWA Aeromedical Control (and radio log)';
+    alertDiv.textContent = 'Notify RLTC / NSWA Aeromedical Control on 1800 932 055 (and radio log)';
     alertDiv.className = 'pulsate';
 
     buttonParentDiv.parentNode.insertBefore(alertDiv, buttonParentDiv);
@@ -2891,16 +2891,11 @@ window.addEventListener('load', function () {
   }
 });
 
-
-
-
-
-
 if (window.location.href.startsWith("https://surfcom.sls.com.au/incidents/edit/")) {
     window.addEventListener("load", function () {
         // Function to count statuses from table rows
         function countStatuses() {
-            const statuses = { "Notified": 0, "Enroute": 0, "Arrived": 0, "Returning": 0, "Stood Down": 0 };
+            const statuses = { "Notified": 0, "Enroute": 0, "Arrived": 0, "Returning": 0, "Stood Down": 0, "Unavailable": 0 };
             const rows = document.querySelectorAll("#servicesTable tbody tr");
             if (!rows.length) return statuses; // If no rows found, return default counts
             rows.forEach(row => {
@@ -2915,15 +2910,20 @@ if (window.location.href.startsWith("https://surfcom.sls.com.au/incidents/edit/"
         // Function to count responding members
         function countResponding() {
             let respondingCount = 0;
+            let unavailableCount = 0;
             const rows = document.querySelectorAll("#sms-members-content tr");
-            if (!rows.length) return respondingCount; // If no rows found, return 0
+            if (!rows.length) return { respondingCount, unavailableCount }; // If no rows found, return 0
             rows.forEach(row => {
                 const response = row.cells[2]?.textContent.trim();
-                if (response && response !== "Unavailable") {
-                    respondingCount++;
+                if (response) {
+                    if (response !== "Unavailable") {
+                        respondingCount++;
+                    } else {
+                        unavailableCount++;
+                    }
                 }
             });
-            return respondingCount;
+            return { respondingCount, unavailableCount };
         }
 
         // Function to create a card element for displaying a status
@@ -2946,7 +2946,7 @@ if (window.location.href.startsWith("https://surfcom.sls.com.au/incidents/edit/"
         }
 
         // Function to append status cards to a container
-        function appendStatusesToContainer(container, statuses, respondingCount) {
+        function appendStatusesToContainer(container, statuses, respondingCount, unavailableCount) {
             Object.entries(statuses).forEach(([status, count]) => {
                 const statusCard = createStatusCard(status, count);
                 container.appendChild(statusCard);
@@ -2958,15 +2958,18 @@ if (window.location.href.startsWith("https://surfcom.sls.com.au/incidents/edit/"
 
             const respondingCard = createStatusCard("Responding", respondingCount);
             container.appendChild(respondingCard);
+
+            const unavailableCard = createStatusCard("Unavailable", unavailableCount);
+            container.appendChild(unavailableCard);
         }
 
         // Main execution block to create status container and append it to the DOM
         const statusCounts = countStatuses();
-        const respondingCount = countResponding();
+        const { respondingCount, unavailableCount } = countResponding();
         const container = document.createElement("div");
         container.style.cssText = "display: flex; align-items: center; justify-content: flex-end; flex-grow: 1; position: relative; top: -7px;";
 
-        appendStatusesToContainer(container, statusCounts, respondingCount);
+        appendStatusesToContainer(container, statusCounts, respondingCount, unavailableCount);
 
         const targetDiv = document.querySelector(".row.mb-4");
         if (targetDiv) {
