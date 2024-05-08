@@ -2595,26 +2595,6 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Add event listener to the document for a click event
 document.addEventListener('click', function (event) {
   let targetElement = event.target;
@@ -2638,17 +2618,16 @@ document.addEventListener('click', function (event) {
           }
         });
 
-        const recordButtonById = document.getElementById("post_comment");
-        if (recordButtonById) {
-          recordButtonById.click();
-        }
+        // const recordButtonById = document.getElementById("post_comment");
+        // if (recordButtonById) {
+        //   recordButtonById.click();
+        // }
       }
       break;
     }
     targetElement = targetElement.parentElement;
   }
 }, false);
-
 
 // Add event listener to the document for a click event
 document.addEventListener('click', function (event) {
