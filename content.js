@@ -2194,7 +2194,7 @@ function addRadioButtonsAboveTextarea() {
         <input type="radio" name="options" id="option4"> TEAMS
       </label>
       <label class="btn btn-secondary">
-        <input type="radio" name="options" id="option5"> TEXT
+        <input type="radio" name="options" id="option5"> SMS
       </label>
       <label class="btn btn-secondary">
         <input type="radio" name="options" id="option6"> ICEMS
