@@ -10,11 +10,11 @@ document.addEventListener("keydown", function (event) {
       { name: "LNC", start: -31.636052, end: -32.447837 },
       { name: "HUN", start: -32.447837, end: -33.165642 },
       { name: "CC", start: -33.165642, end: -33.573543 },
-      { name: "SNB", start: -33.573543, end: -33.825060 },
-      { name: "SYD", start: -33.825060, end: -34.191638 },
+      { name: "SNB", start: -33.573543, end: -33.82506 },
+      { name: "SYD", start: -33.82506, end: -34.191638 },
       { name: "ILL", start: -34.191638, end: -34.548028 },
       { name: "SC", start: -34.548028, end: -35.664119 },
-      { name: "FSC", start: -35.664119, end: -36.000000 },
+      { name: "FSC", start: -35.664119, end: -36.0 },
     ];
 
     // Function to determine the branch based on latitude
@@ -28,29 +28,48 @@ document.addEventListener("keydown", function (event) {
     }
 
     // Extract latitude value
-    let incidentLatitude = parseFloat(document.querySelector("#incidentLatitude").value);
+    let incidentLatitude = parseFloat(
+      document.querySelector("#incidentLatitude").value
+    );
 
     // Find the branch based on the latitude
     let branchIdentifier = determineBranch(incidentLatitude);
 
     // Extract data
-    let incidentLevel = document.querySelector("#priority option:checked").textContent.trim().match(/\((\d+)\)/)?.[1];
-    let incidentNumber = document.querySelector("small.text-muted").textContent.trim().match(/#(L\d+)/)?.[1];
+    let incidentLevel = document
+      .querySelector("#priority option:checked")
+      .textContent.trim()
+      .match(/\((\d+)\)/)?.[1];
+    let incidentNumber = document
+      .querySelector("small.text-muted")
+      .textContent.trim()
+      .match(/#(L\d+)/)?.[1];
     let locationValue = document.querySelector("#incidentLocation").value;
-    let descriptionValue = document.querySelector("#incidentBriefDescription").value;
-    let incidentType = document.querySelector("#incidentType option:checked").textContent.trim();
+    let descriptionValue = document.querySelector(
+      "#incidentBriefDescription"
+    ).value;
+    let incidentType = document
+      .querySelector("#incidentType option:checked")
+      .textContent.trim();
     let slsContact = document.querySelector("#incidentSLSContact").value;
     let textAfterLastSlash = slsContact.split("/").pop();
 
     // Extract username from email
-    let email = document.querySelector(".dropdown-menu .dropdown-item small:nth-of-type(2)").textContent;
-    let username = email.substring(0, email.indexOf('@')).toUpperCase();
+    let email = document.querySelector(
+      ".dropdown-menu .dropdown-item small:nth-of-type(2)"
+    ).textContent;
+    let username = email.substring(0, email.indexOf("@")).toUpperCase();
 
     // Convert locationValue to title case
-    locationValue = locationValue.split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ");
+    locationValue = locationValue
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
 
     // Convert descriptionValue to sentence case
-    descriptionValue = descriptionValue.charAt(0).toUpperCase() + descriptionValue.slice(1).toLowerCase();
+    descriptionValue =
+      descriptionValue.charAt(0).toUpperCase() +
+      descriptionValue.slice(1).toLowerCase();
 
     // Format the output including the branch identifier dynamically
     let output = `L${incidentLevel}. ${incidentNumber}. ${locationValue} (${branchIdentifier}). ${incidentType}. ${descriptionValue}. ${username}.`;
@@ -61,106 +80,158 @@ document.addEventListener("keydown", function (event) {
 });
 
 // content.js for Chrome Extension to handle F1 key press to update SMS mailing groups
-window.addEventListener('load', function () {
-  const emailTemplateSelect = document.getElementById('email_template');
-  const mailingGroupSelect = document.querySelector('.mailinggroup_id');
-  const servicesTable = document.getElementById('servicesTable');
+window.addEventListener("load", function () {
+  const emailTemplateSelect = document.getElementById("email_template");
+  const mailingGroupSelect = document.querySelector(".mailinggroup_id");
+  const servicesTable = document.getElementById("servicesTable");
 
   if (!emailTemplateSelect || !mailingGroupSelect || !servicesTable) {
-      console.error('Required elements not found on the page.');
-      return;
+    console.error("Required elements not found on the page.");
+    return;
   }
-
 
   // Define groups for SMS
   const smsGroups = [
-    { name: "66118_01-1 FNC Serious Incident Notification SMS", start: -28.164557, end: -29.610527 },
-    { name: "66120_02-1 NC Serious Incident Notification SMS", start: -29.610527, end: -30.665687 },
-    { name: "66122_03-1 MNC Serious Incident Notification SMS", start: -30.665687, end: -31.636052 },
-    { name: "66124_04-1 LNC Serious Incident Notification SMS", start: -31.636052, end: -32.447837 },
-    { name: "66146_05-1 HUN Serious Incident Notification SMS", start: -32.447837, end: -33.165642 },
-    { name: "66148_06-1 CC Serious Incident Notification SMS", start: -33.165642, end: -33.573543 },
-    { name: "66151_07-1 SNB Serious Incident Notification SMS", start: -33.573543, end: -33.825060 },
-    { name: "66153_08-1 SYD Serious Incident Notification SMS", start: -33.825060, end: -34.191638 },
-    { name: "66155_09-1 ILL Serious Incident Notification SMS", start: -34.191638, end: -34.548028 },
-    { name: "66157_10-1 SC Serious Incident Notification SMS", start: -34.548028, end: -35.664119 },
-    { name: "66159_11-1 FSC Serious Incident Notification SMS", start: -35.664119, end: -36.000000 }
+    {
+      name: "66118_01-1 FNC Serious Incident Notification SMS",
+      start: -28.164557,
+      end: -29.610527,
+    },
+    {
+      name: "66120_02-1 NC Serious Incident Notification SMS",
+      start: -29.610527,
+      end: -30.665687,
+    },
+    {
+      name: "66122_03-1 MNC Serious Incident Notification SMS",
+      start: -30.665687,
+      end: -31.636052,
+    },
+    {
+      name: "66124_04-1 LNC Serious Incident Notification SMS",
+      start: -31.636052,
+      end: -32.447837,
+    },
+    {
+      name: "66146_05-1 HUN Serious Incident Notification SMS",
+      start: -32.447837,
+      end: -33.165642,
+    },
+    {
+      name: "66148_06-1 CC Serious Incident Notification SMS",
+      start: -33.165642,
+      end: -33.573543,
+    },
+    {
+      name: "66151_07-1 SNB Serious Incident Notification SMS",
+      start: -33.573543,
+      end: -33.82506,
+    },
+    {
+      name: "66153_08-1 SYD Serious Incident Notification SMS",
+      start: -33.82506,
+      end: -34.191638,
+    },
+    {
+      name: "66155_09-1 ILL Serious Incident Notification SMS",
+      start: -34.191638,
+      end: -34.548028,
+    },
+    {
+      name: "66157_10-1 SC Serious Incident Notification SMS",
+      start: -34.548028,
+      end: -35.664119,
+    },
+    {
+      name: "66159_11-1 FSC Serious Incident Notification SMS",
+      start: -35.664119,
+      end: -36.0,
+    },
   ];
 
- // Function to update mailing group options based on the template selected
- function updateMailingGroupOptions() {
-  const groups = smsGroups;
-  setOptions(groups);
-}
+  // Function to update mailing group options based on the template selected
+  function updateMailingGroupOptions() {
+    const groups = smsGroups;
+    setOptions(groups);
+  }
 
-// Function to set options based on current latitude and table content
-function setOptions(groups) {
-  const currentLatitude = getCurrentLatitude();
-  const isLifesaverPresent = checkTableForLifesaver();
-  let selectedGroups = [];
+  // Function to set options based on current latitude and table content
+  function setOptions(groups) {
+    const currentLatitude = getCurrentLatitude();
+    const isLifesaverPresent = checkTableForLifesaver();
+    let selectedGroups = [];
 
-  if (currentLatitude !== null) {
+    if (currentLatitude !== null) {
       const branchName = getMailingGroupId(groups, currentLatitude);
       if (branchName) {
-          selectedGroups.push(branchName);
+        selectedGroups.push(branchName);
       }
-  }
+    }
 
-  if (isLifesaverPresent) {
+    if (isLifesaverPresent) {
       selectedGroups.push("82296_00-8 Westpac Notifications");
+    }
+
+    // Apply all selected groups
+    selectedGroups.forEach((branchName) => selectMailingGroup(branchName));
   }
 
-  // Apply all selected groups
-  selectedGroups.forEach(branchName => selectMailingGroup(branchName));
-}
+  // Get current latitude from the latitude input field
+  function getCurrentLatitude() {
+    const latitudeInput = document.getElementById("incidentLatitude");
+    return latitudeInput ? parseFloat(latitudeInput.value) : null;
+  }
 
-// Get current latitude from the latitude input field
-function getCurrentLatitude() {
-  const latitudeInput = document.getElementById('incidentLatitude');
-  return latitudeInput ? parseFloat(latitudeInput.value) : null;
-}
-
-// Determine the appropriate mailing group ID based on latitude
-function getMailingGroupId(groups, latitude) {
-  for (let group of groups) {
+  // Determine the appropriate mailing group ID based on latitude
+  function getMailingGroupId(groups, latitude) {
+    for (let group of groups) {
       if (latitude >= group.end && latitude < group.start) {
-          return group.name;
+        return group.name;
       }
+    }
+    return null;
   }
-  return null;
-}
 
-// Check table for specific Lifesaver units
-function checkTableForLifesaver() {
-  const rows = servicesTable.getElementsByTagName('tr');
-  for (let row of rows) {
+  // Check table for specific Lifesaver units
+  function checkTableForLifesaver() {
+    const rows = servicesTable.getElementsByTagName("tr");
+    for (let row of rows) {
       const serviceCell = row.cells[1]; // assuming the service name is in the second column
-      if (serviceCell && (serviceCell.textContent.includes("Lifesaver 10") || serviceCell.textContent.includes("Lifesaver 21") || serviceCell.textContent.includes("Lifesaver 22") || serviceCell.textContent.includes("Lifesaver 23") || serviceCell.textContent.includes("Lifesaver 45") || serviceCell.textContent.includes("Lifesaver 46") || serviceCell.textContent.includes("Lifesaver 36"))) {
-          return true;
+      if (
+        serviceCell &&
+        (serviceCell.textContent.includes("Lifesaver 10") ||
+          serviceCell.textContent.includes("Lifesaver 21") ||
+          serviceCell.textContent.includes("Lifesaver 22") ||
+          serviceCell.textContent.includes("Lifesaver 23") ||
+          serviceCell.textContent.includes("Lifesaver 45") ||
+          serviceCell.textContent.includes("Lifesaver 46") ||
+          serviceCell.textContent.includes("Lifesaver 36"))
+      ) {
+        return true;
       }
+    }
+    return false;
   }
-  return false;
-}
 
-// Select the mailing group in the dropdown
-function selectMailingGroup(branchName) {
-  const options = mailingGroupSelect.options;
-  for (let i = 0; i < options.length; i++) {
+  // Select the mailing group in the dropdown
+  function selectMailingGroup(branchName) {
+    const options = mailingGroupSelect.options;
+    for (let i = 0; i < options.length; i++) {
       if (options[i].value.includes(branchName) && !options[i].selected) {
-          options[i].selected = true;
+        options[i].selected = true;
       }
+    }
+    // Trigger a change event on the mailing group select element
+    mailingGroupSelect.dispatchEvent(new Event("change"));
   }
-  // Trigger a change event on the mailing group select element
-  mailingGroupSelect.dispatchEvent(new Event('change'));
-}
 
-// Attach an event listener for F1 keydown to handle updating mailing groups
-window.addEventListener('keydown', function (event) {
-  if (event.key === 'F1') {
-      event.preventDefault();  // Prevent the default F1 help screen
+  // Attach an event listener for F1 keydown to handle updating mailing groups
+  window.addEventListener("keydown", function (event) {
+    if (event.key === "F1") {
+      event.preventDefault(); // Prevent the default F1 help screen
       updateMailingGroupOptions();
-  }
-});
+    }
+  });
 });
 
 document.addEventListener("keydown", function (event) {
@@ -1128,9 +1199,9 @@ function haversineDistance(lat1, lon1, lat2, lon2) {
   var a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(toRad(lat1)) *
-    Math.cos(toRad(lat2)) *
-    Math.sin(dLon / 2) *
-    Math.sin(dLon / 2);
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   var d = R * c;
   return d;
@@ -1269,7 +1340,8 @@ function initializeButtonAddition() {
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
                   console.log(
-                    `Row ${index + 1
+                    `Row ${
+                      index + 1
                     }: Creating new button for incidentId: ${incidentId}`
                   );
 
@@ -1299,7 +1371,8 @@ function initializeButtonAddition() {
 
                   actionsCell.appendChild(newButton);
                   console.log(
-                    `Row ${index + 1
+                    `Row ${
+                      index + 1
                     }: New 'Reopen' button added with confirmation dialog.`
                   );
                 } else {
@@ -1369,7 +1442,8 @@ function initializeButtonAddition22() {
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
                   console.log(
-                    `Row ${index + 1
+                    `Row ${
+                      index + 1
                     }: Creating new button for incidentId: ${incidentId}`
                   );
 
@@ -1398,7 +1472,8 @@ function initializeButtonAddition22() {
               }
             } else {
               console.log(
-                `Row ${index + 1
+                `Row ${
+                  index + 1
                 }: 'Download PDF' button already exists, skipping.`
               );
             }
@@ -1459,7 +1534,8 @@ function initializeButtonAddition12() {
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
                   console.log(
-                    `Row ${index + 1
+                    `Row ${
+                      index + 1
                     }: Creating new button for incidentId: ${incidentId}`
                   );
 
@@ -1487,7 +1563,8 @@ function initializeButtonAddition12() {
               }
             } else {
               console.log(
-                `Row ${index + 1
+                `Row ${
+                  index + 1
                 }: 'Download CSV' button already exists, skipping.`
               );
             }
@@ -1547,7 +1624,8 @@ function initializeButtonAddition3() {
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
                   console.log(
-                    `Row ${index + 1
+                    `Row ${
+                      index + 1
                     }: Creating new button for incidentId: ${incidentId}`
                   );
 
@@ -1572,7 +1650,8 @@ function initializeButtonAddition3() {
 
                   actionsCell.appendChild(newButton);
                   console.log(
-                    `Row ${index + 1
+                    `Row ${
+                      index + 1
                     }: New 'Reopen' button added with confirmation dialog.`
                   );
                 } else {
@@ -1642,7 +1721,8 @@ function initializeButtonAddition2() {
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
                   console.log(
-                    `Row ${index + 1
+                    `Row ${
+                      index + 1
                     }: Creating new button for incidentId: ${incidentId}`
                   );
 
@@ -1667,7 +1747,8 @@ function initializeButtonAddition2() {
 
                   actionsCell.appendChild(newButton);
                   console.log(
-                    `Row ${index + 1
+                    `Row ${
+                      index + 1
                     }: New 'Reopen' button added with confirmation dialog.`
                   );
                 } else {
@@ -1726,13 +1807,15 @@ function initializeStatusFormatting() {
           const statusText = statusCell.textContent.trim();
           if (statusText === "Open") {
             console.log(
-              `Row ${index + 1
+              `Row ${
+                index + 1
               }: Status is 'Open'. Formatting with pastel green.`
             );
             statusCell.innerHTML = `<span style="display: block; padding: 2px 5px; margin: 0; background-color: #b8d8b8; color: #3a5335; border-radius: 4px;">Open</span>`;
           } else if (statusText === "CLOSED") {
             console.log(
-              `Row ${index + 1
+              `Row ${
+                index + 1
               }: Status is 'CLOSED'. Formatting with pastel red.`
             );
             statusCell.innerHTML = `<span style="display: block; padding: 2px 5px; margin: 0; background-color: #f4bfbf; color: #7c2a2a; border-radius: 4px;">CLOSED</span>`;
@@ -2453,22 +2536,6 @@ function insertOrUpdateTimeOpenCounter() {
 // Call the function to insert or update the time open counter
 insertOrUpdateTimeOpenCounter();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // content.js
 window.addEventListener("load", function () {
   const resultContainerId = "weatherapi-results";
@@ -2504,30 +2571,30 @@ window.addEventListener("load", function () {
 
 function convertCompassPoint(abbreviatedDirection) {
   const compassPoints = {
-    N: 'North',
-    NE: 'North-East',
-    E: 'East',
-    SE: 'South-East',
-    S: 'South',
-    SW: 'South-West',
-    W: 'West',
-    NW: 'North-West',
-    NNE: 'North-North-East',
-    ENE: 'East-North-East',
-    ESE: 'East-South-East',
-    SSE: 'South-South-East',
-    SSW: 'South-South-West',
-    WSW: 'West-South-West',
-    WNW: 'West-North-West',
-    NNW: 'North-North-West'
+    N: "North",
+    NE: "North-East",
+    E: "East",
+    SE: "South-East",
+    S: "South",
+    SW: "South-West",
+    W: "West",
+    NW: "North-West",
+    NNE: "North-North-East",
+    ENE: "East-North-East",
+    ESE: "East-South-East",
+    SSE: "South-South-East",
+    SSW: "South-South-West",
+    WSW: "West-South-West",
+    WNW: "West-North-West",
+    NNW: "North-North-West",
   };
 
   return compassPoints[abbreviatedDirection] || abbreviatedDirection;
 }
 
 function adjustToUTC10(date) {
-  const utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
-  const utc10Time = new Date(utcTime + (3600000 * 10));
+  const utcTime = date.getTime() + date.getTimezoneOffset() * 60000;
+  const utc10Time = new Date(utcTime + 3600000 * 10);
   return utc10Time;
 }
 
@@ -2535,7 +2602,10 @@ function findNextTide(tides, currentTime) {
   let nextTide = null;
   tides.forEach((tide) => {
     const tideTime = adjustToUTC10(new Date(tide.tide_time.replace(" ", "T")));
-    if (tideTime > currentTime && (!nextTide || tideTime < new Date(nextTide.tide_time.replace(" ", "T")))) {
+    if (
+      tideTime > currentTime &&
+      (!nextTide || tideTime < new Date(nextTide.tide_time.replace(" ", "T")))
+    ) {
       nextTide = tide;
     }
   });
@@ -2553,27 +2623,47 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
     resultsDiv.style.justifyContent = "space-between";
     resultsDiv.style.gap = "15px";
 
-    const currentTime = adjustToUTC10(new Date(marineData.location.localtime.replace(" ", "T")));
+    const currentTime = adjustToUTC10(
+      new Date(marineData.location.localtime.replace(" ", "T"))
+    );
     let currentTide = null;
     let nextTide = null;
     let forecastDays = marineData.forecast.forecastday;
 
-    forecastDays.some(forecastDay => {
+    forecastDays.some((forecastDay) => {
       const tides = forecastDay.day.tides[0].tide;
       nextTide = findNextTide(tides, currentTime);
       return !!nextTide;
     });
 
     const tidesToday = forecastDays[0].day.tides[0].tide;
-    tidesToday.forEach(tide => {
-      const tideTime = adjustToUTC10(new Date(tide.tide_time.replace(" ", "T")));
-      if (tideTime < currentTime && (!currentTide || tideTime > new Date(currentTide.tide_time.replace(" ", "T")))) {
+    tidesToday.forEach((tide) => {
+      const tideTime = adjustToUTC10(
+        new Date(tide.tide_time.replace(" ", "T"))
+      );
+      if (
+        tideTime < currentTime &&
+        (!currentTide ||
+          tideTime > new Date(currentTide.tide_time.replace(" ", "T")))
+      ) {
         currentTide = tide;
       }
     });
 
-    const currentTideInfo = currentTide ? `<span title='Date: ${currentTide.tide_time.split(" ")[0]}'>${currentTide.tide_type} at ${currentTide.tide_time.split(" ")[1]} (${currentTide.tide_height_mt}m)</span>` : "Not available";
-    const nextTideInfo = nextTide ? `<span title='Date: ${nextTide.tide_time.split(" ")[0]}'>${nextTide.tide_type} at ${nextTide.tide_time.split(" ")[1]} (${nextTide.tide_height_mt}m)</span>` : "Not available";
+    const currentTideInfo = currentTide
+      ? `<span title='Date: ${currentTide.tide_time.split(" ")[0]}'>${
+          currentTide.tide_type
+        } at ${currentTide.tide_time.split(" ")[1]} (${
+          currentTide.tide_height_mt
+        }m)</span>`
+      : "Not available";
+    const nextTideInfo = nextTide
+      ? `<span title='Date: ${nextTide.tide_time.split(" ")[0]}'>${
+          nextTide.tide_type
+        } at ${nextTide.tide_time.split(" ")[1]} (${
+          nextTide.tide_height_mt
+        }m)</span>`
+      : "Not available";
 
     const swellDirection = forecastDays[0].hour[0].swell_dir_16_point;
     const swellDirectionFull = convertCompassPoint(swellDirection);
@@ -2596,117 +2686,154 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
 }
 
 // Add event listener to the document for a click event
-document.addEventListener('click', function (event) {
-  let targetElement = event.target;
-  while (targetElement != null) {
-    if (targetElement.matches('.weather-details') || targetElement.matches('.weather-detail')) {
-      const latitude = document.querySelector("#incidentLatitude").value;
-      const longitude = document.querySelector("#incidentLongitude").value;
+document.addEventListener(
+  "click",
+  function (event) {
+    let targetElement = event.target;
+    while (targetElement != null) {
+      if (
+        targetElement.matches(".weather-details") ||
+        targetElement.matches(".weather-detail")
+      ) {
+        const latitude = document.querySelector("#incidentLatitude").value;
+        const longitude = document.querySelector("#incidentLongitude").value;
 
-      const messageTextArea = document.querySelector("textarea#message");
-      if (messageTextArea) {
-        let weatherDetailsText = `Current Weather at ${latitude}, ${longitude} - `;
-        const details = Array.from(document.querySelectorAll('.weather-detail')).map(detail => detail.innerText);
-        weatherDetailsText += details.join(', ');
-        messageTextArea.value = weatherDetailsText;
+        const messageTextArea = document.querySelector("textarea#message");
+        if (messageTextArea) {
+          let weatherDetailsText = `Current Weather at ${latitude}, ${longitude} - `;
+          const details = Array.from(
+            document.querySelectorAll(".weather-detail")
+          ).map((detail) => detail.innerText);
+          weatherDetailsText += details.join(", ");
+          messageTextArea.value = weatherDetailsText;
 
-        ['msg_to', 'msg_from'].forEach(selectId => {
-          const selectElement = document.querySelector(`select#${selectId}`);
-          if (selectElement) {
-            selectElement.value = "Surfcom";
-            selectElement.dispatchEvent(new Event('change', { 'bubbles': true }));
-          }
-        });
+          ["msg_to", "msg_from"].forEach((selectId) => {
+            const selectElement = document.querySelector(`select#${selectId}`);
+            if (selectElement) {
+              selectElement.value = "Surfcom";
+              selectElement.dispatchEvent(
+                new Event("change", { bubbles: true })
+              );
+            }
+          });
 
-        // const recordButtonById = document.getElementById("post_comment");
-        // if (recordButtonById) {
-        //   recordButtonById.click();
-        // }
+          // const recordButtonById = document.getElementById("post_comment");
+          // if (recordButtonById) {
+          //   recordButtonById.click();
+          // }
+        }
+        break;
       }
-      break;
+      targetElement = targetElement.parentElement;
     }
-    targetElement = targetElement.parentElement;
-  }
-}, false);
+  },
+  false
+);
 
 // Add event listener to the document for a click event
-document.addEventListener('click', function (event) {
-  // Check if the clicked element or its parent has the class 'weather-details'
-  let targetElement = event.target;
-  while (targetElement != null) {
-    if (targetElement.matches('.weather-details') || targetElement.matches('.weather-detail')) {
-      // Fetch latitude and longitude values
-      const latitude = document.querySelector("#incidentLatitude").value;
-      const longitude = document.querySelector("#incidentLongitude").value;
+document.addEventListener(
+  "click",
+  function (event) {
+    // Check if the clicked element or its parent has the class 'weather-details'
+    let targetElement = event.target;
+    while (targetElement != null) {
+      if (
+        targetElement.matches(".weather-details") ||
+        targetElement.matches(".weather-detail")
+      ) {
+        // Fetch latitude and longitude values
+        const latitude = document.querySelector("#incidentLatitude").value;
+        const longitude = document.querySelector("#incidentLongitude").value;
 
-      // Find the textarea to insert the weather data into
-      const messageTextArea = document.querySelector("textarea#message");
-      if (messageTextArea) {
-        // Format the introduction text with the fetched latitude and longitude
-        let weatherDetailsText = `Current Weather at ${latitude}, ${longitude} - `;
+        // Find the textarea to insert the weather data into
+        const messageTextArea = document.querySelector("textarea#message");
+        if (messageTextArea) {
+          // Format the introduction text with the fetched latitude and longitude
+          let weatherDetailsText = `Current Weather at ${latitude}, ${longitude} - `;
 
-        // Collect each weather detail and join them with a comma and a space
-        const details = Array.from(document.querySelectorAll('.weather-detail')).map(detail => detail.innerText);
-        weatherDetailsText += details.join(', ');
+          // Collect each weather detail and join them with a comma and a space
+          const details = Array.from(
+            document.querySelectorAll(".weather-detail")
+          ).map((detail) => detail.innerText);
+          weatherDetailsText += details.join(", ");
 
-        // Insert the formatted weather data into the textarea
-        messageTextArea.value = weatherDetailsText;
+          // Insert the formatted weather data into the textarea
+          messageTextArea.value = weatherDetailsText;
 
-        // Set 'Surfcom' as the value for both 'To' and 'From' select fields and dispatch change events
-        ['msg_to', 'msg_from'].forEach(selectId => {
-          const selectElement = document.querySelector(`select#${selectId}`);
-          if (selectElement) {
-            selectElement.value = "Surfcom";
-            selectElement.dispatchEvent(new Event('change', { 'bubbles': true }));
+          // Set 'Surfcom' as the value for both 'To' and 'From' select fields and dispatch change events
+          ["msg_to", "msg_from"].forEach((selectId) => {
+            const selectElement = document.querySelector(`select#${selectId}`);
+            if (selectElement) {
+              selectElement.value = "Surfcom";
+              selectElement.dispatchEvent(
+                new Event("change", { bubbles: true })
+              );
+            }
+          });
+
+          // Use the ID or name of the button to correctly identify the 'Record' button and click it
+          // Assuming the button has a unique ID "post_comment"
+          const recordButtonById = document.getElementById("post_comment");
+          if (recordButtonById) {
+            recordButtonById.click();
           }
-        });
-
-        // Use the ID or name of the button to correctly identify the 'Record' button and click it
-        // Assuming the button has a unique ID "post_comment"
-        const recordButtonById = document.getElementById("post_comment");
-        if (recordButtonById) {
-          recordButtonById.click();
+          // If you prefer to use the name attribute, uncomment and use the following:
+          // const recordButtonByName = document.querySelector("input[name='post_comment']");
+          // if (recordButtonByName) {
+          //     recordButtonByName.click();
+          // }
         }
-        // If you prefer to use the name attribute, uncomment and use the following:
-        // const recordButtonByName = document.querySelector("input[name='post_comment']");
-        // if (recordButtonByName) {
-        //     recordButtonByName.click();
-        // }
+        break; // Stop the loop once the relevant action is performed
       }
-      break; // Stop the loop once the relevant action is performed
+      targetElement = targetElement.parentElement; // Move up to the parent element
     }
-    targetElement = targetElement.parentElement; // Move up to the parent element
-  }
-}, false);
+  },
+  false
+);
 
-window.addEventListener('load', function () {
-  const helicopterNames = ['Lifesaver 21', 'Lifesaver 22', 'Lifesaver 23', 'Lifesaver 36', 'Lifesaver 45', 'Lifesaver 46']; // List of possible helicopter names
-  const externalControlName = 'Aeromedical Control';
-  const buttonParentDiv = document.getElementById('post_comment').parentNode.parentNode;
+window.addEventListener("load", function () {
+  const helicopterNames = [
+    "Lifesaver 21",
+    "Lifesaver 22",
+    "Lifesaver 23",
+    "Lifesaver 36",
+    "Lifesaver 45",
+    "Lifesaver 46",
+  ]; // List of possible helicopter names
+  const externalControlName = "Aeromedical Control";
+  const buttonParentDiv =
+    document.getElementById("post_comment").parentNode.parentNode;
 
-  const helicopterExists = Array.from(document.querySelectorAll('#servicesTable tbody tr td:nth-child(2)'))
-    .some(td => helicopterNames.some(helicopterName => td.textContent.includes(helicopterName)));
+  const helicopterExists = Array.from(
+    document.querySelectorAll("#servicesTable tbody tr td:nth-child(2)")
+  ).some((td) =>
+    helicopterNames.some((helicopterName) =>
+      td.textContent.includes(helicopterName)
+    )
+  );
 
-  const externalControlExists = Array.from(document.querySelectorAll('.row .direct-chat-name'))
-    .some(name => name.textContent.includes(externalControlName));
+  const externalControlExists = Array.from(
+    document.querySelectorAll(".row .direct-chat-name")
+  ).some((name) => name.textContent.includes(externalControlName));
 
   if (helicopterExists && !externalControlExists && buttonParentDiv) {
-    const alertDiv = document.createElement('div');
-    alertDiv.style.position = 'relative';
-    alertDiv.style.width = '100%';
-    alertDiv.style.textAlign = 'center';
-    alertDiv.style.padding = '10px 0';
-    alertDiv.style.background = 'red';
-    alertDiv.style.color = 'white';
-    alertDiv.style.fontSize = '16px';
-    alertDiv.textContent = 'Notify RLTC / NSWA Aeromedical Control on 1800 932 055 (and radio log)';
-    alertDiv.className = 'pulsate';
+    const alertDiv = document.createElement("div");
+    alertDiv.style.position = "relative";
+    alertDiv.style.width = "100%";
+    alertDiv.style.textAlign = "center";
+    alertDiv.style.padding = "10px 0";
+    alertDiv.style.background = "red";
+    alertDiv.style.color = "white";
+    alertDiv.style.fontSize = "16px";
+    alertDiv.textContent =
+      "Notify RLTC / NSWA Aeromedical Control on 1800 932 055 (and radio log)";
+    alertDiv.className = "pulsate";
 
     buttonParentDiv.parentNode.insertBefore(alertDiv, buttonParentDiv);
 
-    if (!document.getElementById('pulsateStyle')) {
+    if (!document.getElementById("pulsateStyle")) {
       const styleSheet = document.createElement("style");
-      styleSheet.id = 'pulsateStyle';
+      styleSheet.id = "pulsateStyle";
       styleSheet.type = "text/css";
       styleSheet.innerText = `
           @keyframes pulsate {
@@ -2749,11 +2876,11 @@ function openWeatherBoard() {
   const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${latitude},${longitude}&days=1`;
 
   fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       showWeatherModal(data);
     })
-    .catch(error => {
+    .catch((error) => {
       console.error("Error fetching weather data:", error);
     });
 }
@@ -2762,13 +2889,15 @@ function showWeatherModal(weatherData) {
   const now = new Date();
   const currentHour = now.getHours();
   let hoursOptions = weatherData.forecast.forecastday[0].hour
-    .filter(hourData => new Date(hourData.time).getHours() >= currentHour)
+    .filter((hourData) => new Date(hourData.time).getHours() >= currentHour)
     .map((hourData, index) => {
       let hour = new Date(hourData.time).getHours();
       let isNow = hour === currentHour;
-      return `<option value="${index}" ${isNow ? "selected" : ""}>${isNow ? "Now" : `${hour}:00`}</option>`;
+      return `<option value="${index}" ${isNow ? "selected" : ""}>${
+        isNow ? "Now" : `${hour}:00`
+      }</option>`;
     })
-    .join('');
+    .join("");
 
   const modalHtml = `
     <div class="modal fade show" id="weatherModal" tabindex="-1" role="dialog" aria-labelledby="weatherModalLabel" aria-modal="true" style="display: block; z-index: 1001; margin: auto; margin-top: 70px;">
@@ -2789,18 +2918,20 @@ function showWeatherModal(weatherData) {
     </div>
   `;
 
-  const overlay = document.createElement('div');
-  overlay.id = 'modalOverlay';
+  const overlay = document.createElement("div");
+  overlay.id = "modalOverlay";
   overlay.innerHTML = modalHtml;
   document.body.appendChild(overlay);
 
   function updateWeatherDetails(selectedIndex) {
-    const filteredHours = weatherData.forecast.forecastday[0].hour.filter(hourData => new Date(hourData.time).getHours() >= currentHour);
+    const filteredHours = weatherData.forecast.forecastday[0].hour.filter(
+      (hourData) => new Date(hourData.time).getHours() >= currentHour
+    );
     const selectedHourData = filteredHours[selectedIndex];
 
     const willItRainText = selectedHourData.will_it_rain === 1 ? "Yes" : "No";
 
-    document.getElementById('weatherDetails').innerHTML = `
+    document.getElementById("weatherDetails").innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center; background-color: #f0f0f0; padding: 20px; border-radius: 10px;">
         <div>
           <h4>Weather Details</h4>
@@ -2820,23 +2951,27 @@ function showWeatherModal(weatherData) {
     `;
   }
 
-  updateWeatherDetails(document.getElementById('forecastHourDropdown').selectedIndex);
+  updateWeatherDetails(
+    document.getElementById("forecastHourDropdown").selectedIndex
+  );
 
-  document.getElementById('forecastHourDropdown').addEventListener('change', function () {
-    updateWeatherDetails(this.value);
-  });
+  document
+    .getElementById("forecastHourDropdown")
+    .addEventListener("change", function () {
+      updateWeatherDetails(this.value);
+    });
 
   const closeModal = function () {
-    const overlay = document.getElementById('modalOverlay');
-    overlay.style.opacity = '0';
+    const overlay = document.getElementById("modalOverlay");
+    overlay.style.opacity = "0";
     setTimeout(function () {
       document.body.removeChild(overlay);
     }, 300);
   };
 
-  document.getElementById('closeWeather').addEventListener('click', closeModal);
-  document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
+  document.getElementById("closeWeather").addEventListener("click", closeModal);
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
       closeModal();
     }
   });
@@ -2844,187 +2979,227 @@ function showWeatherModal(weatherData) {
 
 createWeatherButton();
 
-window.addEventListener('load', function () {
+window.addEventListener("load", function () {
   // Move the "Responding Services" card above the "Response SMS Notification" card
-  const respondingServicesCard = document.querySelector('.responding-services');
-  const smsNotificationCard = document.getElementById('response-sms-notification');
+  const respondingServicesCard = document.querySelector(".responding-services");
+  const smsNotificationCard = document.getElementById(
+    "response-sms-notification"
+  );
   if (respondingServicesCard && smsNotificationCard) {
-    smsNotificationCard.parentNode.insertBefore(respondingServicesCard, smsNotificationCard);
+    smsNotificationCard.parentNode.insertBefore(
+      respondingServicesCard,
+      smsNotificationCard
+    );
   }
 
   // Adjust the width of all Select2 containers to be 100% for responsive design
-  document.querySelectorAll('.select2-container').forEach(function (selectContainer) {
-    selectContainer.style.width = '100%'; // Ensure Select2 dropdowns fit their containers exactly
-  });
+  document
+    .querySelectorAll(".select2-container")
+    .forEach(function (selectContainer) {
+      selectContainer.style.width = "100%"; // Ensure Select2 dropdowns fit their containers exactly
+    });
 
   // Specifically fix the "Select Mailing Group:" element to not be oversized
-  const mailingGroupSelect2 = document.querySelector('.mailinggroup_id').nextElementSibling; // Target the Select2 container generated for the "mailinggroup_id" select
+  const mailingGroupSelect2 =
+    document.querySelector(".mailinggroup_id").nextElementSibling; // Target the Select2 container generated for the "mailinggroup_id" select
   if (mailingGroupSelect2) {
-    mailingGroupSelect2.style.width = '100%'; // Correct the width to match its container
+    mailingGroupSelect2.style.width = "100%"; // Correct the width to match its container
   }
 
   // Correct positioning adjustments for buttons
-  document.querySelectorAll('.add_unit_quick, #sendSMSResponse').forEach(function (button) {
-    button.classList.add('float-right'); // Adjust button positioning to the right
-    button.style.marginLeft = '20px'; // Correctly adjust the button positioning with a margin to the left
-  });
+  document
+    .querySelectorAll(".add_unit_quick, #sendSMSResponse")
+    .forEach(function (button) {
+      button.classList.add("float-right"); // Adjust button positioning to the right
+      button.style.marginLeft = "20px"; // Correctly adjust the button positioning with a margin to the left
+    });
 
   // Consistent styling for textareas and select elements
-  document.querySelectorAll('textarea, select').forEach(function (element) {
-    element.classList.add('form-control'); // Apply Bootstrap's form-control class for styling
+  document.querySelectorAll("textarea, select").forEach(function (element) {
+    element.classList.add("form-control"); // Apply Bootstrap's form-control class for styling
   });
 
   // Dynamic font size adjustment for the table based on container size
-  const tableResponsive = document.querySelector('.table-responsive');
+  const tableResponsive = document.querySelector(".table-responsive");
   if (tableResponsive) {
-    tableResponsive.style.overflowX = 'auto';
-    tableResponsive.style.maxHeight = 'none';
+    tableResponsive.style.overflowX = "auto";
+    tableResponsive.style.maxHeight = "none";
 
     new ResizeObserver(function (entries) {
       for (let entry of entries) {
         const containerWidth = entry.contentRect.width;
-        document.querySelectorAll('#servicesTable').forEach(function (table) {
-          table.style.fontSize = containerWidth < 768 ? '0.8em' : '1em';
+        document.querySelectorAll("#servicesTable").forEach(function (table) {
+          table.style.fontSize = containerWidth < 768 ? "0.8em" : "1em";
         });
       }
     }).observe(tableResponsive);
   }
 });
 
-if (window.location.href.startsWith("https://surfcom.sls.com.au/incidents/edit/")) {
-    window.addEventListener("load", function () {
-        // Function to count statuses from table rows
-        function countStatuses() {
-            const statuses = { "Notified": 0, "Enroute": 0, "Arrived": 0, "Returning": 0, "Stood Down": 0, "Unavailable": 0 };
-            const rows = document.querySelectorAll("#servicesTable tbody tr");
-            if (!rows.length) return statuses; // If no rows found, return default counts
-            rows.forEach(row => {
-                const status = row.cells[2]?.textContent.trim();
-                if (status && status in statuses) {
-                    statuses[status]++;
-                }
-            });
-            return statuses;
+if (
+  window.location.href.startsWith("https://surfcom.sls.com.au/incidents/edit/")
+) {
+  window.addEventListener("load", function () {
+    // Function to count statuses from table rows
+    function countStatuses() {
+      const statuses = {
+        Notified: 0,
+        Enroute: 0,
+        Arrived: 0,
+        Returning: 0,
+        "Stood Down": 0,
+        Unavailable: 0,
+      };
+      const rows = document.querySelectorAll("#servicesTable tbody tr");
+      if (!rows.length) return statuses; // If no rows found, return default counts
+      rows.forEach((row) => {
+        const status = row.cells[2]?.textContent.trim();
+        if (status && status in statuses) {
+          statuses[status]++;
         }
+      });
+      return statuses;
+    }
 
-        // Function to count responding members
-        function countResponding() {
-            let respondingCount = 0;
-            let unavailableCount = 0;
-            const rows = document.querySelectorAll("#sms-members-content tr");
-            if (!rows.length) return { respondingCount, unavailableCount }; // If no rows found, return 0
-            rows.forEach(row => {
-                const response = row.cells[2]?.textContent.trim();
-                if (response) {
-                    if (response !== "Unavailable") {
-                        respondingCount++;
-                    } else {
-                        unavailableCount++;
-                    }
-                }
-            });
-            return { respondingCount, unavailableCount };
+    // Function to count responding members
+    function countResponding() {
+      let respondingCount = 0;
+      let unavailableCount = 0;
+      const rows = document.querySelectorAll("#sms-members-content tr");
+      if (!rows.length) return { respondingCount, unavailableCount }; // If no rows found, return 0
+      rows.forEach((row) => {
+        const response = row.cells[2]?.textContent.trim();
+        if (response) {
+          if (response !== "Unavailable") {
+            respondingCount++;
+          } else {
+            unavailableCount++;
+          }
         }
+      });
+      return { respondingCount, unavailableCount };
+    }
 
-        // Function to create a card element for displaying a status
-        function createStatusCard(title, count) {
-            const card = document.createElement("div");
-            card.style.cssText = "margin: 0 3px; padding: 6px 12px; background-color: #f0f0f0; border-radius: 5px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);";
-            
-            const statusElement = document.createElement("div");
-            statusElement.textContent = title;
-            statusElement.style.cssText = "font-size: 14px; margin-bottom: 2px; font-weight: 600;";
-            
-            const countElement = document.createElement("div");
-            countElement.textContent = count;
-            countElement.style.cssText = "font-size: 16px; font-weight: bold; color: #007bff;";
-            
-            card.appendChild(statusElement);
-            card.appendChild(countElement);
+    // Function to create a card element for displaying a status
+    function createStatusCard(title, count) {
+      const card = document.createElement("div");
+      card.style.cssText =
+        "margin: 0 3px; padding: 6px 12px; background-color: #f0f0f0; border-radius: 5px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);";
 
-            return card;
-        }
+      const statusElement = document.createElement("div");
+      statusElement.textContent = title;
+      statusElement.style.cssText =
+        "font-size: 14px; margin-bottom: 2px; font-weight: 600;";
 
-        // Function to append status cards to a container
-        function appendStatusesToContainer(container, statuses, respondingCount, unavailableCount) {
-            Object.entries(statuses).forEach(([status, count]) => {
-                const statusCard = createStatusCard(status, count);
-                container.appendChild(statusCard);
-            });
+      const countElement = document.createElement("div");
+      countElement.textContent = count;
+      countElement.style.cssText =
+        "font-size: 16px; font-weight: bold; color: #007bff;";
 
-            const verticalLine = document.createElement("div");
-            verticalLine.style.cssText = "border-left: 2px solid #ccc; height: 40px; margin: 0 8px;";
-            container.appendChild(verticalLine);
+      card.appendChild(statusElement);
+      card.appendChild(countElement);
 
-            const respondingCard = createStatusCard("Responding", respondingCount);
-            container.appendChild(respondingCard);
+      return card;
+    }
 
-            const unavailableCard = createStatusCard("Unavailable", unavailableCount);
-            container.appendChild(unavailableCard);
-        }
+    // Function to append status cards to a container
+    function appendStatusesToContainer(
+      container,
+      statuses,
+      respondingCount,
+      unavailableCount
+    ) {
+      Object.entries(statuses).forEach(([status, count]) => {
+        const statusCard = createStatusCard(status, count);
+        container.appendChild(statusCard);
+      });
 
-        // Main execution block to create status container and append it to the DOM
-        const statusCounts = countStatuses();
-        const { respondingCount, unavailableCount } = countResponding();
-        const container = document.createElement("div");
-        container.style.cssText = "display: flex; align-items: center; justify-content: flex-end; flex-grow: 1; position: relative; top: -7px;";
+      const verticalLine = document.createElement("div");
+      verticalLine.style.cssText =
+        "border-left: 2px solid #ccc; height: 40px; margin: 0 8px;";
+      container.appendChild(verticalLine);
 
-        appendStatusesToContainer(container, statusCounts, respondingCount, unavailableCount);
+      const respondingCard = createStatusCard("Responding", respondingCount);
+      container.appendChild(respondingCard);
 
-        const targetDiv = document.querySelector(".row.mb-4");
-        if (targetDiv) {
-            targetDiv.appendChild(container);
-        } else {
-            document.body.appendChild(container); // If targetDiv not found, append to body
-        }
-    });
+      const unavailableCard = createStatusCard("Unavailable", unavailableCount);
+      container.appendChild(unavailableCard);
+    }
+
+    // Main execution block to create status container and append it to the DOM
+    const statusCounts = countStatuses();
+    const { respondingCount, unavailableCount } = countResponding();
+    const container = document.createElement("div");
+    container.style.cssText =
+      "display: flex; align-items: center; justify-content: flex-end; flex-grow: 1; position: relative; top: -7px;";
+
+    appendStatusesToContainer(
+      container,
+      statusCounts,
+      respondingCount,
+      unavailableCount
+    );
+
+    const targetDiv = document.querySelector(".row.mb-4");
+    if (targetDiv) {
+      targetDiv.appendChild(container);
+    } else {
+      document.body.appendChild(container); // If targetDiv not found, append to body
+    }
+  });
 }
 
-window.addEventListener('load', function () {
-  const respondingServicesHeader = document.querySelector('.responding-services .card-header');
-  const respondingServicesBody = document.querySelector('.responding-services .card-body');
-  const toggleArrow = document.createElement('div');
+window.addEventListener("load", function () {
+  const respondingServicesHeader = document.querySelector(
+    ".responding-services .card-header"
+  );
+  const respondingServicesBody = document.querySelector(
+    ".responding-services .card-body"
+  );
+  const toggleArrow = document.createElement("div");
 
   // Style for the toggle arrow
-  toggleArrow.style.cursor = 'pointer';
-  toggleArrow.style.fontSize = '24px';
-  toggleArrow.style.float = 'right'; // Position to the right of the header text
-  toggleArrow.innerHTML = '▼'; // Down arrow symbol
+  toggleArrow.style.cursor = "pointer";
+  toggleArrow.style.fontSize = "24px";
+  toggleArrow.style.float = "right"; // Position to the right of the header text
+  toggleArrow.innerHTML = "▼"; // Down arrow symbol
 
   // Initially, the card body is shown, so the arrow points down
   let isCardBodyVisible = true;
 
-  toggleArrow.addEventListener('click', () => {
+  toggleArrow.addEventListener("click", () => {
     if (isCardBodyVisible) {
-      respondingServicesBody.style.display = 'none';
-      toggleArrow.innerHTML = '▲'; // Change to up arrow symbol
+      respondingServicesBody.style.display = "none";
+      toggleArrow.innerHTML = "▲"; // Change to up arrow symbol
     } else {
-      respondingServicesBody.style.display = '';
-      toggleArrow.innerHTML = '▼'; // Change to down arrow symbol
+      respondingServicesBody.style.display = "";
+      toggleArrow.innerHTML = "▼"; // Change to down arrow symbol
     }
     isCardBodyVisible = !isCardBodyVisible;
   });
 
   respondingServicesHeader.appendChild(toggleArrow);
 
-  const servicesTable = document.getElementById('servicesTable');
-  const tableRows = servicesTable.querySelectorAll('tbody tr');
+  const servicesTable = document.getElementById("servicesTable");
+  const tableRows = servicesTable.querySelectorAll("tbody tr");
 
   // Collapsing the element if there are more than 10 rows in the table
   if (tableRows.length > 10) {
-    respondingServicesBody.style.display = 'none';
-    toggleArrow.innerHTML = '▲';
+    respondingServicesBody.style.display = "none";
+    toggleArrow.innerHTML = "▲";
     isCardBodyVisible = false;
   }
 });
 
 // This script waits for the DOM to be fully loaded before attempting to modify it.
-window.addEventListener('load', function () {
+window.addEventListener("load", function () {
   // Looks for the element with class 'card-title' that is a descendant of the div with ID 'response-sms-notification'.
-  var cardTitleElement = document.querySelector('#response-sms-notification .card-title');
+  var cardTitleElement = document.querySelector(
+    "#response-sms-notification .card-title"
+  );
   if (cardTitleElement) {
     // If the element is found, change its text content.
-    cardTitleElement.textContent = 'Response SMS Notification (Callout SMS)';
+    cardTitleElement.textContent = "Response SMS Notification (Callout SMS)";
   }
 });
 
@@ -3033,7 +3208,9 @@ window.addEventListener('load', function () {
 // Function to change the title of the card
 function changeCardTitle(newTitle) {
   // Select the card title element
-  var cardTitleElement = document.querySelector('.card.card-primary.card-outline.generate-message .card-header .card-title');
+  var cardTitleElement = document.querySelector(
+    ".card.card-primary.card-outline.generate-message .card-header .card-title"
+  );
 
   // Check if the card title element exists
   if (cardTitleElement) {
@@ -3041,27 +3218,37 @@ function changeCardTitle(newTitle) {
     cardTitleElement.innerText = newTitle;
   } else {
     // Log an error if the card title element is not found
-    console.error('Card title element not found.');
+    console.error("Card title element not found.");
   }
 }
 
 // Call the function to change the card title with the desired new title
-changeCardTitle('Generate Message (Notification SMSs and SitReps)');
+changeCardTitle("Generate Message (Notification SMSs and SitReps)");
 
 // Function to parse date from timestamp string
 function parseDate(timestamp) {
   const parts = timestamp.match(/(\d+)(?:th|nd|rd|st) (\w+) (\d+) (\d+):(\d+)/);
   const months = {
-      Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
-      Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
+    Jan: "01",
+    Feb: "02",
+    Mar: "03",
+    Apr: "04",
+    May: "05",
+    Jun: "06",
+    Jul: "07",
+    Aug: "08",
+    Sep: "09",
+    Oct: "10",
+    Nov: "11",
+    Dec: "12",
   };
   if (parts && months[parts[2]]) {
-      const year = parts[3];
-      const month = months[parts[2]];
-      const day = parts[1].padStart(2, '0');
-      const hour = parts[4];
-      const minute = parts[5];
-      return new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
+    const year = parts[3];
+    const month = months[parts[2]];
+    const day = parts[1].padStart(2, "0");
+    const hour = parts[4];
+    const minute = parts[5];
+    return new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
   }
   return null;
 }
@@ -3071,92 +3258,96 @@ function formatDuration(durationInMinutes) {
   const days = Math.floor(durationInMinutes / (60 * 24));
   const hours = Math.floor((durationInMinutes % (60 * 24)) / 60);
   const minutes = durationInMinutes % 60;
-  let formattedDuration = '';
+  let formattedDuration = "";
   if (days > 0) {
-      formattedDuration += `${days} day${days !== 1 ? 's' : ''}, `;
+    formattedDuration += `${days} day${days !== 1 ? "s" : ""}, `;
   }
   if (hours > 0 || days > 0) {
-      formattedDuration += `${hours} hour${hours !== 1 ? 's' : ''}, `;
+    formattedDuration += `${hours} hour${hours !== 1 ? "s" : ""}, `;
   }
-  formattedDuration += `${minutes} minute${minutes !== 1 ? 's' : ''}`;
+  formattedDuration += `${minutes} minute${minutes !== 1 ? "s" : ""}`;
   return formattedDuration;
 }
 
 // Function to get the most recent "SITUATION REPORT" timestamp
 function getLastSitRepTimestamp() {
-  const messages = Array.from(document.querySelectorAll('.direct-chat-msg'));
+  const messages = Array.from(document.querySelectorAll(".direct-chat-msg"));
   for (let i = 0; i < messages.length; i++) {
-      const message = messages[i];
-      const messageText = message.querySelector('.direct-chat-text').textContent;
-      if (messageText.includes('Situation Report')) {
-          const timestampText = message.querySelector('.direct-chat-timestamp').textContent;
-          return parseDate(timestampText);
-      }
+    const message = messages[i];
+    const messageText = message.querySelector(".direct-chat-text").textContent;
+    if (messageText.includes("Situation Report")) {
+      const timestampText = message.querySelector(
+        ".direct-chat-timestamp"
+      ).textContent;
+      return parseDate(timestampText);
+    }
   }
   return null;
 }
 
 // Function to replace an existing element if it exists
 function replaceIfExists(parentElement, newElement) {
-  const existingElement = parentElement.querySelector(`.${newElement.className}`);
+  const existingElement = parentElement.querySelector(
+    `.${newElement.className}`
+  );
   if (existingElement) {
-      parentElement.replaceChild(newElement, existingElement);
+    parentElement.replaceChild(newElement, existingElement);
   } else {
-      parentElement.appendChild(newElement);
+    parentElement.appendChild(newElement);
   }
 }
 
 // Function to display the time since the last "SITUATION REPORT"
 function displayTimeSinceLastReport() {
-  const prioritySelect = document.getElementById('priority');
-  if (!prioritySelect || prioritySelect.value !== '3') {
-      return; // Only run if priority is 3
+  const prioritySelect = document.getElementById("priority");
+  if (!prioritySelect || prioritySelect.value !== "3") {
+    return; // Only run if priority is 3
   }
 
-  const durationOpenElement = document.getElementById('durationOpen');
-  const openDuration = durationOpenElement.value.split(':');
+  const durationOpenElement = document.getElementById("durationOpen");
+  const openDuration = durationOpenElement.value.split(":");
   const openHours = parseInt(openDuration[0], 10);
   const openMinutes = parseInt(openDuration[1], 10);
   const totalOpenMinutes = openHours * 60 + openMinutes;
 
   if (totalOpenMinutes < 60) {
-      return; // Do not display if open time is less than 60 minutes
+    return; // Do not display if open time is less than 60 minutes
   }
 
   const lastReportTime = getLastSitRepTimestamp();
-  const cardBodyDiv = document.querySelector('.card-body');
+  const cardBodyDiv = document.querySelector(".card-body");
   if (!lastReportTime) {
-      const counterElement = document.createElement('div');
-      counterElement.textContent = `SitRep Due, None sent yet.`;
-      counterElement.style.padding = '10px';
-      counterElement.style.marginTop = '5px';
-      counterElement.style.backgroundColor = 'orange';
-      counterElement.style.textAlign = 'center';
-      counterElement.style.fontWeight = 'bold';
-      counterElement.className = 'pulsate';
-      replaceIfExists(cardBodyDiv, counterElement);
-      return;
+    const counterElement = document.createElement("div");
+    counterElement.textContent = `SitRep Due, None sent yet.`;
+    counterElement.style.padding = "10px";
+    counterElement.style.marginTop = "5px";
+    counterElement.style.backgroundColor = "orange";
+    counterElement.style.textAlign = "center";
+    counterElement.style.fontWeight = "bold";
+    counterElement.className = "pulsate";
+    replaceIfExists(cardBodyDiv, counterElement);
+    return;
   }
 
   const currentTime = new Date();
   const differenceInMinutes = (currentTime - lastReportTime) / (1000 * 60);
 
   if (differenceInMinutes > 60) {
-      const formattedDifference = formatDuration(Math.floor(differenceInMinutes));
-      const counterElement = document.createElement('div');
-      counterElement.textContent = `SitRep is due, last sent ${formattedDifference} ago`;
-      counterElement.style.padding = '10px';
-      counterElement.style.marginTop = '5px';
-      counterElement.style.backgroundColor = 'orange';
-      counterElement.style.textAlign = 'center';
-      counterElement.style.fontWeight = 'bold';
-      counterElement.className = 'pulsate';
-      replaceIfExists(cardBodyDiv, counterElement);
+    const formattedDifference = formatDuration(Math.floor(differenceInMinutes));
+    const counterElement = document.createElement("div");
+    counterElement.textContent = `SitRep is due, last sent ${formattedDifference} ago`;
+    counterElement.style.padding = "10px";
+    counterElement.style.marginTop = "5px";
+    counterElement.style.backgroundColor = "orange";
+    counterElement.style.textAlign = "center";
+    counterElement.style.fontWeight = "bold";
+    counterElement.className = "pulsate";
+    replaceIfExists(cardBodyDiv, counterElement);
   }
 }
 
 // CSS for pulsating effect
-const style = document.createElement('style');
+const style = document.createElement("style");
 style.innerHTML = `
 @keyframes pulsate {
   0% { background-color: orange; }
@@ -3171,33 +3362,33 @@ document.head.appendChild(style);
 
 // Setup MutationObserver to update the display when new chat messages are added
 function observeChatChanges() {
-  const prioritySelect = document.getElementById('priority');
-  if (!prioritySelect || prioritySelect.value !== '3') {
-      return; // Only set up observer if priority is 3
+  const prioritySelect = document.getElementById("priority");
+  if (!prioritySelect || prioritySelect.value !== "3") {
+    return; // Only set up observer if priority is 3
   }
 
-  const chatMessagesContainer = document.querySelector('.direct-chat-messages');
+  const chatMessagesContainer = document.querySelector(".direct-chat-messages");
   const observer = new MutationObserver(() => {
-      displayTimeSinceLastReport();
+    displayTimeSinceLastReport();
   });
   observer.observe(chatMessagesContainer, { childList: true });
 }
 
 // Initialize the script after DOM is fully loaded
-window.addEventListener('load', () => {
-  const prioritySelect = document.getElementById('priority');
+window.addEventListener("load", () => {
+  const prioritySelect = document.getElementById("priority");
   if (prioritySelect) {
-      prioritySelect.addEventListener('change', () => {
-          if (prioritySelect.value === '3') {
-              displayTimeSinceLastReport();
-              observeChatChanges();
-          }
-      });
-
-      if (prioritySelect.value === '3') {
-          displayTimeSinceLastReport();
-          observeChatChanges();
+    prioritySelect.addEventListener("change", () => {
+      if (prioritySelect.value === "3") {
+        displayTimeSinceLastReport();
+        observeChatChanges();
       }
+    });
+
+    if (prioritySelect.value === "3") {
+      displayTimeSinceLastReport();
+      observeChatChanges();
+    }
   }
 });
 
@@ -3206,10 +3397,22 @@ function updateTime() {
   const now = new Date();
   const utcTime = now.toUTCString().slice(17, 25); // Extracting UTC time in HH:MM:SS format
   const utcSeconds = now.toUTCString().slice(23, 25); // Extracting seconds from UTC time
-  const aestTime = formatTime(now.toLocaleString('en-AU', { timeZone: 'Australia/Brisbane', hour12: false }), utcSeconds);
-  const aedtTime = formatTime(now.toLocaleString('en-AU', { timeZone: 'Australia/Sydney', hour12: false }), utcSeconds);
+  const aestTime = formatTime(
+    now.toLocaleString("en-AU", {
+      timeZone: "Australia/Brisbane",
+      hour12: false,
+    }),
+    utcSeconds
+  );
+  const aedtTime = formatTime(
+    now.toLocaleString("en-AU", {
+      timeZone: "Australia/Sydney",
+      hour12: false,
+    }),
+    utcSeconds
+  );
 
-  const clockElement = document.getElementById('clock');
+  const clockElement = document.getElementById("clock");
   clockElement.innerHTML = `
     <div class="clock-container">
       <div class="clock-box">
@@ -3230,14 +3433,14 @@ function updateTime() {
 
 // Helper function to format time strings and append UTC seconds
 function formatTime(timeString, utcSeconds) {
-  const baseTime = timeString.split(' ')[1].slice(0, 5); // Extracts HH:MM format
+  const baseTime = timeString.split(" ")[1].slice(0, 5); // Extracts HH:MM format
   return `${baseTime}:${utcSeconds}`; // Appends UTC seconds to local time in HH:MM:SS format
 }
 
 // Function to create and insert the clock element into the navbar
 function createClockElement() {
-  const clockItem = document.createElement('div');
-  clockItem.id = 'clock';
+  const clockItem = document.createElement("div");
+  clockItem.id = "clock";
   clockItem.style.cssText = `
     text-align: center;
     flex: 1 1 auto;
@@ -3246,19 +3449,22 @@ function createClockElement() {
   `;
 
   // Find the navbar and insert the clock in the center
-  const navbar = document.querySelector('.navbar');
-  const navContainer = document.createElement('li');
-  navContainer.classList.add('nav-item');
+  const navbar = document.querySelector(".navbar");
+  const navContainer = document.createElement("li");
+  navContainer.classList.add("nav-item");
   navContainer.style.cssText = `
     flex-grow: 1;
     display: flex;
     justify-content: center;
   `;
   navContainer.appendChild(clockItem);
-  navbar.insertBefore(navContainer, navbar.querySelector('.navbar-nav.ml-auto'));
+  navbar.insertBefore(
+    navContainer,
+    navbar.querySelector(".navbar-nav.ml-auto")
+  );
 
   // Style the clock containers and labels
-  const style = document.createElement('style');
+  const style = document.createElement("style");
   style.textContent = `
     .clock-container {
       display: flex;
@@ -3296,14 +3502,14 @@ function createClockElement() {
 }
 
 // Add the clock when the window loads
-window.addEventListener('load', createClockElement);
+window.addEventListener("load", createClockElement);
 
-window.addEventListener('load', function() {
+window.addEventListener("load", function () {
   const updateETATimes = () => {
-    const table = document.getElementById('sms-members');
+    const table = document.getElementById("sms-members");
     if (table) {
-      const rows = table.querySelectorAll('tbody#sms-members-content > tr');
-      rows.forEach(row => {
+      const rows = table.querySelectorAll("tbody#sms-members-content > tr");
+      rows.forEach((row) => {
         const etaCell = row.cells[3];
         if (etaCell) {
           const etaText = etaCell.textContent.trim();
@@ -3316,9 +3522,15 @@ window.addEventListener('load', function() {
             etaDate.setHours(parseInt(hour), parseInt(minute), 0, 0);
 
             const now = new Date();
-            const diff = Math.round((etaDate.getTime() - now.getTime()) / 60000);
+            const diff = Math.round(
+              (etaDate.getTime() - now.getTime()) / 60000
+            );
 
-            if (!isNaN(diff) && diff >= 0 && !/\(\d+ mins\)/.test(etaCell.textContent)) {
+            if (
+              !isNaN(diff) &&
+              diff >= 0 &&
+              !/\(\d+ mins\)/.test(etaCell.textContent)
+            ) {
               etaCell.textContent += ` (${diff} mins)`;
             }
           }
@@ -3329,4 +3541,248 @@ window.addEventListener('load', function() {
 
   // Initial run when the content loads
   updateETATimes();
+});
+
+window.addEventListener("load", function () {
+  // Define the SVG icon with proper viewBox and styling to ensure full visibility
+  const svgHTML = `
+  <svg xmlns="http://www.w3.org/2000/svg" fill="cadetblue" class="bi bi-info-circle-fill" viewBox="0 0 16 17" style="cursor: pointer; vertical-align: top; display: block;">
+    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+  </svg>
+  `;
+
+  // Select the element next to which the SVG icon should be appended
+  const globeButton = document.querySelector("#inline");
+
+  if (globeButton) {
+    // Create a span to contain the SVG
+    const iconSpan = document.createElement("span");
+    iconSpan.innerHTML = svgHTML;
+    iconSpan.style.display = "inline-block";
+    iconSpan.style.verticalAlign = "top";
+    iconSpan.style.width = "28.8px";
+    iconSpan.style.height = "28.8px";
+    iconSpan.style.marginLeft = "10px";
+    iconSpan.style.overflow = "visible";
+
+    // Append the span with SVG next to the globe button
+    globeButton.parentNode.insertBefore(iconSpan, globeButton.nextSibling);
+
+    // Add click event to open a window with placeholder text
+    iconSpan.addEventListener("click", function () {
+      const formHTML = `
+      <style>
+      body {
+          font-family: Arial, sans-serif;
+      }
+      #inputForm {
+          width: 60%;
+          margin: 20px auto;
+          padding: 20px;
+          background-color: #f4f4f4;
+          border: 1px solid #ddd;
+          box-shadow: 0 0 10px #ccc;
+      }
+      label {
+          display: block;
+          margin-bottom: 10px;
+      }
+      select, input[type="number"] {
+          width: calc(100% - 22px);
+          padding: 10px;
+          margin-top: 6px;
+      }
+      button {
+          width: 100%;
+          padding: 10px;
+          background-color: #0056b3;
+          color: white;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+      }
+      button:hover {
+          background-color: #004494;
+      }
+  </style>
+  <form id="inputForm" style="text-align: center;">
+      <label>Tasking Issues? <span style="color: red;">*</span>
+          <select name="taskingIssues" required>
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+          </select>
+      </label><br>
+      <label>Activity at time of incident <span style="color: red;">*</span>
+          <select name="activity" required>
+              <option value="">Select...</option>
+              <option value="swimming">Swimming</option>
+              <option value="boating">Boating</option>
+              <option value="tsunami">Tsunami</option>
+              <option value="crowdControl">Crowd Control</option>
+              <option value="debris">Debris</option>
+              <option value="divingSnorkelling">Diving/Snorkelling</option>
+              <option value="suicideSelfHarm">Suicide/Self Harm</option>
+              <option value="environmental">Environmental</option>
+              <option value="floodAssistance">Flood assistance</option>
+              <option value="other">Other</option>
+              <option value="rockFishing">Rockfishing</option>
+              <option value="missingPersonLand">Missing Person - Land</option>
+              <option value="sup">Surfcraft (non-powered) - SUP</option>
+              <option value="kayak">Surfcraft (non-powered) - Kayak</option>
+              <option value="surfing">Surfcraft (non-powered) - Surfing</option>
+              <option value="windsurfer">Surfcraft (non-powered) - Windsurfer</option>
+              <option value="parachuteParasail">Other - Parachute/parasail</option>
+              <option value="lightAircraftCrash">Other - Light aircraft crash</option>
+              <option value="landBasedObservation">Other - land based observation</option>
+              <option value="aerialBasedObservation">Other - aerial based observation</option>
+              <option value="rockCliffRelated">Rock/Cliff related</option>
+              <option value="unknown">Unknown</option>
+          </select>
+      </label><br>
+      <label>Approximate Age <span style="color: red;">*</span>
+          <input type="number" name="age" min="0" required/>
+      </label><br>
+      <label>Wearing a life jacket? <span style="color: red;">*</span>
+          <select name="lifeJacket" required>
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+          </select>
+      </label><br>
+      <label>Patrolled Location? <span style="color: red;">*</span>
+          <select name="patrolledLocation" required>
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+          </select>
+      </label><br>
+      <label>Distance to nearest patrolled location <span style="color: red;">*</span>
+          <select name="distancePatrolled" required>
+              <option value="">Select...</option>
+              <option value="<1km">&lt;1km</option>
+              <option value="1-5km">1-5km</option>
+              <option value=">5km">&gt;5km</option>
+          </select>
+      </label><br>
+      <label>During Patrol Hours (of location) <span style="color: red;">*</span>
+          <select name="patrolHours" required>
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+          </select>
+      </label><br>
+      <label>Distance Of Responding Resource <span style="color: red;">*</span>
+          <select name="distanceResource" required>
+              <option value="">Select...</option>
+              <option value="onLocation">On Patrol At Location</option>
+              <option value="patrol1-5km">Patrol 1-5km away</option>
+              <option value="patrol>5km">Patrol &gt;5km away</option>
+              <option value="callout">Callout</option>
+              <option value="dutyOnly">Duty Officer Only</option>
+              <option value="dutyHelicopter">Duty Officer + Helicopter</option>
+              <option value="helicopterOnly">Helicopter Only</option>
+              <option value="noResponse">No Response</option>
+              <option value="calloutDuty">Callout + Duty Officer</option>
+              <option value="dutyRWC">Duty Officer + RWC</option>
+          </select>
+      </label><br>
+      <label>Summary Outcome <span style="color: red;">*</span>
+          <select name="summaryOutcome" required>
+              <option value="">Select...</option>
+              <option value="patientsRescued">Patients Rescued</option>
+              <option value="stoodDown">Stood Down Before Response/Enroute</option>
+              <option value="rescued">Rescued</option>
+              <option value="personFound">Person Found</option>
+              <option value="noActionNothingFound">No Further Action; Nothing Found/No Assistance Required</option>
+              <option value="gotOut">No Further Action; Got Out By Themselves</option>
+              <option value="rescuedByOthers">No Further Action; Rescued By Others</option>
+              <option value="drowningDeaths">Drowning / Deaths</option>
+              <option value="noFurtherAction">No Further Action</option>
+              <option value="medical">Medical</option>
+              <option value="otherOutcome">Other</option>
+          </select>
+      </label><br>
+      <label>In-Water Search Conducted? <span style="color: red;">*</span>
+          <select name="inWaterSearch" required>
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+          </select>
+      </label><br>
+      <label>DSW Active <span style="color: red;">*</span>
+          <select name="dswActive" required>
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+          </select>
+      </label><br>
+      <label>SITREP Sent <span style="color: red;">*</span>
+          <select name="sitrepSent" required>
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+          </select>
+      </label><br>
+      <label>Media Release Sent <span style="color: red;">*</span>
+          <select name="mediaReleaseSent" required>
+              <option value="">Select...</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+          </select>
+      </label><br>
+      <button type="submit">Submit</button>
+  </form>
+  
+        `;
+
+      const popup = window.open("", "", "width=600,height=600");
+      popup.document.write(formHTML);
+
+      // Extract default values from text area
+      const textArea = document.querySelector(
+        '.form-control[name="incident_further"]'
+      );
+      const regex = /\{\{\{([^{}]*)\}\}\}/;
+      const matches = regex.exec(textArea.value);
+      if (matches) {
+        const defaults = matches[1].split(", ").reduce((acc, curr) => {
+          const [key, value] = curr.split(": ");
+          acc[key.trim()] = value.trim();
+          return acc;
+        }, {});
+
+        // Set default values in the form
+        Object.entries(defaults).forEach(([key, value]) => {
+          const input = popup.document.querySelector(`[name="${key}"]`);
+          if (input) {
+            input.value = value;
+          }
+        });
+      }
+
+      popup.document.getElementById("inputForm").onsubmit = function (e) {
+        e.preventDefault();
+        const formData = new FormData(
+          popup.document.getElementById("inputForm")
+        );
+        let newData = " {{{";
+        formData.forEach((value, key) => {
+          newData += `${key}: ${value}, `;
+        });
+        newData = newData.slice(0, -2) + "}}}";
+
+        let existingText = textArea.value;
+        if (regex.test(existingText)) {
+          existingText = existingText.replace(regex, newData);
+        } else {
+          existingText += newData;
+        }
+
+        textArea.value = existingText;
+        popup.close();
+        return false;
+      };
+    });
+  }
 });
