@@ -3571,41 +3571,52 @@ window.addEventListener("load", function () {
     // Add click event to open a window with placeholder text
     iconSpan.addEventListener("click", function () {
       const formHTML = `
+      <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Extra Information for 13SURF Database</title>
       <style>
-      body {
-          font-family: Arial, sans-serif;
-      }
-      #inputForm {
-          width: 60%;
-          margin: 20px auto;
-          padding: 20px;
-          background-color: #f4f4f4;
-          border: 1px solid #ddd;
-          box-shadow: 0 0 10px #ccc;
-      }
-      label {
-          display: block;
-          margin-bottom: 10px;
-      }
-      select, input[type="number"] {
-          width: calc(100% - 22px);
-          padding: 10px;
-          margin-top: 6px;
-      }
-      button {
-          width: 100%;
-          padding: 10px;
-          background-color: #0056b3;
-          color: white;
-          border: none;
-          cursor: pointer;
-          font-size: 16px;
-      }
-      button:hover {
-          background-color: #004494;
-      }
-  </style>
+          body {
+              font-family: Arial, sans-serif;
+          }
+          #inputForm {
+              width: 60%;
+              margin: 20px auto;
+              padding: 20px;
+              background-color: #f4f4f4;
+              border: 1px solid #ddd;
+              box-shadow: 0 0 10px #ccc;
+          }
+          label {
+              display: block;
+              margin-bottom: 10px;
+          }
+          select, input[type="number"] {
+              width: calc(100% - 22px);
+              padding: 10px;
+              margin-top: 6px;
+          }
+          button {
+              width: 100%;
+              padding: 10px;
+              background-color: #0056b3;
+              color: white;
+              border: none;
+              cursor: pointer;
+              font-size: 16px;
+          }
+          button:hover {
+              background-color: #004494;
+          }
+          h1 {
+              text-align: center;
+              color: #333;
+          }
+      </style>
+  </head>
+  <body>
   <form id="inputForm" style="text-align: center;">
+      <h1>Extra Information for Database</h1>
       <label>Tasking Issues? <span style="color: red;">*</span>
           <select name="taskingIssues" required>
               <option value="">Select...</option>
@@ -3731,58 +3742,79 @@ window.addEventListener("load", function () {
               <option value="no">No</option>
           </select>
       </label><br>
-      <button type="submit">Submit</button>
-  </form>
+      <button type="submit">Submit & Save Incident</button>
+      </form>
+      </body>
   
         `;
 
-      const popup = window.open("", "", "width=600,height=600");
-      popup.document.write(formHTML);
-
-      // Extract default values from text area
-      const textArea = document.querySelector(
-        '.form-control[name="incident_further"]'
-      );
-      const regex = /\{\{\{([^{}]*)\}\}\}/;
-      const matches = regex.exec(textArea.value);
-      if (matches) {
-        const defaults = matches[1].split(", ").reduce((acc, curr) => {
-          const [key, value] = curr.split(": ");
-          acc[key.trim()] = value.trim();
-          return acc;
-        }, {});
-
-        // Set default values in the form
-        Object.entries(defaults).forEach(([key, value]) => {
-          const input = popup.document.querySelector(`[name="${key}"]`);
-          if (input) {
-            input.value = value;
-          }
-        });
-      }
-
-      popup.document.getElementById("inputForm").onsubmit = function (e) {
-        e.preventDefault();
-        const formData = new FormData(
-          popup.document.getElementById("inputForm")
-        );
-        let newData = " {{{";
-        formData.forEach((value, key) => {
-          newData += `${key}: ${value}, `;
-        });
-        newData = newData.slice(0, -2) + "}}}";
-
-        let existingText = textArea.value;
-        if (regex.test(existingText)) {
-          existingText = existingText.replace(regex, newData);
+        const popup = window.open("", "", "width=600,height=600");
+        popup.document.write(formHTML);
+  
+        const textArea = document.querySelector('.form-control[name="incident_further"]');
+        const regex = /\{\{\{([^{}]*)\}\}\}/;
+        const matches = regex.exec(textArea.value);
+  
+        if (matches) {
+          const defaults = matches[1].split(", ").reduce((acc, curr) => {
+            const [key, value] = curr.split(": ");
+            acc[key.trim()] = value.trim();
+            return acc;
+          }, {});
+          
+          Object.entries(defaults).forEach(([key, value]) => {
+            const input = popup.document.querySelector(`[name="${key}"]`);
+            if (input) input.value = value;
+          });
         } else {
-          existingText += newData;
+          // Insert 5 new lines if the custom data structure does not already exist
+          textArea.value += "\n\n\n\n\n";
         }
+  
+        popup.document.getElementById("inputForm").onsubmit = function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          let newData = "{{{";
+          formData.forEach((value, key) => {
+            newData += `${key}: ${value}, `;
+          });
+          newData = newData.slice(0, -2) + "}}}";
+  
+          let existingText = textArea.value;
+          existingText = regex.test(existingText) ? existingText.replace(regex, newData) : existingText + newData;
+  
+          textArea.value = existingText;
+          
+          // Programmatically click the save button
+          document.querySelector('.btn.btn-app.check-incident-status').click();
+  
+          popup.close();
+          return false;
+        };
+      });
+    }
+  });
 
-        textArea.value = existingText;
-        popup.close();
-        return false;
-      };
+  window.addEventListener('load', function() {
+    const checkbox = document.querySelector('#callerDetails13Surf');
+    const closeButton = document.querySelector('a.btn.btn-app.check-incident-status');
+    const textArea = document.querySelector('textarea.form-control[name="incident_further"]');
+
+    closeButton.addEventListener('click', function(event) {
+        // Always prevent the default action of the button if the checkbox is checked
+        if (checkbox && checkbox.checked) {
+            event.preventDefault(); // Prevents the default button action
+
+            // Check for text within {{{}}} in the textarea
+            const regex = /\{\{\{(.+?)\}\}\}/;
+            const match = regex.exec(textArea.value);
+
+            if (match) {
+
+            } else {
+                // If there's no text in {{{}}}, show an alert and keep the action stopped
+                alert('You havent completed the "Extra Information for Database" window, click on the blue information circle next to the map!');
+            }
+        }
     });
-  }
 });
