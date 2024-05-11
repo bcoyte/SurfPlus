@@ -578,35 +578,26 @@ window.addEventListener("load", function () {
       button.style.marginTop = "10px"; // Add some spacing above the button
 
       button.addEventListener("click", function () {
-        // Confirmation dialog
-        const userConfirmed = confirm(
-          "Are you sure you want to bulk sign off all?"
-        );
+        // Use prompt for input
+        const userInput = prompt("Type 'SIGNOFF' to confirm bulk sign off of all services:");
 
-        if (userConfirmed) {
-          document
-            .querySelectorAll(
-              'a[href^="https://surfcom.sls.com.au/log-service-off?log_id="]'
-            )
-            .forEach((link) => {
-              let href = link.getAttribute("href");
-              // Append "&bulkSupportOpsSignOff" to the href
-              href += "&bulkSupportOpsSignOff";
-              console.log("Opening link:", href); // Log the href being opened
-              window.open(href, "_blank");
-            });
+        if (userInput === "SIGNOFF") {
+          document.querySelectorAll('a[href^="https://surfcom.sls.com.au/log-service-off?log_id="]').forEach((link) => {
+            let href = link.getAttribute("href");
+            // Append "&bulkSupportOpsSignOff" to the href
+            href += "&bulkSupportOpsSignOff";
+            console.log("Opening link:", href); // Log the href being opened
+            window.open(href, "_blank");
+          });
         } else {
-          // Log or handle the cancel action
-          console.log("Bulk sign off canceled by the user.");
+          // Log or handle the incorrect input or cancel action
+          console.log("Bulk sign off not confirmed by the user or incorrect input.");
         }
       });
 
       targetDiv.appendChild(button);
     } else {
-      console.error(
-        "Failed to find the target div using selector:",
-        targetDivSelector
-      );
+      console.error("Failed to find the target div using selector:", targetDivSelector);
     }
   }
 });
