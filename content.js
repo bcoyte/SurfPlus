@@ -155,6 +155,30 @@ window.addEventListener("load", function () {
     setOptions(groups);
   }
 
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'F1') {
+        event.preventDefault();
+        
+        // Check if the primary service is set to 'Lake Parramatta (Lifeguards)'
+        const primaryServiceSelect = document.querySelector('#primary_service');
+        if (primaryServiceSelect && primaryServiceSelect.value === '1517') { // 1517 is the value for 'Lake Parramatta (Lifeguards)'
+            
+            // Set the Surfguard Mailing Group to '00-5 ALS-AESS Staff Critical Incident Notification'
+            const mailingGroupSelect = document.querySelector('.mailinggroup_id');
+            if (mailingGroupSelect) {
+                const optionToSelect = Array.from(mailingGroupSelect.options).find(option => option.value === '79946_00-5 ALS-AESS Staff Critical Incident Notification');
+                if (optionToSelect) {
+                    optionToSelect.selected = true;
+                    
+                    // Trigger change event to notify any listeners of the change
+                    const event = new Event('change', { bubbles: true });
+                    mailingGroupSelect.dispatchEvent(event);
+                }
+            }
+        }
+    }
+});
+
   // Function to set options based on current latitude and table content
   function setOptions(groups) {
     const currentLatitude = getCurrentLatitude();
@@ -3764,6 +3788,7 @@ window.addEventListener("load", function () {
   
         popup.document.getElementById("inputForm").onsubmit = function (e) {
           e.preventDefault();
+          addExtraAutoDetails();  
           const formData = new FormData(this);
           let newData = "{{{";
           formData.forEach((value, key) => {
@@ -3809,3 +3834,84 @@ window.addEventListener("load", function () {
         }
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function addExtraAutoDetails() {
+  // Get the value from the input field
+  const slsContactInput = document.getElementById('incidentSLSContact').value;
+  // Extract the substring after the last '/' character and trim any leading or trailing whitespace
+  const extractedText = slsContactInput.substring(slsContactInput.lastIndexOf('/') + 1).trim();
+
+  // Initialize sets to store unique entries
+  const uniqueAddedDutyOfficers = new Set();
+  const uniqueAddedUnits = new Set();
+
+  // Patterns for duty officers and specific units
+  const dutyOfficerPattern = /(.+ - Duty Officer - .+) has been added to Incident/i;
+  const unitPattern = /(.+?) - (.*?(UAV|IRB|Support Ski) ?\(.*?\)) has been added to Incident/i;
+
+  // Gather all message texts for processing
+  const messages = document.querySelectorAll('.direct-chat-msg .direct-chat-text');
+
+  messages.forEach(message => {
+    const content = message.textContent;
+
+    // Match and collect duty officer additions
+    let dutyOfficerMatch = content.match(dutyOfficerPattern);
+    if (dutyOfficerMatch) {
+      uniqueAddedDutyOfficers.add(dutyOfficerMatch[1].trim());
+    }
+
+    // Match and collect specific units, ignoring regions
+    let unitMatch = content.match(unitPattern);
+    if (unitMatch) {
+      uniqueAddedUnits.add(unitMatch[1].trim() + ' - ' + unitMatch[2].trim());
+    }
+  });
+
+  // Data preparation for output
+  const uniqueDutyOfficerCount = uniqueAddedDutyOfficers.size;
+  const callsignsFormatted = Array.from(uniqueAddedDutyOfficers).join(' | ');
+  const unitsFormatted = Array.from(uniqueAddedUnits).join(' | ');
+
+  // Get the textarea element
+  const furtherInfoTextArea = document.querySelector('textarea[name="incident_further"]');
+
+  // Check and update or add new placeholder content
+  const regex = /\[\[\[.*?\]\]\]/;
+  const currentText = furtherInfoTextArea.value;
+  const placeholderExists = regex.test(currentText);
+
+  if (placeholderExists) {
+    // Update existing placeholder with all collected and formatted data
+    furtherInfoTextArea.value = currentText.replace(regex, `[[[${extractedText}, added: ${uniqueDutyOfficerCount}, callsigns: ${callsignsFormatted}, units added: ${unitsFormatted}]]]`);
+  } else {
+    // Add new placeholder with all data if no existing placeholder is found
+    furtherInfoTextArea.value = currentText + ` [[[${extractedText}, added: ${uniqueDutyOfficerCount}, callsigns: ${callsignsFormatted}, units added: ${unitsFormatted}]]]`;
+  }
+}
