@@ -26,20 +26,9 @@ This project enhances the SurfCom Management System with additional features and
 
 6. **Uppercase Conversion**: Converts the text in the message textarea to uppercase as the user types.
 
-7. **Message Log Coloring**: Applies color coding to the message logs based on specific keywords or phrases. The color scheme is as follows:
+7. **Message Log Coloring**: Applies color coding to the message logs based on specific keywords or phrases.
 
-  | Condition                                        | Colour           |
-  |--------------------------------------------------|------------------|
-  | Unit Added/Status Change/Cleared from incident   | [SlateGrey](images/RespondingUnitModified.png)    |
-  | Attachment added to Incident                     | [PapayaWhip](images/AttachmentAdded.png)     |
-  | Incident Notification SMS                        | [MediumAquaMarine](images/NotificationSMS.png)|
-  | Callout SMS                                      | [Salmon](images/CalloutSMS.png)   |
-  | Unavailable for Callout                          | [RosyBrown](images/ECOTUnavailable.png)    |
-  | Available for Callout                            | [PaleTurquoise](images/ECOTAvailable.png)  |
-  | Further Information Log                          | [MediumSlateBlue](images/FurtherInformation.png) |
-  | System Message (Open/Closed/Reopened)            | [Black](images/SystemMessage.png)  |
-
-8. **Incident Table Enhancements**: Adds additional buttons to the incident table, such as "Reopen", "Download PDF", and "Download CSV", and applies color formatting to the status column.
+8. **Incident Table Enhancements**: Adds additional buttons to the incident table, such as "Reopen", "Download PDF", "Download CSV", and applies color formatting to the status column.
 
 9. **Radio Buttons for Communication Method**: Adds radio buttons above the message textarea to select the communication method (e.g., radio, phone, email).
 
@@ -60,6 +49,16 @@ This project enhances the SurfCom Management System with additional features and
 17. **Card Title Renaming**: Renames the "Response SMS Notification" card title to "Response SMS Notification (Callout SMS)" and the "Generate Message" card title to "Generate Message (Notification SMSs and SitReps)".
 
 18. **Situation Report Reminder**: Displays a reminder to send a situation report (SitRep) based on the time elapsed since the last report for High (3) priority incidents.
+
+19. **Real-Time Clocks**: Adds real-time clocks displaying UTC, AEST, and AEDT times in the navbar.
+
+20. **ETA Time Countdown**: Displays a countdown timer next to each responding member's ETA, indicating the time remaining until their arrival.
+
+21. **Information Icon for Extra Incident Details**: Adds an information icon next to the globe button, which opens a form for entering additional incident details for the 13SURF database.
+
+22. **Priority Dropdown Validation**: Removes the "Low (1)" priority option from the dropdown when the "13SURF" checkbox is checked, ensuring 13SURF incidents cannot be set to low priority.
+
+23. **Shark Attack Incident Alert**: Displays an alert reminding the user to notify the NSW Department of Primary Industries when the incident type is set to "Shark Attack (IRD)".
 
 ## Installation
 
