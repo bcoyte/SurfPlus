@@ -3930,4 +3930,98 @@ pulsateStyle.innerHTML = `
 `;
 document.head.appendChild(pulsateStyle);
 
-// Removed the part that sets "Shark Attack (IRD)" as the default incident type
+// Function to check the incident type and add an alert if necessary
+function checkIncidentTypeAndAddAlert() {
+  const incidentTypeElement = document.getElementById("incidentType");
+  if (!incidentTypeElement) return;
+
+  const criticalIncidentTypes = [
+    "B07", // Capsized Vessel (IRD)
+    "E01", // Diving Accident (IRD)
+    "E02", // Drowning (IRD)
+    "B05", // Flare Sighting
+    "A02", // Missing Person - Water (IRD)
+    "C04", // Rock Fishing Incident (IRD)
+    "A03", // Missing Vessel (IRD)
+    "B06"  // Shark Attack (IRD)
+  ];
+
+  const selectedIncidentType = incidentTypeElement.value;
+  if (criticalIncidentTypes.includes(selectedIncidentType) && !callerDetailsContainMAC() && !messageToPoliceMACExists()) {
+    addAlertBanner();
+  }
+}
+
+// Function to check if the caller details contain MAC or MACLO
+function callerDetailsContainMAC() {
+  const callerNameElement = document.getElementById("callerDetailsName");
+  const callerOrganisationElement = document.getElementById("callerDetailsOrganisation");
+
+  if (!callerNameElement || !callerOrganisationElement) return false;
+
+  const callerName = callerNameElement.value;
+  const callerOrganisation = callerOrganisationElement.value;
+
+  return callerName.includes("MAC") || callerName.includes("MACLO") ||
+         callerOrganisation.includes("MAC") || callerOrganisation.includes("MACLO");
+}
+
+// Function to check if a message to Police - Marine Area Command (MAC) exists
+function messageToPoliceMACExists() {
+  const chatMessages = document.querySelectorAll(".direct-chat-msg .direct-chat-name");
+  for (let msg of chatMessages) {
+    if (msg.textContent.includes("Surfcom to Police - Marine Area Command")) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Function to add the alert banner
+function addAlertBanner() {
+  const alertElement = document.createElement("div");
+  alertElement.textContent = "Notify Marine Area Command and radio log the transmission.";
+  alertElement.style.padding = "10px";
+  alertElement.style.marginTop = "5px";
+  alertElement.style.backgroundColor = "orange";
+  alertElement.style.textAlign = "center";
+  alertElement.style.fontWeight = "bold";
+  alertElement.className = "pulsate";
+  const cardBodyDiv = document.querySelector(".card-body");
+  replaceIfExists(cardBodyDiv, alertElement);
+}
+
+// Function to replace an existing element if it exists
+function replaceIfExists(parent, newElement) {
+  const existingElement = parent.querySelector(`.${newElement.className}`);
+  if (existingElement) {
+    parent.replaceChild(newElement, existingElement);
+  } else {
+    parent.appendChild(newElement);
+  }
+}
+
+// Add CSS for pulsating effect if not already added
+function addPulsateStyle() {
+  if (!document.getElementById("pulsate-style")) {
+    const style = document.createElement("style");
+    style.id = "pulsate-style";
+    style.innerHTML = `
+    @keyframes pulsate {
+      0% { background-color: orange; }
+      50% { background-color: darkorange; }
+      100% { background-color: orange; }
+    }
+    .pulsate {
+      animation: pulsate 2s infinite;
+    }
+    `;
+    document.head.appendChild(style);
+  }
+}
+
+// Call the function when the page loads
+window.addEventListener("load", () => {
+  addPulsateStyle();
+  checkIncidentTypeAndAddAlert();
+});
