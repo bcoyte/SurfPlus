@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Coordinate Converter</title>
-  <script src="converter.js"></script>
+  <title>Side Panel</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
 </head>
 <body>
-  <h1>Coordinate Converter WIP, NOT YET WORKING</h1>
-  <input type="text" id="input" placeholder="Enter coordinate">
-  <button id="convertBtn">Convert</button>
-  <p>DMS: <span id="outputDMS"></span></p>
-  <p>DDM: <span id="outputDDM"></span></p>
-  <p>DD: <span id="outputDD"></span></p>
+  <iframe src="https://www.pgc.umn.edu/apps/convert/"></iframe>
 </body>
 </html>

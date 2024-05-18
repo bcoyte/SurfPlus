@@ -4,9 +4,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   }
 });
 
-
-
-// background.js
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "fetchWeatherData") {
       const { lat, lon } = request;
@@ -57,31 +54,6 @@ chrome.runtime.onStartup.addListener(function() {
 });
 
 // a72468e1e3234dc3b0543634242403 - Weather API Key
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.sidePanel.setOptions({

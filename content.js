@@ -24,7 +24,7 @@ document.addEventListener("keydown", function (event) {
           return branches[i].name;
         }
       }
-      return "Unknown"; // Return a default or error value if not found
+      return "Interstate"; // Return a default or error value if not found
     }
 
     // Extract latitude value
@@ -86,7 +86,7 @@ window.addEventListener("load", function () {
   const servicesTable = document.getElementById("servicesTable");
 
   if (!emailTemplateSelect || !mailingGroupSelect || !servicesTable) {
-    console.error("Required elements not found on the page.");
+    console.log("Required elements not found on the page.");
     return;
   }
 
@@ -621,7 +621,7 @@ window.addEventListener("load", function () {
 
       targetDiv.appendChild(button);
     } else {
-      console.error("Failed to find the target div using selector:", targetDivSelector);
+      console.log("Failed to find the target div using selector:", targetDivSelector);
     }
   }
 });
@@ -673,7 +673,7 @@ window.addEventListener("load", function () {
       // Append the button to the .card-footer div
       targetDiv.appendChild(button);
     } else {
-      console.error(
+      console.log(
         "Failed to find the target div using selector: .card-footer"
       );
     }
@@ -1309,7 +1309,7 @@ window.addEventListener("load", function () {
       // Append the icon to the target div
       targetDiv.appendChild(swapButton);
     } else {
-      console.error("Failed to find the target div");
+      console.log("Failed to find the target div");
     }
   }
 });
@@ -1409,7 +1409,7 @@ function initializeButtonAddition() {
         }
       });
     } else {
-      console.error("Incident table not found.");
+      console.log("Incident table not found.");
     }
   } else {
     console.log("Script is not on the correct page for execution.");
@@ -1500,7 +1500,7 @@ function initializeButtonAddition22() {
         }
       });
     } else {
-      console.error("Incident table not found.");
+      console.log("Incident table not found.");
     }
   } else {
     console.log("Script is not on the correct page for execution.");
@@ -1591,7 +1591,7 @@ function initializeButtonAddition12() {
         }
       });
     } else {
-      console.error("Incident table not found.");
+      console.log("Incident table not found.");
     }
   } else {
     console.log("Script is not on the correct page for execution.");
@@ -1688,7 +1688,7 @@ function initializeButtonAddition3() {
         }
       });
     } else {
-      console.error("Incident table not found.");
+      console.log("Incident table not found.");
     }
   } else {
     console.log("Script is not on the correct page for execution.");
@@ -1785,7 +1785,7 @@ function initializeButtonAddition2() {
         }
       });
     } else {
-      console.error("Incident table not found.");
+      console.log("Incident table not found.");
     }
   } else {
     console.log("Script is not on the correct page for execution.");
@@ -1840,7 +1840,7 @@ function initializeStatusFormatting() {
         }
       });
     } else {
-      console.error("Incident table not found.");
+      console.log("Incident table not found.");
     }
   } else {
     console.log("Script is not on the correct page for execution.");
@@ -1906,7 +1906,7 @@ if (window.location.href.startsWith("https://surfcom.sls.com.au/")) {
           "SurfCom Management System with enhancements and extra features, Contact Riley Porteous for extra details!";
         // Add '+' and the version number with styling
         element.innerHTML =
-          'Surfcom + <span class="version-number" style="color: lightgrey; font-size: smaller; font-style: italic;">v1.0</span>';
+          'Surfcom + <span class="version-number" style="color: lightgrey; font-size: smaller; font-style: italic;">v2.3</span>';
       }
     });
   }
@@ -2197,7 +2197,7 @@ document.addEventListener("DOMContentLoaded", function () {
       button.click();
       console.log("Yey");
     } else {
-      console.error("Button not found!");
+      console.log("Button not found!");
     }
   }
 });
@@ -2218,7 +2218,7 @@ window.addEventListener("load", function () {
       currentLocationInput.value = "BASE";
       console.log('Location prefilled with "BASE".');
     } else {
-      console.error("Failed to find the current location input.");
+      console.log("Failed to find the current location input.");
     }
 
     // Simulate the submit button click
@@ -2232,7 +2232,7 @@ window.addEventListener("load", function () {
       // Optionally, close the window after a delay if that's still desired
       setTimeout(() => window.close(), 1000);
     } else {
-      console.error("Failed to find the submit button.");
+      console.log("Failed to find the submit button.");
     }
   }
 });
@@ -2576,7 +2576,7 @@ window.addEventListener("load", function () {
               response.data.forecastData
             );
           } else if (response.error) {
-            console.error("Error fetching weather data:", response.error);
+            console.log("Error fetching weather data:", response.error);
           }
         }
       );
@@ -2896,7 +2896,7 @@ function openWeatherBoard() {
       showWeatherModal(data);
     })
     .catch((error) => {
-      console.error("Error fetching weather data:", error);
+      console.log("Error fetching weather data:", error);
     });
 }
 
@@ -3233,7 +3233,7 @@ function changeCardTitle(newTitle) {
     cardTitleElement.innerText = newTitle;
   } else {
     // Log an error if the card title element is not found
-    console.error("Card title element not found.");
+    console.log("Card title element not found.");
   }
 }
 
@@ -3835,83 +3835,99 @@ window.addEventListener("load", function () {
     });
 });
 
+window.addEventListener('load', function () {
+  const surfCheckbox = document.querySelector('#callerDetails13Surf');
+  const priorityDropdown = document.querySelector('#priority');
 
+  // Function to update the dropdown options
+  function updatePriorityOptions() {
+      const lowOption = priorityDropdown.querySelector('option[value="1"]');
 
+      if (surfCheckbox.checked) {
+          // If Low (1) is already selected, update the priority and show an alert
+          if (priorityDropdown.value === '1') {
+              priorityDropdown.value = '2';
+              alert('13SURF Incidents can not be Priority 1 (Low). Incident updated to be Priority 2 (Medium).');
+          }
 
+          // Remove the Low (1) option
+          if (lowOption) {
+              lowOption.remove();
+          }
+      } else {
+          // If checkbox is unchecked, ensure Low (1) is an option
+          if (!priorityDropdown.querySelector('option[value="1"]')) {
+              const newLowOption = document.createElement('option');
+              newLowOption.value = '1';
+              newLowOption.textContent = 'Low (1)';
+              priorityDropdown.appendChild(newLowOption);
+          }
+      }
+  }
 
+  // Check the status of the checkbox on page load
+  updatePriorityOptions();
 
+  // Add an event listener for changes to the checkbox
+  surfCheckbox.addEventListener('change', updatePriorityOptions);
+});
 
+// Function to check the incident type and add the alert
+function checkIncidentTypeAndAddAlert() {
+  const incidentTypeSelect = document.querySelector("#incidentType");
+  const selectedIncidentType = incidentTypeSelect.options[incidentTypeSelect.selectedIndex].text;
 
+  if (selectedIncidentType === "Shark Attack (IRD)") {
+    const chatMessages = document.querySelectorAll(".direct-chat-msg");
+    let messageExists = false;
 
+    chatMessages.forEach(msg => {
+      const chatName = msg.querySelector(".direct-chat-name");
+      if (chatName && chatName.textContent.includes("Surfcom to EXTERNAL - NSW Dept Primary Industries")) {
+        messageExists = true;
+      }
+    });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function addExtraAutoDetails() {
-  // Get the value from the input field
-  const slsContactInput = document.getElementById('incidentSLSContact').value;
-  // Extract the substring after the last '/' character and trim any leading or trailing whitespace
-  const extractedText = slsContactInput.substring(slsContactInput.lastIndexOf('/') + 1).trim();
-
-  // Initialize sets to store unique entries
-  const uniqueAddedDutyOfficers = new Set();
-  const uniqueAddedUnits = new Set();
-
-  // Patterns for duty officers and specific units
-  const dutyOfficerPattern = /(.+ - Duty Officer - .+) has been added to Incident/i;
-  const unitPattern = /(.+?) - (.*?(UAV|IRB|Support Ski) ?\(.*?\)) has been added to Incident/i;
-
-  // Gather all message texts for processing
-  const messages = document.querySelectorAll('.direct-chat-msg .direct-chat-text');
-
-  messages.forEach(message => {
-    const content = message.textContent;
-
-    // Match and collect duty officer additions
-    let dutyOfficerMatch = content.match(dutyOfficerPattern);
-    if (dutyOfficerMatch) {
-      uniqueAddedDutyOfficers.add(dutyOfficerMatch[1].trim());
+    if (!messageExists) {
+      const alertElement = document.createElement("div");
+      alertElement.textContent = "DPI Notification required. (Don't forget to log message to NSW Dept Primary Industries.)";
+      alertElement.style.padding = "10px";
+      alertElement.style.marginTop = "5px";
+      alertElement.style.backgroundColor = "orange";
+      alertElement.style.textAlign = "center";
+      alertElement.style.fontWeight = "bold";
+      alertElement.className = "pulsate";
+      const cardBodyDiv = document.querySelector(".card-body");
+      replaceIfExists(cardBodyDiv, alertElement);
     }
-
-    // Match and collect specific units, ignoring regions
-    let unitMatch = content.match(unitPattern);
-    if (unitMatch) {
-      uniqueAddedUnits.add(unitMatch[1].trim() + ' - ' + unitMatch[2].trim());
-    }
-  });
-
-  // Data preparation for output
-  const uniqueDutyOfficerCount = uniqueAddedDutyOfficers.size;
-  const callsignsFormatted = Array.from(uniqueAddedDutyOfficers).join(' | ');
-  const unitsFormatted = Array.from(uniqueAddedUnits).join(' | ');
-
-  // Get the textarea element
-  const furtherInfoTextArea = document.querySelector('textarea[name="incident_further"]');
-
-  // Check and update or add new placeholder content
-  const regex = /\[\[\[.*?\]\]\]/;
-  const currentText = furtherInfoTextArea.value;
-  const placeholderExists = regex.test(currentText);
-
-  if (placeholderExists) {
-    // Update existing placeholder with all collected and formatted data
-    furtherInfoTextArea.value = currentText.replace(regex, `[[[${extractedText}, added: ${uniqueDutyOfficerCount}, callsigns: ${callsignsFormatted}, units added: ${unitsFormatted}]]]`);
-  } else {
-    // Add new placeholder with all data if no existing placeholder is found
-    furtherInfoTextArea.value = currentText + ` [[[${extractedText}, added: ${uniqueDutyOfficerCount}, callsigns: ${callsignsFormatted}, units added: ${unitsFormatted}]]]`;
   }
 }
+
+// Call the function when the page loads
+window.addEventListener("load", checkIncidentTypeAndAddAlert);
+
+// Function to replace an existing element if it exists
+function replaceIfExists(parent, newElement) {
+  const existingElement = parent.querySelector(`.${newElement.className}`);
+  if (existingElement) {
+    parent.replaceChild(newElement, existingElement);
+  } else {
+    parent.appendChild(newElement);
+  }
+}
+
+// CSS for pulsating effect
+const pulsateStyle = document.createElement("style");
+pulsateStyle.innerHTML = `
+@keyframes pulsate {
+  0% { background-color: orange; }
+  50% { background-color: darkorange; }
+  100% { background-color: orange; }
+}
+.pulsate {
+  animation: pulsate 2s infinite;
+}
+`;
+document.head.appendChild(pulsateStyle);
+
+// Removed the part that sets "Shark Attack (IRD)" as the default incident type
