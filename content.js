@@ -1882,7 +1882,7 @@ if (window.location.href.startsWith("https://surfcom.sls.com.au/")) {
           "SurfCom Management System with enhancements and extra features, Contact Riley Porteous for extra details!";
         // Add '+' and the version number with styling
         element.innerHTML =
-          'Surfcom + <span class="version-number" style="color: lightgrey; font-size: smaller; font-style: italic;">v1.0</span>';
+          'Surfcom + <span class="version-number" style="color: lightgrey; font-size: smaller; font-style: italic;">v2.3</span>';
       }
     });
   }
