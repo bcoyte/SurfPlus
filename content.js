@@ -4025,3 +4025,43 @@ window.addEventListener("load", () => {
   addPulsateStyle();
   checkIncidentTypeAndAddAlert();
 });
+
+
+window.addEventListener('load', function() {
+  // Function to add counter and character limit
+  function addCounter(inputId, labelFor, maxLength) {
+      const inputField = document.getElementById(inputId);
+      const label = document.querySelector(`label[for="${labelFor}"]`);
+
+      // Create the counter element
+      const counter = document.createElement('span');
+      counter.style.marginLeft = '5px';
+      counter.style.fontStyle = 'italic';
+      counter.style.color = 'darkgray';
+      label.appendChild(counter);
+
+      // Update the counter and limit the input length
+      function updateCounter() {
+          const currentLength = inputField.value.length;
+          counter.textContent = `(${currentLength}/${maxLength})`;
+
+          if (currentLength > maxLength) {
+              inputField.value = inputField.value.substring(0, maxLength);
+          }
+      }
+
+      // Initial counter update
+      updateCounter();
+
+      // Event listener for input changes
+      inputField.addEventListener('input', updateCounter);
+  }
+
+  // Apply counter and limit to each specified input field
+  addCounter('incidentLocation', 'incidentLocation', 512);
+  addCounter('incidentThirdParty', 'incidentThirdParty', 16);
+  addCounter('incidentSLSContact', 'incidentSLSContact', 100);
+  addCounter('callerDetailsName', 'callerDetailsName', 128);
+  addCounter('callerDetailsOrganisation', 'callerDetailsOrganisation', 128);
+  addCounter('callerDetailsNumber', 'callerDetailsNumber', 16);
+});
