@@ -4026,7 +4026,6 @@ window.addEventListener("load", () => {
   checkIncidentTypeAndAddAlert();
 });
 
-
 window.addEventListener('load', function() {
   // Function to add counter and character limit
   function addCounter(inputId, labelFor, maxLength) {
@@ -4044,17 +4043,21 @@ window.addEventListener('load', function() {
       function updateCounter() {
           const currentLength = inputField.value.length;
           counter.textContent = `(${currentLength}/${maxLength})`;
+      }
 
-          if (currentLength > maxLength) {
-              inputField.value = inputField.value.substring(0, maxLength);
+      // Prevent adding characters beyond the limit
+      function enforceMaxLength(event) {
+          if (inputField.value.length >= maxLength && event.key !== 'Backspace' && event.key !== 'Delete') {
+              event.preventDefault();
           }
       }
 
       // Initial counter update
       updateCounter();
 
-      // Event listener for input changes
+      // Event listeners for input changes and keydown to enforce character limit
       inputField.addEventListener('input', updateCounter);
+      inputField.addEventListener('keydown', enforceMaxLength);
   }
 
   // Apply counter and limit to each specified input field
@@ -4064,4 +4067,46 @@ window.addEventListener('load', function() {
   addCounter('callerDetailsName', 'callerDetailsName', 128);
   addCounter('callerDetailsOrganisation', 'callerDetailsOrganisation', 128);
   addCounter('callerDetailsNumber', 'callerDetailsNumber', 16);
+  addCounter('incidentLatitude', 'incidentLatitude', 32);
+  addCounter('incidentLongitude', 'incidentLongitude', 32);
 });
+
+// Function to extract and format phone number from URL
+function extractPhoneNumber(url) {
+  const urlParams = new URLSearchParams(url.split('?')[1]);
+  let phoneNumber = urlParams.get('mobile_number');
+  if (phoneNumber) {
+      phoneNumber = phoneNumber.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
+  }
+  return phoneNumber;
+}
+
+// Function to add phone number column and populate it
+function addPhoneNumberColumn() {
+  const table = document.getElementById('sms-members');
+  const tbody = document.getElementById('sms-members-content');
+
+  if (!table || !tbody) {
+      return;
+  }
+
+  // Add Phone Number header
+  const headerRow = table.querySelector('thead tr');
+  const phoneNumberHeader = document.createElement('th');
+  phoneNumberHeader.textContent = 'Phone Number';
+  headerRow.insertBefore(phoneNumberHeader, headerRow.children[1]);
+
+  // Add Phone Number data
+  const rows = tbody.querySelectorAll('tr');
+  rows.forEach(row => {
+      const etaCell = row.querySelector('td a[href*="mobile_number"]');
+      const phoneNumber = etaCell ? extractPhoneNumber(etaCell.href) : '';
+
+      const phoneNumberCell = document.createElement('td');
+      phoneNumberCell.textContent = phoneNumber;
+      row.insertBefore(phoneNumberCell, row.children[1]);
+  });
+}
+
+// Execute the function when the content is loaded
+window.addEventListener('load', addPhoneNumberColumn);
