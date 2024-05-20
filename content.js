@@ -2334,8 +2334,18 @@ function addRadioButtonsAboveTextarea() {
     });
 }
 
-// Call the function to add radio buttons and setup their functionality
-addRadioButtonsAboveTextarea();
+// Check if the current URL matches the specified patterns
+const currentUrl = window.location.href;
+const urlPatterns = [
+  'https://surfcom.sls.com.au/incidents/edit/',
+  'https://surfcom.sls.com.au/incidents/record/',
+  'https://surfcom.sls.com.au/radio-log/add'
+];
+
+if (urlPatterns.some(pattern => currentUrl.startsWith(pattern))) {
+  // Call the function to add radio buttons and setup their functionality
+  addRadioButtonsAboveTextarea();
+}
 
 // // Function to attempt setting the dropdown value
 // function setDropdownValue() {
@@ -4047,7 +4057,10 @@ window.addEventListener('load', function() {
 
       // Prevent adding characters beyond the limit
       function enforceMaxLength(event) {
-          if (inputField.value.length >= maxLength && event.key !== 'Backspace' && event.key !== 'Delete') {
+          const isCtrlA = event.ctrlKey && event.key === 'a';
+          const isNavigationKey = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key);
+          
+          if (inputField.value.length >= maxLength && !isCtrlA && !isNavigationKey) {
               event.preventDefault();
           }
       }
@@ -4110,3 +4123,25 @@ function addPhoneNumberColumn() {
 
 // Execute the function when the content is loaded
 window.addEventListener('load', addPhoneNumberColumn);
+
+window.addEventListener('load', function() {
+  // Get the latitude and longitude input fields
+  var latInput = document.getElementById('incidentLatitude');
+  var lngInput = document.getElementById('incidentLongitude');
+
+  // Function to allow only numbers in the input fields
+  function allowOnlyNumbers(event) {
+      var charCode = event.which ? event.which : event.keyCode;
+      if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+          event.preventDefault();
+      }
+  }
+
+  // Add event listeners to restrict input to numbers only
+  latInput.addEventListener('keypress', allowOnlyNumbers);
+  lngInput.addEventListener('keypress', allowOnlyNumbers);
+
+  // Optionally, you can force the input type to 'number' for better UX
+  latInput.setAttribute('type', 'number');
+  lngInput.setAttribute('type', 'number');
+});
