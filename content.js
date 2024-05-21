@@ -1906,7 +1906,7 @@ if (window.location.href.startsWith("https://surfcom.sls.com.au/")) {
           "SurfCom Management System with enhancements and extra features, Contact Riley Porteous for extra details!";
         // Add '+' and the version number with styling
         element.innerHTML =
-          'Surfcom + <span class="version-number" style="color: lightgrey; font-size: smaller; font-style: italic;">v2.4</span>';
+          'Surfcom + <span class="version-number" style="color: lightgrey; font-size: smaller; font-style: italic;">v2.5</span>';
       }
     });
   }
@@ -2334,18 +2334,8 @@ function addRadioButtonsAboveTextarea() {
     });
 }
 
-// Check if the current URL matches the specified patterns
-const currentUrl = window.location.href;
-const urlPatterns = [
-  'https://surfcom.sls.com.au/incidents/edit/',
-  'https://surfcom.sls.com.au/incidents/record/',
-  'https://surfcom.sls.com.au/radio-log/add'
-];
-
-if (urlPatterns.some(pattern => currentUrl.startsWith(pattern))) {
-  // Call the function to add radio buttons and setup their functionality
-  addRadioButtonsAboveTextarea();
-}
+// Call the function to add radio buttons and setup their functionality
+addRadioButtonsAboveTextarea();
 
 // // Function to attempt setting the dropdown value
 // function setDropdownValue() {
@@ -3797,8 +3787,7 @@ window.addEventListener("load", function () {
         }
   
         popup.document.getElementById("inputForm").onsubmit = function (e) {
-          e.preventDefault();
-          addExtraAutoDetails();  
+          e.preventDefault(); 
           const formData = new FormData(this);
           let newData = "{{{";
           formData.forEach((value, key) => {
@@ -3882,6 +3871,37 @@ window.addEventListener('load', function () {
   surfCheckbox.addEventListener('change', updatePriorityOptions);
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Function to check the incident type and add the alert
 function checkIncidentTypeAndAddAlert() {
   const incidentTypeSelect = document.querySelector("#incidentType");
@@ -3915,6 +3935,24 @@ function checkIncidentTypeAndAddAlert() {
 
 // Call the function when the page loads
 window.addEventListener("load", checkIncidentTypeAndAddAlert);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Function to replace an existing element if it exists
 function replaceIfExists(parent, newElement) {
