@@ -2,9 +2,7 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    types:
-      - closed
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -14,15 +12,17 @@ name: release-please
 
 jobs:
   release-please:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4  # Ensure the repository is checked out
       - uses: googleapis/release-please-action@v4
+        id: release
         with:
-          # this assumes that you have created a personal access token
-          # (PAT) and configured it as a GitHub action secret named
-          # `MY_RELEASE_PLEASE_TOKEN` (this secret name is not important).
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
-          # this is a built-in strategy in release-please, see "Action Inputs"
-          # for more options
-          release-type: simple
+
+      - name: Create GitHub Release
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          gh release create ${{ steps.release.outputs.tag_name }} --notes "Release notes" --target ${{ github.sha }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
