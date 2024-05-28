@@ -15,6 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4
+        id: release
         with:
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
           release-type: simple
+
+      - name: Create GitHub Release
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          gh release create ${{ steps.release.outputs.tag_name }} --notes "Release notes" --target ${{ github.sha }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
