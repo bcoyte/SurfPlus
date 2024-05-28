@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.5.2](https://github.com/rporteous1/SurfPlus/compare/v2.5.1...v2.5.2) (2024-05-28)
+
+
+### Bug Fixes
+
+* :bug: fixed access log errors ([dad44ff](https://github.com/rporteous1/SurfPlus/commit/dad44ff52889c4f6bf7a0021a18f995c83c3809c))
+* :bug: Fixed the "no message" error when logging the message for user access log. ([59d6e4f](https://github.com/rporteous1/SurfPlus/commit/59d6e4fbf012284d940cf18c4d73f76d6c4dc1d5))
+
 ## [2.5.1](https://github.com/rporteous1/SurfPlus/compare/v1.0.0...v2.5.1) (2024-05-28)
 
 
