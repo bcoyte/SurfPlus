@@ -3874,37 +3874,6 @@ window.addEventListener('load', function () {
   surfCheckbox.addEventListener('change', updatePriorityOptions);
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Function to check the incident type and add the alert
 function checkIncidentTypeAndAddAlert() {
   const incidentTypeSelect = document.querySelector("#incidentType");
@@ -3938,24 +3907,6 @@ function checkIncidentTypeAndAddAlert() {
 
 // Call the function when the page loads
 window.addEventListener("load", checkIncidentTypeAndAddAlert);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Function to replace an existing element if it exists
 function replaceIfExists(parent, newElement) {
