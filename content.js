@@ -4187,31 +4187,8 @@ window.addEventListener('load', function() {
   lngInput.setAttribute('type', 'number');
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 window.addEventListener('load', function() {
-  // Create the new card element
+  // Create the card element
   const newCard = document.createElement('div');
   newCard.classList.add('card', 'card-primary', 'card-outline');
   newCard.style.width = '100%';  // Set the card's width to 100%
@@ -4495,35 +4472,6 @@ window.addEventListener('load', function() {
   // Recheck and update the table after 5 seconds
   setTimeout(updateTable, 5000);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 window.addEventListener('load', function () {
   console.log("Page loaded. Current URL: " + window.location.href);
