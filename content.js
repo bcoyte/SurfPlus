@@ -4557,7 +4557,7 @@ window.addEventListener('load', function () {
                           textArea.value = '';
                           console.log("Text area cleared.");
                       }
-                  }, 100); // Adjust the delay as needed
+                  }, 250); // Adjust the delay as needed
               } else {
                   console.error("Record button not found.");
               }
