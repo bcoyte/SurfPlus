@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.5.3](https://github.com/rporteous1/SurfPlus/compare/v2.5.2...v2.5.3) (2024-05-28)
+
+
+### Bug Fixes
+
+* :bug: Adjusted access log timeout ([72feb94](https://github.com/rporteous1/SurfPlus/commit/72feb9460e6a42c38de033775aa3499753191056))
+* :bug: removed autolog of access log ([e6e7a72](https://github.com/rporteous1/SurfPlus/commit/e6e7a72111054e8868917b81293323149e92154c))
+* :bug: Testing of Release Please ([3ee41df](https://github.com/rporteous1/SurfPlus/commit/3ee41df5cf9086f9dff8faa6e2943089897d942c))
+
 ## [2.5.2](https://github.com/rporteous1/SurfPlus/compare/v2.5.1...v2.5.2) (2024-05-28)
 
 
