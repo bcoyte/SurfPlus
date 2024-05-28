@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.5.1](https://github.com/rporteous1/SurfPlus/compare/v1.0.0...v2.5.1) (2024-05-28)
+
+
+### Miscellaneous Chores
+
+* release 2.0.0 ([5c6d390](https://github.com/rporteous1/SurfPlus/commit/5c6d39001a25c4891c793f55b9ceef85495893da))
+* release 2.0.0 ([bb48d37](https://github.com/rporteous1/SurfPlus/commit/bb48d370514a41c6cc10afd2b30c8cecc9a3de9b))
+
 ## 1.0.0 (2024-05-28)
 
 
