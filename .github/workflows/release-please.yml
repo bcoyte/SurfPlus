@@ -14,11 +14,12 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4  # Ensure the repository is checked out
       - uses: googleapis/release-please-action@v4
         id: release
         with:
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
-          release-type: simple
+          config-file: release-please-config.json
 
       - name: Create GitHub Release
         if: ${{ steps.release.outputs.release_created }}
