@@ -6,15 +6,16 @@
 ### Features
 
 * :sparkles: added autolog for access log ([9d14c16](https://github.com/rporteous1/SurfPlus/commit/9d14c16f8ba839e35ca074d51e9325a3e6fffbb7))
-* added ability for multiple SMS groups to be within one LngLat ([da9af8b](https://github.com/rporteous1/SurfPlus/commit/da9af8b964f9f60aad30cf0a481190192af4b15a))
-* added counters on fields with a hidden limit ([da9af8b](https://github.com/rporteous1/SurfPlus/commit/da9af8b964f9f60aad30cf0a481190192af4b15a))
-* added forced limit to fields with a hidden limit ([da9af8b](https://github.com/rporteous1/SurfPlus/commit/da9af8b964f9f60aad30cf0a481190192af4b15a))
-* added locking to ERB cells ([da9af8b](https://github.com/rporteous1/SurfPlus/commit/da9af8b964f9f60aad30cf0a481190192af4b15a))
+* :sparkles: added ability for multiple SMS groups to be within one LngLat ([da9af8b](https://github.com/rporteous1/SurfPlus/commit/da9af8b964f9f60aad30cf0a481190192af4b15a))
+* :sparkles: added counters on fields with a hidden limit ([da9af8b](https://github.com/rporteous1/SurfPlus/commit/da9af8b964f9f60aad30cf0a481190192af4b15a))
+* :sparkles: added forced limit to fields with a hidden limit ([da9af8b](https://github.com/rporteous1/SurfPlus/commit/da9af8b964f9f60aad30cf0a481190192af4b15a))
+* :sparkles: added locking to ERB cells ([da9af8b](https://github.com/rporteous1/SurfPlus/commit/da9af8b964f9f60aad30cf0a481190192af4b15a))
 
 
 ### Bug Fixes
 
 * :bug: fixed message send delay error ([d5840d6](https://github.com/rporteous1/SurfPlus/commit/d5840d64d31f6a8250027afbf6e5ced0d381dd79))
+* :bug: fixed inconsistencies with ERB naming conventions ([da9af8b](https://github.com/rporteous1/SurfPlus/commit/da9af8b964f9f60aad30cf0a481190192af4b15a))
 
 ## [2.5.3](https://github.com/rporteous1/SurfPlus/compare/v2.5.2...v2.5.3) (2024-05-28)
 
