@@ -93,57 +93,57 @@ window.addEventListener("load", function () {
   // Define groups for SMS
   const smsGroups = [
     {
-      name: "66118_01-1 FNC Serious Incident Notification SMS",
+      name: ["66118_01-1 FNC Serious Incident Notification SMS", "82448_QLD Notifications"],
       start: -28.164557,
       end: -29.610527,
     },
     {
-      name: "66120_02-1 NC Serious Incident Notification SMS",
+      name: ["66120_02-1 NC Serious Incident Notification SMS"],
       start: -29.610527,
       end: -30.665687,
     },
     {
-      name: "66122_03-1 MNC Serious Incident Notification SMS",
+      name: ["66122_03-1 MNC Serious Incident Notification SMS"],
       start: -30.665687,
       end: -31.636052,
     },
     {
-      name: "66124_04-1 LNC Serious Incident Notification SMS",
+      name: ["66124_04-1 LNC Serious Incident Notification SMS"],
       start: -31.636052,
       end: -32.447837,
     },
     {
-      name: "66146_05-1 HUN Serious Incident Notification SMS",
+      name: ["66146_05-1 HUN Serious Incident Notification SMS"],
       start: -32.447837,
       end: -33.165642,
     },
     {
-      name: "66148_06-1 CC Serious Incident Notification SMS",
+      name: ["66148_06-1 CC Serious Incident Notification SMS"],
       start: -33.165642,
       end: -33.573543,
     },
     {
-      name: "66151_07-1 SNB Serious Incident Notification SMS",
+      name: ["66151_07-1 SNB Serious Incident Notification SMS"],
       start: -33.573543,
       end: -33.82506,
     },
     {
-      name: "66153_08-1 SYD Serious Incident Notification SMS",
+      name: ["66153_08-1 SYD Serious Incident Notification SMS"],
       start: -33.82506,
       end: -34.191638,
     },
     {
-      name: "66155_09-1 ILL Serious Incident Notification SMS",
+      name: ["66155_09-1 ILL Serious Incident Notification SMS"],
       start: -34.191638,
       end: -34.548028,
     },
     {
-      name: "66157_10-1 SC Serious Incident Notification SMS",
+      name: ["66157_10-1 SC Serious Incident Notification SMS"],
       start: -34.548028,
       end: -35.664119,
     },
     {
-      name: "66159_11-1 FSC Serious Incident Notification SMS",
+      name: ["66159_11-1 FSC Serious Incident Notification SMS"],
       start: -35.664119,
       end: -36.0,
     },
@@ -186,9 +186,9 @@ window.addEventListener("load", function () {
     let selectedGroups = [];
 
     if (currentLatitude !== null) {
-      const branchName = getMailingGroupId(groups, currentLatitude);
-      if (branchName) {
-        selectedGroups.push(branchName);
+      const branchNames = getMailingGroupIds(groups, currentLatitude);
+      if (branchNames) {
+        selectedGroups.push(...branchNames);
       }
     }
 
@@ -206,8 +206,8 @@ window.addEventListener("load", function () {
     return latitudeInput ? parseFloat(latitudeInput.value) : null;
   }
 
-  // Determine the appropriate mailing group ID based on latitude
-  function getMailingGroupId(groups, latitude) {
+  // Determine the appropriate mailing group IDs based on latitude
+  function getMailingGroupIds(groups, latitude) {
     for (let group of groups) {
       if (latitude >= group.end && latitude < group.start) {
         return group.name;
@@ -257,6 +257,7 @@ window.addEventListener("load", function () {
     }
   });
 });
+
 
 document.addEventListener("keydown", function (event) {
   if (event.key === "F2") {
@@ -403,6 +404,19 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 document.addEventListener("keydown", function (event) {
   if (event.key === "F7") {
     event.preventDefault(); // Prevent the default F7 action
@@ -420,40 +434,40 @@ document.addEventListener("keydown", function (event) {
 
     // ERB names, excluding the first placeholder
     let erbNames = [
-      "Dreamtime Beach (Fingal - Tweed)",
-      "Kingscliff (Tweed)",
-      "Brunswick Beach (Byron)",
-      "Belongil Beach (Byron)",
-      "Suffolk Park",
-      "Seven Mile Beach/Lennox (Ballina)",
-      "Shelly Beach (Port Macquarie)",
-      "Diamond Beach (LNC)",
-      "Tuncurry Beach (LNC)",
-      "The Ruins (LNC)",
-      "Boomerang Beach (LNC)",
-      "Fingal Spit (Port Stephens)",
-      "Fingal Island (Port Stephens)",
-      "Snapper Point (Frazer Park)",
-      "Budgewoi (Central Coast)",
-      "The Entrance Channel (Central Coast)",
-      "Pearl Beach (Central Coast)",
-      "Shelly Beach (Manly)",
-      "Malabar (Randwick)",
-      "Little Bay (Randwick)",
-      "Greenhills Beach Track 1 (Sutherland Shire)",
-      "Greenhills Beach Track 6 (Sutherland Shire)",
-      "Potter Point (Kurnell)",
-      "Blackwoods Beach (Cronulla)",
-      "Sharky Beach (Coledale)",
-      "East Corrimal Beach (Wollongong)",
-      "Puckeys Beach (Wollongong)",
-      "Coniston Beach (Wollongong)",
-      "Hill 60 (Wollongong)",
-      "Windang Island (Shellharbour)",
-      "Shellharbour",
-      "South Bombo (Kiama)",
-      "Kiama Blowhole (Kiama)",
-      "Kendalls Beach (Kiama)",
+      "North Kingscliff ERB (Tweed - Far North Coast (Upper))",
+      "Brunswick Breakwall ERB (Byron - Far North Coast (Upper))",
+      "Belongil Beach/The Wreck ERB (Byron - Far North Coast (Upper))",
+      "Suffolk Park ERB (Ballina - Far North Coast (Lower))",
+      "Seven Mile Lennox Head ERB (Ballina - Far North Coast (Lower))",
+      "Shelly Beach ERB (Port Macquarie-Hastings - Mid North Coast)",
+      "Diamond Beach ERB (Mid-Coast - Lower North Coast)",
+      "Tuncurry Beach ERB (Mid-Coast - Lower North Coast)",
+      "The Ruins ERB (Mid-Coast - Lower North Coast)",
+      "Boomerang Beach ERB (Mid-Coast - Lower North Coast)",
+      "Fingal Spit, Port Stephens (Port Stephens - Hunter)",
+      "Fingal Island, Port Stephens (Port Stephens - Hunter)",
+      "Snapper Point ERB (Central Coast - Central Coast)",
+      "Budgewoi ERB (Central Coast - Central Coast)",
+      "The Entrance Channel ERB (Central Coast - Central Coast)",
+      "Pearl Beach ERB (Central Coast - Central Coast)",
+      "Shelly Beach (Manly) ERB (Northern Beaches - Sydney Northern Beaches)",
+      "Malabar ERB (Council device) (Randwick - Sydney)",
+      "Little Bay ERB (Council device) (Randwick - Sydney)",
+      "Potter Point ERB (Sutherland - Sydney)",
+      "Greenhills Track 1 ERB (Sutherland - Sydney)",
+      "Greenhills Track 6 ERB (Sutherland - Sydney)",
+      "Sharky Beach ERB (Wollongong - Illawarra)",
+      "East Corrimal ERB (Wollongong - Illawarra)",
+      "Puckys Beach ERB (Wollongong - Illawarra)",
+      "Hill 60 ERB (Wollongong - Illawarra)",
+      "Windang Island/Lake Illawarra ERB (Shellharbour - South Coast)",
+      "Shellharbour ERB (Shellharbour - South Coast)",
+      "South Bombo ERB (Kiama - South Coast)",
+      "Kiama Blowhole ERB (Kiama - South Coast)",
+      "Kendalls ERB (Kiama - South Coast)",
+      "Dreamtime ERB (Tweed - Far North Coast (Upper))",
+      "Blackwoods ERB (Sutherland - Sydney)",
+      "Coniston ERB (Wollongong - Illawarra)"
     ];
 
     // Sort ERB names alphabetically
@@ -490,21 +504,35 @@ document.addEventListener("keydown", function (event) {
       let tpi = "NIL";
 
       // Insert into the textarea
-      document.querySelector("#callerDetailsName").value = name;
-      document.querySelector("#callerDetailsOrganisation").value = org;
-      document.querySelector("#callerDetailsNumber").value = number;
-      document.querySelector("#incidentLocation").value = location;
-      document.querySelector("#incidentThirdParty").value = tpi;
+      let nameField = document.querySelector("#callerDetailsName");
+      let orgField = document.querySelector("#callerDetailsOrganisation");
+      let numberField = document.querySelector("#callerDetailsNumber");
+      let locationField = document.querySelector("#incidentLocation");
+      let tpiField = document.querySelector("#incidentThirdParty");
+      let serviceField = document.getElementById("primary_service");
 
-      var selectElementTo = document.getElementById("primary_service");
-      selectElementTo.value = "680";
+      nameField.value = name;
+      orgField.value = org;
+      numberField.value = number;
+      locationField.value = location;
+      tpiField.value = tpi;
+
+      serviceField.value = "680";
       // Trigger the 'change' event for the select element
-      var changeEventTo = new Event("change", {
+      let changeEvent = new Event("change", {
         bubbles: true,
         cancelable: true,
       });
-      selectElementTo.dispatchEvent(changeEventTo);
+      serviceField.dispatchEvent(changeEvent);
       document.querySelector("#callerDetails13Surf").checked = false;
+
+      // Lock the specific fields after selection
+      nameField.disabled = true;
+      orgField.disabled = true;
+      numberField.disabled = true;
+      locationField.disabled = true;
+      tpiField.disabled = true;
+      serviceField.disabled = true;
 
       // Optionally, remove the dropdown after selection
       dropdown.remove();
@@ -514,6 +542,84 @@ document.addEventListener("keydown", function (event) {
     dropdown.focus();
   }
 });
+
+// Unlock fields and run button action when save button is clicked
+document.querySelector(".btn.btn-app.check-incident-status").addEventListener("click", function () {
+  // Unlock the specific fields
+  document.querySelector("#callerDetailsName").disabled = false;
+  document.querySelector("#callerDetailsOrganisation").disabled = false;
+  document.querySelector("#callerDetailsNumber").disabled = false;
+  document.querySelector("#incidentLocation").disabled = false;
+  document.querySelector("#incidentThirdParty").disabled = false;
+  document.getElementById("primary_service").disabled = false;
+
+  // Run the button's action
+  $('#saveIncidentForm').submit();
+});
+
+// Add Unlock All button
+window.addEventListener("load", function () {
+  // Create the Unlock All button
+  let unlockAllButton = document.createElement("button");
+  unlockAllButton.className = "btn btn-app";
+  unlockAllButton.innerHTML = `
+    <svg class="svg-inline--fa fa-unlock" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="unlock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+      <path fill="currentColor" d="M400 224H112V144C112 64.47 176.5 0 256 0S400 64.47 400 144v16c0 8.836-7.164 16-16 16H336c-8.836 0-16-7.164-16-16V144c0-44.11-35.89-80-80-80S160 99.89 160 144v80h-48V448c0 35.35 28.65 64 64 64h208c35.35 0 64-28.65 64-64V256C448 238.3 433.7 224 416 224z"></path>
+    </svg>
+    Unlock All
+  `;
+
+  // Add the button to the DOM
+  let buttonContainer = document.querySelector(".row.mb-4");
+  buttonContainer.appendChild(unlockAllButton);
+
+  // Add event listener to the Unlock All button
+  unlockAllButton.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default action
+
+    // Unlock the specific fields
+    document.querySelector("#callerDetailsName").disabled = false;
+    document.querySelector("#callerDetailsOrganisation").disabled = false;
+    document.querySelector("#callerDetailsNumber").disabled = false;
+    document.querySelector("#incidentLocation").disabled = false;
+    document.querySelector("#incidentThirdParty").disabled = false;
+    document.getElementById("primary_service").disabled = false;
+  });
+
+  // Lock fields on window load if they meet the conditions
+  let nameField = document.querySelector("#callerDetailsName");
+  let orgField = document.querySelector("#callerDetailsOrganisation");
+  let numberField = document.querySelector("#callerDetailsNumber");
+  let locationField = document.querySelector("#incidentLocation");
+  let tpiField = document.querySelector("#incidentThirdParty");
+  let serviceField = document.getElementById("primary_service");
+
+  if (
+    nameField.value.startsWith("ERB -") &&
+    orgField.value === "SLSNSW" &&
+    numberField.value === "ERB" &&
+    locationField.value.startsWith("ERB -") &&
+    tpiField.value === "NIL" &&
+    serviceField.value === "680"
+  ) {
+    nameField.disabled = true;
+    orgField.disabled = true;
+    numberField.disabled = true;
+    locationField.disabled = true;
+    tpiField.disabled = true;
+    serviceField.disabled = true;
+  }
+});
+
+
+
+
+
+
+
+
+
+
 
 document.addEventListener("keydown", function (event) {
   // Check if Ctrl + S was pressed
@@ -2037,8 +2143,13 @@ function applyColorsToMessages(container) {
     ) {
       log.style.backgroundColor = "Salmon";
       log.style.color = "white";
+    } else if (
+      text.includes(" accessed this incident at ")
+    ) {
+      log.style.backgroundColor = "black";
+      log.style.color = "white";
     }
-    // No need for a default action
+    // No need for a default action 
   });
 }
 
@@ -4483,14 +4594,14 @@ window.addEventListener('load', function () {
               let toSelect = document.querySelector('#msg_to');
 
               if (fromSelect) {
-                  fromSelect.value = "Surfcom";
+                  fromSelect.value = "unit_1996";
                   console.log("'From' dropdown set to Surfcom.");
               } else {
                   console.error("'From' dropdown not found");
               }
 
               if (toSelect) {
-                  toSelect.value = "Surfcom";
+                  toSelect.value = "unit_1997";
                   console.log("'To' dropdown set to Surfcom.");
               } else {
                   console.error("'To' dropdown not found");
