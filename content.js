@@ -258,7 +258,6 @@ window.addEventListener("load", function () {
   });
 });
 
-
 document.addEventListener("keydown", function (event) {
   if (event.key === "F2") {
     event.preventDefault(); // Prevent the default F2 action
@@ -404,19 +403,6 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 document.addEventListener("keydown", function (event) {
   if (event.key === "F7") {
     event.preventDefault(); // Prevent the default F7 action
@@ -527,12 +513,14 @@ document.addEventListener("keydown", function (event) {
       document.querySelector("#callerDetails13Surf").checked = false;
 
       // Lock the specific fields after selection
-      nameField.disabled = true;
-      orgField.disabled = true;
-      numberField.disabled = true;
-      locationField.disabled = true;
-      tpiField.disabled = true;
-      serviceField.disabled = true;
+      if (window.location.href !== "https://surfcom.sls.com.au/incidents/add") {
+        nameField.disabled = true;
+        orgField.disabled = true;
+        numberField.disabled = true;
+        locationField.disabled = true;
+        tpiField.disabled = true;
+        serviceField.disabled = true;
+      }
 
       // Optionally, remove the dropdown after selection
       dropdown.remove();
@@ -543,104 +531,93 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Function to unlock fields
-  function unlockFields() {
+window.addEventListener("load", function() {
+  document.querySelector(".btn.btn-app.check-incident-status").addEventListener("click", function () {
+    // Unlock the specific fields
     document.querySelector("#callerDetailsName").disabled = false;
     document.querySelector("#callerDetailsOrganisation").disabled = false;
     document.querySelector("#callerDetailsNumber").disabled = false;
     document.querySelector("#incidentLocation").disabled = false;
     document.querySelector("#incidentThirdParty").disabled = false;
     document.getElementById("primary_service").disabled = false;
-  }
 
-  // Unlock fields and run button action when save button is clicked
-  const saveButton = document.querySelector(".btn.btn-app.check-incident-status");
-  if (saveButton) {
-    saveButton.addEventListener("click", function () {
-      try {
-        unlockFields();
-        $('#saveIncidentForm').submit(); // Ensure jQuery is loaded
-      } catch (error) {
-        console.error("Error unlocking fields or submitting form:", error);
-      }
-    });
-  } else {
-    console.error("Save button not found.");
-  }
-
-  // Add Unlock All button
-  window.addEventListener("load", function () {
-    try {
-      // Create the Unlock All button
-      let unlockAllButton = document.createElement("button");
-      unlockAllButton.className = "btn btn-app";
-      unlockAllButton.innerHTML = `
-        <svg class="svg-inline--fa fa-unlock" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="unlock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
-          <path fill="currentColor" d="M400 224H112V144C112 64.47 176.5 0 256 0S400 64.47 400 144v16c0 8.836-7.164 16-16 16H336c-8.836 0-16-7.164-16-16V144c0-44.11-35.89-80-80-80S160 99.89 160 144v80h-48V448c0 35.35 28.65 64 64 64h208c35.35 0 64-28.65 64-64V256C448 238.3 433.7 224 416 224z"></path>
-        </svg>
-        Unlock All
-      `;
-
-      // Add the button to the DOM
-      let buttonContainer = document.querySelector(".row.mb-4");
-      if (buttonContainer) {
-        buttonContainer.appendChild(unlockAllButton);
-      } else {
-        console.error("Button container not found.");
-      }
-
-      // Add event listener to the Unlock All button
-      unlockAllButton.addEventListener("click", function (event) {
-        event.preventDefault(); // Prevent the default action
-        unlockFields();
-      });
-
-      // Lock fields on window load if they meet the conditions
-      let nameField = document.querySelector("#callerDetailsName");
-      let orgField = document.querySelector("#callerDetailsOrganisation");
-      let numberField = document.querySelector("#callerDetailsNumber");
-      let locationField = document.querySelector("#incidentLocation");
-      let tpiField = document.querySelector("#incidentThirdParty");
-      let serviceField = document.getElementById("primary_service");
-
-      if (
-        nameField &&
-        orgField &&
-        numberField &&
-        locationField &&
-        tpiField &&
-        serviceField &&
-        nameField.value.startsWith("ERB -") &&
-        orgField.value === "SLSNSW" &&
-        numberField.value === "ERB" &&
-        locationField.value.startsWith("ERB -") &&
-        tpiField.value === "NIL" &&
-        serviceField.value === "680"
-      ) {
-        nameField.disabled = true;
-        orgField.disabled = true;
-        numberField.disabled = true;
-        locationField.disabled = true;
-        tpiField.disabled = true;
-        serviceField.disabled = true;
-      }
-    } catch (error) {
-      console.error("Error during window load event:", error);
-    }
+    // Run the button's action
+    document.getElementById('saveIncidentForm').submit();
   });
 });
 
+window.addEventListener("load", function () {
+  // Lock fields on window load if they meet the conditions
+  let nameField = document.querySelector("#callerDetailsName");
+  let orgField = document.querySelector("#callerDetailsOrganisation");
+  let numberField = document.querySelector("#callerDetailsNumber");
+  let locationField = document.querySelector("#incidentLocation");
+  let tpiField = document.querySelector("#incidentThirdParty");
+  let serviceField = document.getElementById("primary_service");
 
+  let areAllFieldsLocked = false;
 
+  if (
+    nameField.value.startsWith("ERB -") &&
+    orgField.value === "SLSNSW" &&
+    numberField.value === "ERB" &&
+    locationField.value.startsWith("ERB -") &&
+    tpiField.value === "NIL" &&
+    serviceField.value === "680" &&
+    window.location.href !== "https://surfcom.sls.com.au/incidents/add"
+  ) {
+    nameField.disabled = true;
+    orgField.disabled = true;
+    numberField.disabled = true;
+    locationField.disabled = true;
+    tpiField.disabled = true;
+    serviceField.disabled = true;
+    areAllFieldsLocked = true;
+  }
 
+  if (areAllFieldsLocked) {
+    // Create the Unlock All button
+    let unlockAllButton = document.createElement("button");
+    unlockAllButton.className = "btn btn-app";
+    unlockAllButton.innerHTML = `
+      <svg class="svg-inline--fa fa-unlock" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="unlock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+        <path fill="currentColor" d="M400 224H112V144C112 64.47 176.5 0 256 0S400 64.47 400 144v16c0 8.836-7.164 16-16 16H336c-8.836 0-16-7.164-16-16V144c0-44.11-35.89-80-80-80S160 99.89 160 144v80h-48V448c0 35.35 28.65 64 64 64h208c35.35 0 64-28.65 64-64V256C448 238.3 433.7 224 416 224z"></path>
+      </svg>
+      Unlock All
+    `;
 
+    // Add the button to the DOM
+    let buttonContainer = document.querySelector(".row.mb-4");
+    buttonContainer.appendChild(unlockAllButton);
 
+    // Add event listener to the Unlock All button
+    unlockAllButton.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent the default action
 
+      // Unlock the specific fields
+      nameField.disabled = false;
+      orgField.disabled = false;
+      numberField.disabled = false;
+      locationField.disabled = false;
+      tpiField.disabled = false;
+      serviceField.disabled = false;
+    });
+  }
 
+  // Remove button with type="reset" and class="btn btn-app"
+  var resetButtons = document.querySelectorAll('button[type="reset"]');
+  resetButtons.forEach(function(button) {
+    if (button.classList.contains('btn') && button.classList.contains('btn-app')) {
+      button.remove();
+    }
+  });
 
-
-
+  // Remove anchor tag with specific class and href
+  var anchor = document.querySelector('a.btn.btn-app[href="https://surfcom.sls.com.au/incidents/view/0"]');
+  if (anchor) {
+    anchor.remove();
+  }
+});
 
 document.addEventListener("keydown", function (event) {
   // Check if Ctrl + S was pressed
@@ -3197,8 +3174,8 @@ if (
         Enroute: 0,
         Arrived: 0,
         Returning: 0,
+        Standby: 0,
         "Stood Down": 0,
-        Unavailable: 0,
       };
       const rows = document.querySelectorAll("#servicesTable tbody tr");
       if (!rows.length) return statuses; // If no rows found, return default counts
