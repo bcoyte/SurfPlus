@@ -4703,7 +4703,7 @@ function extractUsername() {
   return '';
 }
 
-// Function to create the role selection buttons
+// Function to create the role selection buttons and the remove button
 function createRoleButtons(callback) {
   let container = document.createElement('div');
   container.id = 'role-buttons-container';
@@ -4724,6 +4724,21 @@ function createRoleButtons(callback) {
       };
       container.appendChild(button);
   });
+
+  // Create the remove button with red bin icon
+  let removeButton = document.createElement('button');
+  removeButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+  removeButton.style.marginLeft = '10px';
+  removeButton.style.float = 'right';
+  removeButton.style.color = 'red';
+  removeButton.style.background = 'none';
+  removeButton.style.border = 'none';
+  removeButton.style.cursor = 'pointer';
+  removeButton.onclick = (e) => {
+      e.preventDefault();
+      removeUser();
+  };
+  container.appendChild(removeButton);
 
   return container;
 }
@@ -4772,6 +4787,23 @@ function insertRoleButtons() {
       newColDiv.className = 'col-12 col-md-6';
       newColDiv.appendChild(addButtonContainer);
       targetDiv.appendChild(newColDiv);
+  }
+}
+
+// Function to remove the user from the field
+function removeUser() {
+  let username = extractUsername();
+  if (username) {
+      let inputField = document.querySelector('#incidentSLSContact');
+      if (inputField) {
+          let currentValue = inputField.value;
+          let entries = currentValue ? currentValue.split(' / ') : [];
+          let updatedEntries = entries.filter(entry => !entry.includes(username));
+
+          inputField.value = updatedEntries.join(' / ');
+      }
+  } else {
+      alert('Username not found.');
   }
 }
 
