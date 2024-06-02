@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.7.0](https://github.com/rporteous1/SurfPlus/compare/v2.6.0...v2.7.0) (2024-06-02)
+
+
+### Features
+
+* ✨ added filling of lnglat to ERBs ([8681a6a](https://github.com/rporteous1/SurfPlus/commit/8681a6ab360c19d041238f34f3ba6fb5ba29c33f))
+* ✨ added lockdowns on sls contact field ([09814ef](https://github.com/rporteous1/SurfPlus/commit/09814efc5dcb6548a07ce344369dd7760dd32e9e))
+* ✨ added sectioning to ERB dropdown by branch ([8681a6a](https://github.com/rporteous1/SurfPlus/commit/8681a6ab360c19d041238f34f3ba6fb5ba29c33f))
+
+
+### Bug Fixes
+
+* :bug: fixed all pages except incident manager not working ([9c69fb4](https://github.com/rporteous1/SurfPlus/commit/9c69fb4bb705d096dd052c2b2b223c05e96ebc6d))
+* :bug: fixed issue with creating an erb job not unlocking ([bd1054f](https://github.com/rporteous1/SurfPlus/commit/bd1054ffb102af26bb37047632a8ead5041efff1))
+
 ## [2.6.0](https://github.com/rporteous1/SurfPlus/compare/v2.5.3...v2.6.0) (2024-05-30)
 
 
