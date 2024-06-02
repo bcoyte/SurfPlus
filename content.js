@@ -592,6 +592,8 @@ window.addEventListener("load", function() {
     document.querySelector("#incidentLocation").disabled = false;
     document.querySelector("#incidentThirdParty").disabled = false;
     document.getElementById("primary_service").disabled = false;
+    document.getElementById("incidentLatitude").disabled = false;
+    document.getElementById("incidentLongitude").disabled = false;
 
     // Run the button's action
     document.getElementById('saveIncidentForm').submit();
@@ -606,6 +608,8 @@ window.addEventListener("load", function () {
   let locationField = document.querySelector("#incidentLocation");
   let tpiField = document.querySelector("#incidentThirdParty");
   let serviceField = document.getElementById("primary_service");
+  let latField = document.getElementById("incidentLatitude");
+  let lngField = document.getElementById("incidentLongitude");
 
   let areAllFieldsLocked = false;
 
@@ -624,6 +628,8 @@ window.addEventListener("load", function () {
     locationField.disabled = true;
     tpiField.disabled = true;
     serviceField.disabled = true;
+    latField.disabled = true;
+    lngField.disabled = true;
     areAllFieldsLocked = true;
   }
 
@@ -653,6 +659,8 @@ window.addEventListener("load", function () {
       locationField.disabled = false;
       tpiField.disabled = false;
       serviceField.disabled = false;
+      latField.disabled = false;
+      lngField.disabled = false;
     });
   }
 
@@ -670,6 +678,7 @@ window.addEventListener("load", function () {
     anchor.remove();
   }
 });
+
 
 document.addEventListener("keydown", function (event) {
   // Check if Ctrl + S was pressed
