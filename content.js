@@ -4692,3 +4692,164 @@ window.addEventListener('load', function () {
       console.log("Script not running because current URL does not match 'https://surfcom.sls.com.au/incidents/edit/' pattern");
   }
 });
+
+// Function to extract the username from the email before the @ symbol
+function extractUsername() {
+  let emailElement = document.querySelector('.dropdown-menu .dropdown-item small:last-of-type');
+  if (emailElement) {
+      let email = emailElement.textContent;
+      return email.split('@')[0].toUpperCase();
+  }
+  return '';
+}
+
+// Function to create the role selection buttons
+function createRoleButtons(callback) {
+  let container = document.createElement('div');
+  container.id = 'role-buttons-container';
+  container.style.marginTop = '10px';
+
+  let title = document.createElement('p');
+  title.innerHTML = '<strong>Add me to incident as:</strong>';
+  container.appendChild(title);
+
+  let roles = ['ERO', 'UAVERO', 'SERO', 'SDO'];
+  roles.forEach(role => {
+      let button = document.createElement('button');
+      button.textContent = role;
+      button.style.marginRight = '10px';
+      button.onclick = (e) => {
+          e.preventDefault();
+          callback(role);
+      };
+      container.appendChild(button);
+  });
+
+  return container;
+}
+
+// Function to insert the role selection buttons next to the SLS contact field
+function insertRoleButtons() {
+  let targetDiv = document.querySelector('#incidentSLSContact').parentNode.parentNode.parentNode;
+  let addButtonContainer = createRoleButtons((role) => {
+      let username = extractUsername();
+      if (username) {
+          let inputField = document.querySelector('#incidentSLSContact');
+          if (inputField) {
+              let currentValue = inputField.value;
+              let newEntry = `${username} (${role})`;
+              let entries = currentValue ? currentValue.split(' / ') : [];
+              let entryExists = false;
+
+              for (let i = 0; i < entries.length; i++) {
+                  if (entries[i].includes(username)) {
+                      entries[i] = newEntry;
+                      entryExists = true;
+                      break;
+                  }
+              }
+
+              if (!entryExists) {
+                  entries.push(newEntry);
+              }
+
+              entries.sort((a, b) => {
+                  let rolesOrder = ['ERO', 'UAVERO', 'SERO', 'SDO'];
+                  let roleA = a.match(/\(([^)]+)\)/)[1];
+                  let roleB = b.match(/\(([^)]+)\)/)[1];
+                  return rolesOrder.indexOf(roleA) - rolesOrder.indexOf(roleB);
+              });
+
+              inputField.value = entries.join(' / ');
+          }
+      } else {
+          alert('Username not found.');
+      }
+  });
+
+  if (targetDiv) {
+      let newColDiv = document.createElement('div');
+      newColDiv.className = 'col-12 col-md-6';
+      newColDiv.appendChild(addButtonContainer);
+      targetDiv.appendChild(newColDiv);
+  }
+}
+
+// Wait for the DOM to load before running the script
+window.addEventListener('load', insertRoleButtons);
+
+window.addEventListener('load', function() {
+  // Lock the input field on window load
+  const inputField = document.getElementById('incidentSLSContact');
+  if (inputField) {
+      inputField.readOnly = true;
+      
+      // Add horizontal scrollbar to the input field
+      inputField.style.overflowX = 'auto';
+      inputField.style.whiteSpace = 'nowrap';
+
+      // Create the scroll buttons
+      const scrollLeftButton = document.createElement('button');
+      scrollLeftButton.id = 'scrollLeft';
+      scrollLeftButton.innerHTML = '&lt;';
+      scrollLeftButton.style.marginRight = '5px';
+      
+      const scrollRightButton = document.createElement('button');
+      scrollRightButton.id = 'scrollRight';
+      scrollRightButton.innerHTML = '&gt;';
+      scrollRightButton.style.marginLeft = '5px';
+      
+      // Insert the buttons after the input field
+      inputField.parentNode.insertBefore(scrollLeftButton, inputField.nextSibling);
+      inputField.parentNode.insertBefore(scrollRightButton, scrollLeftButton.nextSibling);
+
+      // Add event listeners to the scroll buttons
+      scrollLeftButton.addEventListener('click', function(event) {
+          event.preventDefault();
+          inputField.scrollLeft -= 10; // Adjust the value as needed
+      });
+
+      scrollRightButton.addEventListener('click', function(event) {
+          event.preventDefault();
+          inputField.scrollLeft += 10; // Adjust the value as needed
+      });
+  }
+
+  // Add an event listener to the button to unlock the input field and run the function
+  const button = document.querySelector('button.check-incident-status');
+  if (button) {
+      button.addEventListener('click', function(event) {
+          event.preventDefault();
+          if (inputField) {
+              inputField.readOnly = false;
+          }
+
+          // Run the function associated with the button
+          const form = document.getElementById('saveIncidentForm');
+          if (form) {
+              form.submit();
+          }
+      });
+  }
+});
+
+window.addEventListener('load', function() {
+  // Select the element with the incidentSLSContact field
+  var incidentSLSContactElement = document.querySelector('#incidentSLSContact');
+
+  // Navigate to the parent .col-12.col-md-6 div
+  if (incidentSLSContactElement) {
+      var parentColDiv = incidentSLSContactElement.closest('.col-12.col-md-6');
+
+      // Check if the next sibling exists and has the empty .form-group
+      if (parentColDiv && parentColDiv.nextElementSibling) {
+          var nextSiblingColDiv = parentColDiv.nextElementSibling;
+          var emptyFormGroup = nextSiblingColDiv.querySelector('.form-group');
+
+          // Remove the next sibling .col-12.col-md-6 if it contains an empty .form-group
+          if (emptyFormGroup && emptyFormGroup.children.length === 0) {
+              nextSiblingColDiv.remove();
+          }
+      }
+  }
+});
