@@ -418,57 +418,100 @@ document.addEventListener("keydown", function (event) {
     dropdown.id = "erbNameDropdown";
     dropdown.className = "form-control"; // Optional: for styling if using Bootstrap or similar
 
-    // ERB names, excluding the first placeholder
-    let erbNames = [
-      "North Kingscliff ERB (Tweed - Far North Coast (Upper))",
-      "Brunswick Breakwall ERB (Byron - Far North Coast (Upper))",
-      "Belongil Beach/The Wreck ERB (Byron - Far North Coast (Upper))",
-      "Suffolk Park ERB (Ballina - Far North Coast (Lower))",
-      "Seven Mile Lennox Head ERB (Ballina - Far North Coast (Lower))",
-      "Shelly Beach ERB (Port Macquarie-Hastings - Mid North Coast)",
-      "Diamond Beach ERB (Mid-Coast - Lower North Coast)",
-      "Tuncurry Beach ERB (Mid-Coast - Lower North Coast)",
-      "The Ruins ERB (Mid-Coast - Lower North Coast)",
-      "Boomerang Beach ERB (Mid-Coast - Lower North Coast)",
-      "Fingal Spit, Port Stephens (Port Stephens - Hunter)",
-      "Fingal Island, Port Stephens (Port Stephens - Hunter)",
-      "Snapper Point ERB (Central Coast - Central Coast)",
-      "Budgewoi ERB (Central Coast - Central Coast)",
-      "The Entrance Channel ERB (Central Coast - Central Coast)",
-      "Pearl Beach ERB (Central Coast - Central Coast)",
-      "Shelly Beach (Manly) ERB (Northern Beaches - Sydney Northern Beaches)",
-      "Malabar ERB (Council device) (Randwick - Sydney)",
-      "Little Bay ERB (Council device) (Randwick - Sydney)",
-      "Potter Point ERB (Sutherland - Sydney)",
-      "Greenhills Track 1 ERB (Sutherland - Sydney)",
-      "Greenhills Track 6 ERB (Sutherland - Sydney)",
-      "Sharky Beach ERB (Wollongong - Illawarra)",
-      "East Corrimal ERB (Wollongong - Illawarra)",
-      "Puckys Beach ERB (Wollongong - Illawarra)",
-      "Hill 60 ERB (Wollongong - Illawarra)",
-      "Windang Island/Lake Illawarra ERB (Shellharbour - South Coast)",
-      "Shellharbour ERB (Shellharbour - South Coast)",
-      "South Bombo ERB (Kiama - South Coast)",
-      "Kiama Blowhole ERB (Kiama - South Coast)",
-      "Kendalls ERB (Kiama - South Coast)",
-      "Dreamtime ERB (Tweed - Far North Coast (Upper))",
-      "Blackwoods ERB (Sutherland - Sydney)",
-      "Coniston ERB (Wollongong - Illawarra)"
+    // ERB names and their corresponding latitudes, longitudes, and branches
+    let erbs = [
+      { name: "North Kingscliff ERB (Kingscliff - Far North Coast)", lat: -28.240223, lon: 153.568423, branch: "Far North Coast" },
+      { name: "Brunswick Breakwall ERB (Brunswick Heads - Far North Coast)", lat: -28.5383, lon: 153.55635, branch: "Far North Coast" },
+      { name: "Belongil Beach/The Wreck ERB (Byron Bay - Far North Coast)", lat: -28.63699, lon: 153.60409, branch: "Far North Coast" },
+      { name: "Suffolk Park ERB (Suffolk Park - Far North Coast)", lat: -28.69081, lon: 153.61417, branch: "Far North Coast" },
+      { name: "Seven Mile Lennox Head ERB (Lennox Head - Far North Coast)", lat: -28.786265, lon: 153.593925, branch: "Far North Coast" },
+      { name: "Shelly Beach ERB (Port Macquarie - Mid North Coast)", lat: -31.457766, lon: 152.932622, branch: "Mid North Coast" },
+      { name: "Diamond Beach ERB (Diamond Beach - Lower North Coast)", lat: -32.044077, lon: 152.541142, branch: "Lower North Coast" },
+      { name: "Tuncurry Beach ERB (Tuncurry - Lower North Coast)", lat: -32.173371, lon: 152.508961, branch: "Lower North Coast" },
+      { name: "The Ruins ERB (Booti Booti - Lower North Coast)", lat: -32.31087, lon: 152.52105, branch: "Lower North Coast" },
+      { name: "Boomerang Beach ERB (Boomerang Beach - Lower North Coast)", lat: -32.336374, lon: 152.5455, branch: "Lower North Coast" },
+      { name: "Fingal Spit ERB (Fingal Bay - Hunter)", lat: -32.73955, lon: 152.18287, branch: "Hunter" },
+      { name: "Fingal Island ERB (Fingal Bay - Hunter)", lat: -32.74208, lon: 152.19221, branch: "Hunter" },
+      { name: "Snapper Point ERB (Frazer Park - Central Coast)", lat: -33.186083, lon: 151.628188, branch: "Central Coast" },
+      { name: "Budgewoi ERB (Budgewoi - Central Coast)", lat: -33.23851, lon: 151.56971, branch: "Central Coast" },
+      { name: "The Entrance Channel ERB (The Entrance - Central Coast)", lat: -33.34599, lon: 151.50262, branch: "Central Coast" },
+      { name: "Pearl Beach ERB (Pearl Beach - Central Coast)", lat: -33.541723, lon: 151.30774, branch: "Central Coast" },
+      { name: "Shelly Beach ERB (Manly - Sydney Northern Beaches)", lat: -33.800901, lon: 151.297836, branch: "Sydney Northern Beaches" },
+      { name: "Malabar ERB (Malabar - Sydney)", lat: -33.963842, lon: 151.252012, branch: "Sydney" },
+      { name: "Little Bay ERB (Little Bay - Sydney)", lat: -33.979961, lon: 151.251169, branch: "Sydney" },
+      { name: "Potter Point ERB (Kurnell - Sydney)", lat: -34.041263, lon: 151.214189, branch: "Sydney" },
+      { name: "Greenhills Track 1 ERB (Cronulla - Sydney)", lat: -34.034316, lon: 151.18413, branch: "Sydney" },
+      { name: "Greenhills Track 6 ERB (Cronulla - Sydney)", lat: -34.040529, lon: 151.165024, branch: "Sydney" },
+      { name: "Sharky Beach ERB (Coledale - Illawarra)", lat: -34.294615, lon: 150.943376, branch: "Illawarra" },
+      { name: "East Corrimal ERB (East Corrimal - Illawarra)", lat: -34.377399, lon: 150.920598, branch: "Illawarra" },
+      { name: "Puckys Beach ERB (Wollongong - Illawarra)", lat: -34.410413, lon: 150.901774, branch: "Illawarra" },
+      { name: "Hill 60 ERB (Port Kembla - Illawarra)", lat: -34.493238, lon: 150.919691, branch: "Illawarra" },
+      { name: "Windang Island/Lake Illawarra ERB (Lake Illawarra - South Coast)", lat: -34.543799, lon: 150.874818, branch: "South Coast" },
+      { name: "Shellharbour ERB (Shellharbour - South Coast)", lat: -34.582453, lon: 150.873245, branch: "South Coast" },
+      { name: "South Bombo ERB (Bombo - South Coast)", lat: -34.663681, lon: 150.853776, branch: "South Coast" },
+      { name: "Kiama Blowhole ERB (Bombo - South Coast)", lat: -34.671656, lon: 150.86274, branch: "South Coast" },
+      { name: "Kendalls ERB (Kiama - South Coast)", lat: -34.681704, lon: 150.854718, branch: "South Coast" },
+      { name: "Dreamtime ERB (Fingal Head - Far North Coast)", lat: -28.201114, lon: 153.569519, branch: "Far North Coast" },
+      { name: "Blackwoods ERB (Cronulla - Sydney)", lat: -34.05982936, lon: 151.1571563, branch: "Sydney" },
+      { name: "Coniston ERB (Wollongong - Illawarra)", lat: -34.430177, lon: 150.902805, branch: "Illawarra" }
     ];
 
-    // Sort ERB names alphabetically
-    erbNames.sort();
+    // Sort ERB names alphabetically within their branches
+    erbs.sort((a, b) => a.name.localeCompare(b.name));
 
     // Add the placeholder as the first option
     dropdown.appendChild(new Option("Select an ERB...", ""));
 
-    // Append sorted ERB names as options
-    erbNames.forEach(function (erbName) {
-      let option = document.createElement("option");
-      option.value = erbName;
-      option.text = erbName;
-      dropdown.appendChild(option);
+    // Function to append options under an optgroup
+    function appendOptionsToGroup(groupLabel, erbArray) {
+      let optgroup = document.createElement("optgroup");
+      optgroup.label = groupLabel;
+      erbArray.forEach(function (erb) {
+        let option = document.createElement("option");
+        option.value = JSON.stringify({ name: erb.name, lat: erb.lat, lon: erb.lon });
+        option.text = erb.name;
+        optgroup.appendChild(option);
+      });
+      dropdown.appendChild(optgroup);
+    }
+
+    // Group ERBs by branch
+    let groupedErbs = {};
+
+    // Populate the groupedErbs object
+    erbs.forEach(function (erb) {
+      if (!groupedErbs[erb.branch]) {
+        groupedErbs[erb.branch] = [];
+      }
+      groupedErbs[erb.branch].push(erb);
     });
+
+    // Order of branches
+    let branchOrder = [
+      "Far North Coast",
+      "North Coast",
+      "Mid North Coast",
+      "Lower North Coast",
+      "Hunter",
+      "Central Coast",
+      "Sydney Northern Beaches",
+      "Sydney",
+      "Illawarra",
+      "South Coast",
+      "Far South Coast"
+    ];
+
+    // Append options to dropdown for each group in the specified order
+    branchOrder.forEach(function (branch) {
+      if (groupedErbs[branch]) {
+        appendOptionsToGroup(branch, groupedErbs[branch]);
+      } else {
+        console.log(`Branch not found in ERBs: ${branch}`);
+      }
+    });
+
+    // Check if options are correctly added to the dropdown
+    console.log("Dropdown options added:", dropdown.innerHTML);
 
     // Find the second column in the first row where the dropdown should be appended
     let targetColumn = document.querySelector(
@@ -480,12 +523,12 @@ document.addEventListener("keydown", function (event) {
 
     // Listener for the dropdown change event
     dropdown.addEventListener("change", function () {
-      let selectedERBName = this.value;
+      let selectedERB = JSON.parse(this.value);
 
       // Format the output with the selected ERB Name
-      let location = `ERB - ${selectedERBName}`;
+      let location = `ERB - ${selectedERB.name}`;
       let org = `SLSNSW`;
-      let name = `ERB - ${selectedERBName}`;
+      let name = `ERB - ${selectedERB.name}`;
       let number = "ERB";
       let tpi = "NIL";
 
@@ -503,6 +546,13 @@ document.addEventListener("keydown", function (event) {
       locationField.value = location;
       tpiField.value = tpi;
 
+      // Insert latitude and longitude
+      let latitudeField = document.querySelector("#incidentLatitude");
+      let longitudeField = document.querySelector("#incidentLongitude");
+
+      latitudeField.value = selectedERB.lat;
+      longitudeField.value = selectedERB.lon;
+
       serviceField.value = "680";
       // Trigger the 'change' event for the select element
       let changeEvent = new Event("change", {
@@ -519,6 +569,8 @@ document.addEventListener("keydown", function (event) {
         numberField.disabled = true;
         locationField.disabled = true;
         tpiField.disabled = true;
+        latitudeField.disabled = true;
+        longitudeField.disabled = true;
         serviceField.disabled = true;
       }
 
