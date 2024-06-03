@@ -4139,20 +4139,6 @@ window.addEventListener("load", function () {
               <option value="no">No</option>
           </select>
       </label><br>
-      <label>SITREP Sent <span style="color: red;">*</span>
-          <select name="sitrepSent" required>
-              <option value="">Select...</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-          </select>
-      </label><br>
-      <label>Media Release Sent <span style="color: red;">*</span>
-          <select name="mediaReleaseSent" required>
-              <option value="">Select...</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-          </select>
-      </label><br>
       <button type="submit">Submit & Save Incident</button>
       </form>
       </body>
