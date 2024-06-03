@@ -3954,6 +3954,20 @@ window.addEventListener("load", function () {
   updateETATimes();
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 window.addEventListener("load", function () {
   // Define the SVG icon with proper viewBox and styling to ensure full visibility
   const svgHTML = `
@@ -4162,27 +4176,29 @@ window.addEventListener("load", function () {
       const popup = window.open("", "", "width=600,height=600");
       popup.document.write(formHTML);
 
-      const textArea = document.querySelector(
-        '.form-control[name="incident_further"]'
-      );
+      const textArea = document.querySelector('.form-control[name="message"]');
       const regex = /\{\{\{([^{}]*)\}\}\}/;
-      const matches = regex.exec(textArea.value);
 
-      if (matches) {
-        const defaults = matches[1].split(", ").reduce((acc, curr) => {
-          const [key, value] = curr.split(": ");
-          acc[key.trim()] = value.trim();
-          return acc;
-        }, {});
+      const messages = document.querySelectorAll(".direct-chat-msg .direct-chat-text");
+      let matchFound = false;
 
-        Object.entries(defaults).forEach(([key, value]) => {
-          const input = popup.document.querySelector(`[name="${key}"]`);
-          if (input) input.value = value;
-        });
-      } else {
-        // Insert 5 new lines if the custom data structure does not already exist
-        textArea.value += "\n\n\n\n\n";
-      }
+      messages.forEach(message => {
+        const match = regex.exec(message.innerHTML);
+        if (match && !matchFound) {
+          const defaults = match[1].split(", ").reduce((acc, curr) => {
+            const [key, value] = curr.split(": ");
+            acc[key.trim()] = value.trim();
+            return acc;
+          }, {});
+
+          Object.entries(defaults).forEach(([key, value]) => {
+            const input = popup.document.querySelector(`[name="${key}"]`);
+            if (input) input.value = value;
+          });
+
+          matchFound = true; // Stop after finding the first match
+        }
+      });
 
       popup.document.getElementById("inputForm").onsubmit = function (e) {
         e.preventDefault();
@@ -4200,8 +4216,37 @@ window.addEventListener("load", function () {
 
         textArea.value = existingText;
 
-        // Programmatically click the save button
-        document.querySelector(".btn.btn-app.check-incident-status").click();
+        const fromSelect = document.querySelector('#from');
+        const toSelect = document.querySelector('#to');
+
+        if (fromSelect) {
+          fromSelect.value = "unit_1996";
+          console.log("'From' dropdown set to Surfcom.");
+        } else {
+          console.error("'From' dropdown not found");
+        }
+
+        if (toSelect) {
+          toSelect.value = "unit_1997";
+          console.log("'To' dropdown set to Surfcom.");
+        } else {
+          console.error("'To' dropdown not found");
+        }
+
+        // Trigger the 'Record' button click and then clear the text area
+        let recordButton = document.querySelector("#post_comment");
+        if (recordButton) {
+          recordButton.click();
+          console.log("Record button clicked.");
+
+          // Clear the text area after a short delay
+          setTimeout(() => {
+            if (textArea) {
+              textArea.value = "";
+              console.log("Text area cleared.");
+            }
+          }, 250); // Adjust the delay as needed
+        }
 
         popup.close();
         return false;
@@ -4216,7 +4261,7 @@ window.addEventListener("load", function () {
     "a.btn.btn-app.check-incident-status"
   );
   const textArea = document.querySelector(
-    'textarea.form-control[name="incident_further"]'
+    'textarea.form-control[name="message"]'
   );
 
   closeButton.addEventListener("click", function (event) {
@@ -4224,20 +4269,36 @@ window.addEventListener("load", function () {
     if (checkbox && checkbox.checked) {
       event.preventDefault(); // Prevents the default button action
 
-      // Check for text within {{{}}} in the textarea
+      // Check for text within {{{}}} in the direct chat messages
       const regex = /\{\{\{(.+?)\}\}\}/;
-      const match = regex.exec(textArea.value);
+      const messages = document.querySelectorAll(".direct-chat-msg .direct-chat-text");
+      let matchFound = false;
 
-      if (match) {
-      } else {
+      messages.forEach(message => {
+        const match = regex.exec(message.innerHTML);
+        if (match && !matchFound) {
+          matchFound = true;
+        }
+      });
+
+      if (!matchFound) {
         // If there's no text in {{{}}}, show an alert and keep the action stopped
         alert(
-          'You havent completed the "Extra Information for Database" window, click on the blue information circle next to the map!'
+          'You haven\'t completed the "Extra Information for Database" window, click on the blue information circle next to the map!'
         );
       }
     }
   });
 });
+
+
+
+
+
+
+
+
+
 
 window.addEventListener("load", function () {
   const surfCheckbox = document.querySelector("#callerDetails13Surf");
@@ -5273,3 +5334,63 @@ function observeMessageLog() {
 addFilterCheckbox();
 filterMessages();
 observeMessageLog();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+window.addEventListener('load', function () {
+  // Select all "Delivered to" messages
+  const deliveredToMessages = document.querySelectorAll('.direct-chat-text ul li');
+
+  deliveredToMessages.forEach(message => {
+      const deliveredText = message.innerHTML;
+      const startIndex = deliveredText.indexOf('(');
+      
+      if (startIndex !== -1) {
+          const visiblePart = deliveredText.slice(0, startIndex).trim();
+          const hiddenPart = deliveredText.slice(startIndex).trim();
+
+          // Create a span for the hidden content
+          const hiddenSpan = document.createElement('span');
+          hiddenSpan.style.display = 'none';
+          hiddenSpan.innerHTML = hiddenPart;
+
+          // Create a button to toggle the visibility
+          const toggleButton = document.createElement('button');
+          toggleButton.textContent = 'Show More';
+          toggleButton.style.marginLeft = '10px';
+          toggleButton.style.cursor = 'pointer';
+
+          toggleButton.addEventListener('click', function (event) {
+              event.preventDefault();
+              if (hiddenSpan.style.display === 'none') {
+                  hiddenSpan.style.display = 'inline';
+                  toggleButton.textContent = 'Show Less';
+              } else {
+                  hiddenSpan.style.display = 'none';
+                  toggleButton.textContent = 'Show More';
+              }
+          });
+
+          // Clear the existing content and add the new elements
+          message.innerHTML = '';
+          message.appendChild(document.createTextNode(visiblePart));
+          message.appendChild(hiddenSpan);
+          message.appendChild(toggleButton);
+      }
+  });
+});
