@@ -93,7 +93,10 @@ window.addEventListener("load", function () {
   // Define groups for SMS
   const smsGroups = [
     {
-      name: ["66118_01-1 FNC Serious Incident Notification SMS", "82448_QLD Notifications"],
+      name: [
+        "66118_01-1 FNC Serious Incident Notification SMS",
+        "82448_QLD Notifications",
+      ],
       start: -28.164557,
       end: -29.610527,
     },
@@ -155,29 +158,34 @@ window.addEventListener("load", function () {
     setOptions(groups);
   }
 
-  document.addEventListener('keydown', function(event) {
-    if (event.key === 'F1') {
-        event.preventDefault();
-        
-        // Check if the primary service is set to 'Lake Parramatta (Lifeguards)'
-        const primaryServiceSelect = document.querySelector('#primary_service');
-        if (primaryServiceSelect && primaryServiceSelect.value === '1517') { // 1517 is the value for 'Lake Parramatta (Lifeguards)'
-            
-            // Set the Surfguard Mailing Group to '00-5 ALS-AESS Staff Critical Incident Notification'
-            const mailingGroupSelect = document.querySelector('.mailinggroup_id');
-            if (mailingGroupSelect) {
-                const optionToSelect = Array.from(mailingGroupSelect.options).find(option => option.value === '79946_00-5 ALS-AESS Staff Critical Incident Notification');
-                if (optionToSelect) {
-                    optionToSelect.selected = true;
-                    
-                    // Trigger change event to notify any listeners of the change
-                    const event = new Event('change', { bubbles: true });
-                    mailingGroupSelect.dispatchEvent(event);
-                }
-            }
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "F1") {
+      event.preventDefault();
+
+      // Check if the primary service is set to 'Lake Parramatta (Lifeguards)'
+      const primaryServiceSelect = document.querySelector("#primary_service");
+      if (primaryServiceSelect && primaryServiceSelect.value === "1517") {
+        // 1517 is the value for 'Lake Parramatta (Lifeguards)'
+
+        // Set the Surfguard Mailing Group to '00-5 ALS-AESS Staff Critical Incident Notification'
+        const mailingGroupSelect = document.querySelector(".mailinggroup_id");
+        if (mailingGroupSelect) {
+          const optionToSelect = Array.from(mailingGroupSelect.options).find(
+            (option) =>
+              option.value ===
+              "79946_00-5 ALS-AESS Staff Critical Incident Notification"
+          );
+          if (optionToSelect) {
+            optionToSelect.selected = true;
+
+            // Trigger change event to notify any listeners of the change
+            const event = new Event("change", { bubbles: true });
+            mailingGroupSelect.dispatchEvent(event);
+          }
         }
+      }
     }
-});
+  });
 
   // Function to set options based on current latitude and table content
   function setOptions(groups) {
@@ -420,40 +428,210 @@ document.addEventListener("keydown", function (event) {
 
     // ERB names and their corresponding latitudes, longitudes, and branches
     let erbs = [
-      { name: "North Kingscliff ERB (Kingscliff - Far North Coast)", lat: -28.240223, lon: 153.568423, branch: "Far North Coast" },
-      { name: "Brunswick Breakwall ERB (Brunswick Heads - Far North Coast)", lat: -28.5383, lon: 153.55635, branch: "Far North Coast" },
-      { name: "Belongil Beach/The Wreck ERB (Byron Bay - Far North Coast)", lat: -28.63699, lon: 153.60409, branch: "Far North Coast" },
-      { name: "Suffolk Park ERB (Suffolk Park - Far North Coast)", lat: -28.69081, lon: 153.61417, branch: "Far North Coast" },
-      { name: "Seven Mile Lennox Head ERB (Lennox Head - Far North Coast)", lat: -28.786265, lon: 153.593925, branch: "Far North Coast" },
-      { name: "Shelly Beach ERB (Port Macquarie - Mid North Coast)", lat: -31.457766, lon: 152.932622, branch: "Mid North Coast" },
-      { name: "Diamond Beach ERB (Diamond Beach - Lower North Coast)", lat: -32.044077, lon: 152.541142, branch: "Lower North Coast" },
-      { name: "Tuncurry Beach ERB (Tuncurry - Lower North Coast)", lat: -32.173371, lon: 152.508961, branch: "Lower North Coast" },
-      { name: "The Ruins ERB (Booti Booti - Lower North Coast)", lat: -32.31087, lon: 152.52105, branch: "Lower North Coast" },
-      { name: "Boomerang Beach ERB (Boomerang Beach - Lower North Coast)", lat: -32.336374, lon: 152.5455, branch: "Lower North Coast" },
-      { name: "Fingal Spit ERB (Fingal Bay - Hunter)", lat: -32.73955, lon: 152.18287, branch: "Hunter" },
-      { name: "Fingal Island ERB (Fingal Bay - Hunter)", lat: -32.74208, lon: 152.19221, branch: "Hunter" },
-      { name: "Snapper Point ERB (Frazer Park - Central Coast)", lat: -33.186083, lon: 151.628188, branch: "Central Coast" },
-      { name: "Budgewoi ERB (Budgewoi - Central Coast)", lat: -33.23851, lon: 151.56971, branch: "Central Coast" },
-      { name: "The Entrance Channel ERB (The Entrance - Central Coast)", lat: -33.34599, lon: 151.50262, branch: "Central Coast" },
-      { name: "Pearl Beach ERB (Pearl Beach - Central Coast)", lat: -33.541723, lon: 151.30774, branch: "Central Coast" },
-      { name: "Shelly Beach ERB (Manly - Sydney Northern Beaches)", lat: -33.800901, lon: 151.297836, branch: "Sydney Northern Beaches" },
-      { name: "Malabar ERB (Malabar - Sydney)", lat: -33.963842, lon: 151.252012, branch: "Sydney" },
-      { name: "Little Bay ERB (Little Bay - Sydney)", lat: -33.979961, lon: 151.251169, branch: "Sydney" },
-      { name: "Potter Point ERB (Kurnell - Sydney)", lat: -34.041263, lon: 151.214189, branch: "Sydney" },
-      { name: "Greenhills Track 1 ERB (Cronulla - Sydney)", lat: -34.034316, lon: 151.18413, branch: "Sydney" },
-      { name: "Greenhills Track 6 ERB (Cronulla - Sydney)", lat: -34.040529, lon: 151.165024, branch: "Sydney" },
-      { name: "Sharky Beach ERB (Coledale - Illawarra)", lat: -34.294615, lon: 150.943376, branch: "Illawarra" },
-      { name: "East Corrimal ERB (East Corrimal - Illawarra)", lat: -34.377399, lon: 150.920598, branch: "Illawarra" },
-      { name: "Puckys Beach ERB (Wollongong - Illawarra)", lat: -34.410413, lon: 150.901774, branch: "Illawarra" },
-      { name: "Hill 60 ERB (Port Kembla - Illawarra)", lat: -34.493238, lon: 150.919691, branch: "Illawarra" },
-      { name: "Windang Island/Lake Illawarra ERB (Lake Illawarra - South Coast)", lat: -34.543799, lon: 150.874818, branch: "South Coast" },
-      { name: "Shellharbour ERB (Shellharbour - South Coast)", lat: -34.582453, lon: 150.873245, branch: "South Coast" },
-      { name: "South Bombo ERB (Bombo - South Coast)", lat: -34.663681, lon: 150.853776, branch: "South Coast" },
-      { name: "Kiama Blowhole ERB (Bombo - South Coast)", lat: -34.671656, lon: 150.86274, branch: "South Coast" },
-      { name: "Kendalls ERB (Kiama - South Coast)", lat: -34.681704, lon: 150.854718, branch: "South Coast" },
-      { name: "Dreamtime ERB (Fingal Head - Far North Coast)", lat: -28.201114, lon: 153.569519, branch: "Far North Coast" },
-      { name: "Blackwoods ERB (Cronulla - Sydney)", lat: -34.05982936, lon: 151.1571563, branch: "Sydney" },
-      { name: "Coniston ERB (Wollongong - Illawarra)", lat: -34.430177, lon: 150.902805, branch: "Illawarra" }
+      {
+        name: "North Kingscliff ERB (Kingscliff - Far North Coast)",
+        lat: -28.240223,
+        lon: 153.568423,
+        branch: "Far North Coast",
+      },
+      {
+        name: "Brunswick Breakwall ERB (Brunswick Heads - Far North Coast)",
+        lat: -28.5383,
+        lon: 153.55635,
+        branch: "Far North Coast",
+      },
+      {
+        name: "Belongil Beach/The Wreck ERB (Byron Bay - Far North Coast)",
+        lat: -28.63699,
+        lon: 153.60409,
+        branch: "Far North Coast",
+      },
+      {
+        name: "Suffolk Park ERB (Suffolk Park - Far North Coast)",
+        lat: -28.69081,
+        lon: 153.61417,
+        branch: "Far North Coast",
+      },
+      {
+        name: "Seven Mile Lennox Head ERB (Lennox Head - Far North Coast)",
+        lat: -28.786265,
+        lon: 153.593925,
+        branch: "Far North Coast",
+      },
+      {
+        name: "Shelly Beach ERB (Port Macquarie - Mid North Coast)",
+        lat: -31.457766,
+        lon: 152.932622,
+        branch: "Mid North Coast",
+      },
+      {
+        name: "Diamond Beach ERB (Diamond Beach - Lower North Coast)",
+        lat: -32.044077,
+        lon: 152.541142,
+        branch: "Lower North Coast",
+      },
+      {
+        name: "Tuncurry Beach ERB (Tuncurry - Lower North Coast)",
+        lat: -32.173371,
+        lon: 152.508961,
+        branch: "Lower North Coast",
+      },
+      {
+        name: "The Ruins ERB (Booti Booti - Lower North Coast)",
+        lat: -32.31087,
+        lon: 152.52105,
+        branch: "Lower North Coast",
+      },
+      {
+        name: "Boomerang Beach ERB (Boomerang Beach - Lower North Coast)",
+        lat: -32.336374,
+        lon: 152.5455,
+        branch: "Lower North Coast",
+      },
+      {
+        name: "Fingal Spit ERB (Fingal Bay - Hunter)",
+        lat: -32.73955,
+        lon: 152.18287,
+        branch: "Hunter",
+      },
+      {
+        name: "Fingal Island ERB (Fingal Bay - Hunter)",
+        lat: -32.74208,
+        lon: 152.19221,
+        branch: "Hunter",
+      },
+      {
+        name: "Snapper Point ERB (Frazer Park - Central Coast)",
+        lat: -33.186083,
+        lon: 151.628188,
+        branch: "Central Coast",
+      },
+      {
+        name: "Budgewoi ERB (Budgewoi - Central Coast)",
+        lat: -33.23851,
+        lon: 151.56971,
+        branch: "Central Coast",
+      },
+      {
+        name: "The Entrance Channel ERB (The Entrance - Central Coast)",
+        lat: -33.34599,
+        lon: 151.50262,
+        branch: "Central Coast",
+      },
+      {
+        name: "Pearl Beach ERB (Pearl Beach - Central Coast)",
+        lat: -33.541723,
+        lon: 151.30774,
+        branch: "Central Coast",
+      },
+      {
+        name: "Shelly Beach ERB (Manly - Sydney Northern Beaches)",
+        lat: -33.800901,
+        lon: 151.297836,
+        branch: "Sydney Northern Beaches",
+      },
+      {
+        name: "Malabar ERB (Malabar - Sydney)",
+        lat: -33.963842,
+        lon: 151.252012,
+        branch: "Sydney",
+      },
+      {
+        name: "Little Bay ERB (Little Bay - Sydney)",
+        lat: -33.979961,
+        lon: 151.251169,
+        branch: "Sydney",
+      },
+      {
+        name: "Potter Point ERB (Kurnell - Sydney)",
+        lat: -34.041263,
+        lon: 151.214189,
+        branch: "Sydney",
+      },
+      {
+        name: "Greenhills Track 1 ERB (Cronulla - Sydney)",
+        lat: -34.034316,
+        lon: 151.18413,
+        branch: "Sydney",
+      },
+      {
+        name: "Greenhills Track 6 ERB (Cronulla - Sydney)",
+        lat: -34.040529,
+        lon: 151.165024,
+        branch: "Sydney",
+      },
+      {
+        name: "Sharky Beach ERB (Coledale - Illawarra)",
+        lat: -34.294615,
+        lon: 150.943376,
+        branch: "Illawarra",
+      },
+      {
+        name: "East Corrimal ERB (East Corrimal - Illawarra)",
+        lat: -34.377399,
+        lon: 150.920598,
+        branch: "Illawarra",
+      },
+      {
+        name: "Puckys Beach ERB (Wollongong - Illawarra)",
+        lat: -34.410413,
+        lon: 150.901774,
+        branch: "Illawarra",
+      },
+      {
+        name: "Hill 60 ERB (Port Kembla - Illawarra)",
+        lat: -34.493238,
+        lon: 150.919691,
+        branch: "Illawarra",
+      },
+      {
+        name: "Windang Island/Lake Illawarra ERB (Lake Illawarra - South Coast)",
+        lat: -34.543799,
+        lon: 150.874818,
+        branch: "South Coast",
+      },
+      {
+        name: "Shellharbour ERB (Shellharbour - South Coast)",
+        lat: -34.582453,
+        lon: 150.873245,
+        branch: "South Coast",
+      },
+      {
+        name: "South Bombo ERB (Bombo - South Coast)",
+        lat: -34.663681,
+        lon: 150.853776,
+        branch: "South Coast",
+      },
+      {
+        name: "Kiama Blowhole ERB (Bombo - South Coast)",
+        lat: -34.671656,
+        lon: 150.86274,
+        branch: "South Coast",
+      },
+      {
+        name: "Kendalls ERB (Kiama - South Coast)",
+        lat: -34.681704,
+        lon: 150.854718,
+        branch: "South Coast",
+      },
+      {
+        name: "Dreamtime ERB (Fingal Head - Far North Coast)",
+        lat: -28.201114,
+        lon: 153.569519,
+        branch: "Far North Coast",
+      },
+      {
+        name: "Blackwoods ERB (Cronulla - Sydney)",
+        lat: -34.05982936,
+        lon: 151.1571563,
+        branch: "Sydney",
+      },
+      {
+        name: "Coniston ERB (Wollongong - Illawarra)",
+        lat: -34.430177,
+        lon: 150.902805,
+        branch: "Illawarra",
+      },
     ];
 
     // Sort ERB names alphabetically within their branches
@@ -468,7 +646,11 @@ document.addEventListener("keydown", function (event) {
       optgroup.label = groupLabel;
       erbArray.forEach(function (erb) {
         let option = document.createElement("option");
-        option.value = JSON.stringify({ name: erb.name, lat: erb.lat, lon: erb.lon });
+        option.value = JSON.stringify({
+          name: erb.name,
+          lat: erb.lat,
+          lon: erb.lon,
+        });
         option.text = erb.name;
         optgroup.appendChild(option);
       });
@@ -498,7 +680,7 @@ document.addEventListener("keydown", function (event) {
       "Sydney",
       "Illawarra",
       "South Coast",
-      "Far South Coast"
+      "Far South Coast",
     ];
 
     // Append options to dropdown for each group in the specified order
@@ -583,21 +765,23 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
-window.addEventListener("load", function() {
-  document.querySelector(".btn.btn-app.check-incident-status").addEventListener("click", function () {
-    // Unlock the specific fields
-    document.querySelector("#callerDetailsName").disabled = false;
-    document.querySelector("#callerDetailsOrganisation").disabled = false;
-    document.querySelector("#callerDetailsNumber").disabled = false;
-    document.querySelector("#incidentLocation").disabled = false;
-    document.querySelector("#incidentThirdParty").disabled = false;
-    document.getElementById("primary_service").disabled = false;
-    document.getElementById("incidentLatitude").disabled = false;
-    document.getElementById("incidentLongitude").disabled = false;
+window.addEventListener("load", function () {
+  document
+    .querySelector(".btn.btn-app.check-incident-status")
+    .addEventListener("click", function () {
+      // Unlock the specific fields
+      document.querySelector("#callerDetailsName").disabled = false;
+      document.querySelector("#callerDetailsOrganisation").disabled = false;
+      document.querySelector("#callerDetailsNumber").disabled = false;
+      document.querySelector("#incidentLocation").disabled = false;
+      document.querySelector("#incidentThirdParty").disabled = false;
+      document.getElementById("primary_service").disabled = false;
+      document.getElementById("incidentLatitude").disabled = false;
+      document.getElementById("incidentLongitude").disabled = false;
 
-    // Run the button's action
-    document.getElementById('saveIncidentForm').submit();
-  });
+      // Run the button's action
+      document.getElementById("saveIncidentForm").submit();
+    });
 });
 
 window.addEventListener("load", function () {
@@ -664,44 +848,49 @@ window.addEventListener("load", function () {
 
   // Remove button with type="reset" and class="btn btn-app"
   var resetButtons = document.querySelectorAll('button[type="reset"]');
-  resetButtons.forEach(function(button) {
-    if (button.classList.contains('btn') && button.classList.contains('btn-app')) {
+  resetButtons.forEach(function (button) {
+    if (
+      button.classList.contains("btn") &&
+      button.classList.contains("btn-app")
+    ) {
       button.remove();
     }
   });
 
   // Remove anchor tag with specific class and href
-  var anchor = document.querySelector('a.btn.btn-app[href="https://surfcom.sls.com.au/incidents/view/0"]');
+  var anchor = document.querySelector(
+    'a.btn.btn-app[href="https://surfcom.sls.com.au/incidents/view/0"]'
+  );
   if (anchor) {
     anchor.remove();
   }
 });
 
-
-window.addEventListener('load', function() {
+window.addEventListener("load", function () {
   // Function to unlock the input field
   function unlockField() {
-    const inputField = document.getElementById('incidentSLSContact');
+    const inputField = document.getElementById("incidentSLSContact");
     if (inputField) {
-      inputField.removeAttribute('readonly');
+      inputField.removeAttribute("readonly");
       inputField.style.backgroundColor = "#fff"; // Optional: change background color to indicate it's editable
     }
   }
 
   // Find the specific button containing the SVG element
-  const unlockButton = document.querySelector('button.btn.btn-app .fa-unlock').parentElement;
+  const unlockButton = document.querySelector(
+    "button.btn.btn-app .fa-unlock"
+  ).parentElement;
 
   // Add click event listener to the button
   if (unlockButton) {
-    unlockButton.addEventListener('click', function(event) {
+    unlockButton.addEventListener("click", function (event) {
       event.preventDefault();
       unlockField();
     });
   } else {
-    console.error('Unlock button not found');
+    console.error("Unlock button not found");
   }
 });
-
 
 document.addEventListener("keydown", function (event) {
   // Check if Ctrl + S was pressed
@@ -791,25 +980,36 @@ window.addEventListener("load", function () {
 
       button.addEventListener("click", function () {
         // Use prompt for input
-        const userInput = prompt("Type 'SIGNOFF' to confirm bulk sign off of all services:");
+        const userInput = prompt(
+          "Type 'SIGNOFF' to confirm bulk sign off of all services:"
+        );
 
         if (userInput === "SIGNOFF") {
-          document.querySelectorAll('a[href^="https://surfcom.sls.com.au/log-service-off?log_id="]').forEach((link) => {
-            let href = link.getAttribute("href");
-            // Append "&bulkSupportOpsSignOff" to the href
-            href += "&bulkSupportOpsSignOff";
-            console.log("Opening link:", href); // Log the href being opened
-            window.open(href, "_blank");
-          });
+          document
+            .querySelectorAll(
+              'a[href^="https://surfcom.sls.com.au/log-service-off?log_id="]'
+            )
+            .forEach((link) => {
+              let href = link.getAttribute("href");
+              // Append "&bulkSupportOpsSignOff" to the href
+              href += "&bulkSupportOpsSignOff";
+              console.log("Opening link:", href); // Log the href being opened
+              window.open(href, "_blank");
+            });
         } else {
           // Log or handle the incorrect input or cancel action
-          console.log("Bulk sign off not confirmed by the user or incorrect input.");
+          console.log(
+            "Bulk sign off not confirmed by the user or incorrect input."
+          );
         }
       });
 
       targetDiv.appendChild(button);
     } else {
-      console.log("Failed to find the target div using selector:", targetDivSelector);
+      console.log(
+        "Failed to find the target div using selector:",
+        targetDivSelector
+      );
     }
   }
 });
@@ -861,9 +1061,7 @@ window.addEventListener("load", function () {
       // Append the button to the .card-footer div
       targetDiv.appendChild(button);
     } else {
-      console.log(
-        "Failed to find the target div using selector: .card-footer"
-      );
+      console.log("Failed to find the target div using selector: .card-footer");
     }
   }
 });
@@ -2094,8 +2292,7 @@ if (window.location.href.startsWith("https://surfcom.sls.com.au/")) {
         element.title =
           "SurfCom Management System with enhancements and extra features, Contact Riley Porteous for extra details!";
         // Add '+' and the version number with styling
-        element.innerHTML =
-          `Surfcom + <span class="version-number" style="color: lightgrey; font-size: smaller; font-style: italic;">v${version}</span>`;
+        element.innerHTML = `Surfcom + <span class="version-number" style="color: lightgrey; font-size: smaller; font-style: italic;">v${version}</span>`;
       }
     });
   }
@@ -2230,13 +2427,11 @@ function applyColorsToMessages(container) {
     ) {
       log.style.backgroundColor = "Salmon";
       log.style.color = "white";
-    } else if (
-      text.includes(" accessed this incident at ")
-    ) {
+    } else if (text.includes(" accessed this incident at ")) {
       log.style.backgroundColor = "black";
       log.style.color = "white";
     }
-    // No need for a default action 
+    // No need for a default action
   });
 }
 
@@ -3964,133 +4159,151 @@ window.addEventListener("load", function () {
   
         `;
 
-        const popup = window.open("", "", "width=600,height=600");
-        popup.document.write(formHTML);
-  
-        const textArea = document.querySelector('.form-control[name="incident_further"]');
-        const regex = /\{\{\{([^{}]*)\}\}\}/;
-        const matches = regex.exec(textArea.value);
-  
-        if (matches) {
-          const defaults = matches[1].split(", ").reduce((acc, curr) => {
-            const [key, value] = curr.split(": ");
-            acc[key.trim()] = value.trim();
-            return acc;
-          }, {});
-          
-          Object.entries(defaults).forEach(([key, value]) => {
-            const input = popup.document.querySelector(`[name="${key}"]`);
-            if (input) input.value = value;
-          });
-        } else {
-          // Insert 5 new lines if the custom data structure does not already exist
-          textArea.value += "\n\n\n\n\n";
-        }
-  
-        popup.document.getElementById("inputForm").onsubmit = function (e) {
-          e.preventDefault(); 
-          const formData = new FormData(this);
-          let newData = "{{{";
-          formData.forEach((value, key) => {
-            newData += `${key}: ${value}, `;
-          });
-          newData = newData.slice(0, -2) + "}}}";
-  
-          let existingText = textArea.value;
-          existingText = regex.test(existingText) ? existingText.replace(regex, newData) : existingText + newData;
-  
-          textArea.value = existingText;
-          
-          // Programmatically click the save button
-          document.querySelector('.btn.btn-app.check-incident-status').click();
-  
-          popup.close();
-          return false;
-        };
-      });
-    }
-  });
+      const popup = window.open("", "", "width=600,height=600");
+      popup.document.write(formHTML);
 
-  window.addEventListener('load', function() {
-    const checkbox = document.querySelector('#callerDetails13Surf');
-    const closeButton = document.querySelector('a.btn.btn-app.check-incident-status');
-    const textArea = document.querySelector('textarea.form-control[name="incident_further"]');
+      const textArea = document.querySelector(
+        '.form-control[name="incident_further"]'
+      );
+      const regex = /\{\{\{([^{}]*)\}\}\}/;
+      const matches = regex.exec(textArea.value);
 
-    closeButton.addEventListener('click', function(event) {
-        // Always prevent the default action of the button if the checkbox is checked
-        if (checkbox && checkbox.checked) {
-            event.preventDefault(); // Prevents the default button action
+      if (matches) {
+        const defaults = matches[1].split(", ").reduce((acc, curr) => {
+          const [key, value] = curr.split(": ");
+          acc[key.trim()] = value.trim();
+          return acc;
+        }, {});
 
-            // Check for text within {{{}}} in the textarea
-            const regex = /\{\{\{(.+?)\}\}\}/;
-            const match = regex.exec(textArea.value);
+        Object.entries(defaults).forEach(([key, value]) => {
+          const input = popup.document.querySelector(`[name="${key}"]`);
+          if (input) input.value = value;
+        });
+      } else {
+        // Insert 5 new lines if the custom data structure does not already exist
+        textArea.value += "\n\n\n\n\n";
+      }
 
-            if (match) {
+      popup.document.getElementById("inputForm").onsubmit = function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        let newData = "{{{";
+        formData.forEach((value, key) => {
+          newData += `${key}: ${value}, `;
+        });
+        newData = newData.slice(0, -2) + "}}}";
 
-            } else {
-                // If there's no text in {{{}}}, show an alert and keep the action stopped
-                alert('You havent completed the "Extra Information for Database" window, click on the blue information circle next to the map!');
-            }
-        }
+        let existingText = textArea.value;
+        existingText = regex.test(existingText)
+          ? existingText.replace(regex, newData)
+          : existingText + newData;
+
+        textArea.value = existingText;
+
+        // Programmatically click the save button
+        document.querySelector(".btn.btn-app.check-incident-status").click();
+
+        popup.close();
+        return false;
+      };
     });
+  }
 });
 
-window.addEventListener('load', function () {
-  const surfCheckbox = document.querySelector('#callerDetails13Surf');
-  const priorityDropdown = document.querySelector('#priority');
+window.addEventListener("load", function () {
+  const checkbox = document.querySelector("#callerDetails13Surf");
+  const closeButton = document.querySelector(
+    "a.btn.btn-app.check-incident-status"
+  );
+  const textArea = document.querySelector(
+    'textarea.form-control[name="incident_further"]'
+  );
+
+  closeButton.addEventListener("click", function (event) {
+    // Always prevent the default action of the button if the checkbox is checked
+    if (checkbox && checkbox.checked) {
+      event.preventDefault(); // Prevents the default button action
+
+      // Check for text within {{{}}} in the textarea
+      const regex = /\{\{\{(.+?)\}\}\}/;
+      const match = regex.exec(textArea.value);
+
+      if (match) {
+      } else {
+        // If there's no text in {{{}}}, show an alert and keep the action stopped
+        alert(
+          'You havent completed the "Extra Information for Database" window, click on the blue information circle next to the map!'
+        );
+      }
+    }
+  });
+});
+
+window.addEventListener("load", function () {
+  const surfCheckbox = document.querySelector("#callerDetails13Surf");
+  const priorityDropdown = document.querySelector("#priority");
 
   // Function to update the dropdown options
   function updatePriorityOptions() {
-      const lowOption = priorityDropdown.querySelector('option[value="1"]');
+    const lowOption = priorityDropdown.querySelector('option[value="1"]');
 
-      if (surfCheckbox.checked) {
-          // If Low (1) is already selected, update the priority and show an alert
-          if (priorityDropdown.value === '1') {
-              priorityDropdown.value = '2';
-              alert('13SURF Incidents can not be Priority 1 (Low). Incident updated to be Priority 2 (Medium).');
-          }
-
-          // Remove the Low (1) option
-          if (lowOption) {
-              lowOption.remove();
-          }
-      } else {
-          // If checkbox is unchecked, ensure Low (1) is an option
-          if (!priorityDropdown.querySelector('option[value="1"]')) {
-              const newLowOption = document.createElement('option');
-              newLowOption.value = '1';
-              newLowOption.textContent = 'Low (1)';
-              priorityDropdown.appendChild(newLowOption);
-          }
+    if (surfCheckbox.checked) {
+      // If Low (1) is already selected, update the priority and show an alert
+      if (priorityDropdown.value === "1") {
+        priorityDropdown.value = "2";
+        alert(
+          "13SURF Incidents can not be Priority 1 (Low). Incident updated to be Priority 2 (Medium)."
+        );
       }
+
+      // Remove the Low (1) option
+      if (lowOption) {
+        lowOption.remove();
+      }
+    } else {
+      // If checkbox is unchecked, ensure Low (1) is an option
+      if (!priorityDropdown.querySelector('option[value="1"]')) {
+        const newLowOption = document.createElement("option");
+        newLowOption.value = "1";
+        newLowOption.textContent = "Low (1)";
+        priorityDropdown.appendChild(newLowOption);
+      }
+    }
   }
 
   // Check the status of the checkbox on page load
   updatePriorityOptions();
 
   // Add an event listener for changes to the checkbox
-  surfCheckbox.addEventListener('change', updatePriorityOptions);
+  surfCheckbox.addEventListener("change", updatePriorityOptions);
 });
 
 // Function to check the incident type and add the alert
 function checkIncidentTypeAndAddAlert() {
   const incidentTypeSelect = document.querySelector("#incidentType");
-  const selectedIncidentType = incidentTypeSelect.options[incidentTypeSelect.selectedIndex].text;
+  const selectedIncidentType =
+    incidentTypeSelect.options[incidentTypeSelect.selectedIndex].text;
 
   if (selectedIncidentType === "Shark Attack (IRD)") {
     const chatMessages = document.querySelectorAll(".direct-chat-msg");
     let messageExists = false;
 
-    chatMessages.forEach(msg => {
+    chatMessages.forEach((msg) => {
       const chatName = msg.querySelector(".direct-chat-name");
-      if (chatName && chatName.textContent.includes("Surfcom to EXTERNAL - NSW Dept Primary Industries")) {
+      if (
+        chatName &&
+        chatName.textContent.includes(
+          "Surfcom to EXTERNAL - NSW Dept Primary Industries"
+        )
+      ) {
         messageExists = true;
       }
     });
 
     if (!messageExists) {
       const alertElement = document.createElement("div");
-      alertElement.textContent = "DPI Notification required. (Don't forget to log message to NSW Dept Primary Industries.)";
+      alertElement.textContent =
+        "DPI Notification required. (Don't forget to log message to NSW Dept Primary Industries.)";
       alertElement.style.padding = "10px";
       alertElement.style.marginTop = "5px";
       alertElement.style.backgroundColor = "orange";
@@ -4143,11 +4356,15 @@ function checkIncidentTypeAndAddAlert() {
     "A02", // Missing Person - Water (IRD)
     "C04", // Rock Fishing Incident (IRD)
     "A03", // Missing Vessel (IRD)
-    "B06"  // Shark Attack (IRD)
+    "B06", // Shark Attack (IRD)
   ];
 
   const selectedIncidentType = incidentTypeElement.value;
-  if (criticalIncidentTypes.includes(selectedIncidentType) && !callerDetailsContainMAC() && !messageToPoliceMACExists()) {
+  if (
+    criticalIncidentTypes.includes(selectedIncidentType) &&
+    !callerDetailsContainMAC() &&
+    !messageToPoliceMACExists()
+  ) {
     addAlertBanner();
   }
 }
@@ -4155,20 +4372,28 @@ function checkIncidentTypeAndAddAlert() {
 // Function to check if the caller details contain MAC or MACLO
 function callerDetailsContainMAC() {
   const callerNameElement = document.getElementById("callerDetailsName");
-  const callerOrganisationElement = document.getElementById("callerDetailsOrganisation");
+  const callerOrganisationElement = document.getElementById(
+    "callerDetailsOrganisation"
+  );
 
   if (!callerNameElement || !callerOrganisationElement) return false;
 
   const callerName = callerNameElement.value;
   const callerOrganisation = callerOrganisationElement.value;
 
-  return callerName.includes("MAC") || callerName.includes("MACLO") ||
-         callerOrganisation.includes("MAC") || callerOrganisation.includes("MACLO");
+  return (
+    callerName.includes("MAC") ||
+    callerName.includes("MACLO") ||
+    callerOrganisation.includes("MAC") ||
+    callerOrganisation.includes("MACLO")
+  );
 }
 
 // Function to check if a message to Police - Marine Area Command (MAC) exists
 function messageToPoliceMACExists() {
-  const chatMessages = document.querySelectorAll(".direct-chat-msg .direct-chat-name");
+  const chatMessages = document.querySelectorAll(
+    ".direct-chat-msg .direct-chat-name"
+  );
   for (let msg of chatMessages) {
     if (msg.textContent.includes("Surfcom to Police - Marine Area Command")) {
       return true;
@@ -4180,7 +4405,8 @@ function messageToPoliceMACExists() {
 // Function to add the alert banner
 function addAlertBanner() {
   const alertElement = document.createElement("div");
-  alertElement.textContent = "Notify Marine Area Command and radio log the transmission.";
+  alertElement.textContent =
+    "Notify Marine Area Command and radio log the transmission.";
   alertElement.style.padding = "10px";
   alertElement.style.marginTop = "5px";
   alertElement.style.backgroundColor = "orange";
@@ -4226,139 +4452,150 @@ window.addEventListener("load", () => {
   checkIncidentTypeAndAddAlert();
 });
 
-window.addEventListener('load', function() {
+window.addEventListener("load", function () {
   // Function to add counter and character limit
   function addCounter(inputId, labelFor, maxLength) {
-      const inputField = document.getElementById(inputId);
-      const label = document.querySelector(`label[for="${labelFor}"]`);
+    const inputField = document.getElementById(inputId);
+    const label = document.querySelector(`label[for="${labelFor}"]`);
 
-      // Create the counter element
-      const counter = document.createElement('span');
-      counter.style.marginLeft = '5px';
-      counter.style.fontStyle = 'italic';
-      counter.style.color = 'darkgray';
-      label.appendChild(counter);
+    // Create the counter element
+    const counter = document.createElement("span");
+    counter.style.marginLeft = "5px";
+    counter.style.fontStyle = "italic";
+    counter.style.color = "darkgray";
+    label.appendChild(counter);
 
-      // Update the counter and limit the input length
-      function updateCounter() {
-          const currentLength = inputField.value.length;
-          counter.textContent = `(${currentLength}/${maxLength})`;
+    // Update the counter and limit the input length
+    function updateCounter() {
+      const currentLength = inputField.value.length;
+      counter.textContent = `(${currentLength}/${maxLength})`;
+    }
+
+    // Prevent adding characters beyond the limit
+    function enforceMaxLength(event) {
+      const isCtrlA = event.ctrlKey && event.key === "a";
+      const isNavigationKey = [
+        "Backspace",
+        "Delete",
+        "ArrowLeft",
+        "ArrowRight",
+        "ArrowUp",
+        "ArrowDown",
+      ].includes(event.key);
+
+      if (
+        inputField.value.length >= maxLength &&
+        !isCtrlA &&
+        !isNavigationKey
+      ) {
+        event.preventDefault();
       }
+    }
 
-      // Prevent adding characters beyond the limit
-      function enforceMaxLength(event) {
-          const isCtrlA = event.ctrlKey && event.key === 'a';
-          const isNavigationKey = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key);
-          
-          if (inputField.value.length >= maxLength && !isCtrlA && !isNavigationKey) {
-              event.preventDefault();
-          }
-      }
+    // Initial counter update
+    updateCounter();
 
-      // Initial counter update
-      updateCounter();
-
-      // Event listeners for input changes and keydown to enforce character limit
-      inputField.addEventListener('input', updateCounter);
-      inputField.addEventListener('keydown', enforceMaxLength);
+    // Event listeners for input changes and keydown to enforce character limit
+    inputField.addEventListener("input", updateCounter);
+    inputField.addEventListener("keydown", enforceMaxLength);
   }
 
   // Apply counter and limit to each specified input field
-  addCounter('incidentLocation', 'incidentLocation', 512);
-  addCounter('incidentThirdParty', 'incidentThirdParty', 16);
-  addCounter('incidentSLSContact', 'incidentSLSContact', 100);
-  addCounter('callerDetailsName', 'callerDetailsName', 128);
-  addCounter('callerDetailsOrganisation', 'callerDetailsOrganisation', 128);
-  addCounter('callerDetailsNumber', 'callerDetailsNumber', 16);
-  addCounter('incidentLatitude', 'incidentLatitude', 32);
-  addCounter('incidentLongitude', 'incidentLongitude', 32);
+  addCounter("incidentLocation", "incidentLocation", 512);
+  addCounter("incidentThirdParty", "incidentThirdParty", 16);
+  addCounter("incidentSLSContact", "incidentSLSContact", 100);
+  addCounter("callerDetailsName", "callerDetailsName", 128);
+  addCounter("callerDetailsOrganisation", "callerDetailsOrganisation", 128);
+  addCounter("callerDetailsNumber", "callerDetailsNumber", 16);
+  addCounter("incidentLatitude", "incidentLatitude", 32);
+  addCounter("incidentLongitude", "incidentLongitude", 32);
 });
 
 // Function to extract and format phone number from URL
 function extractPhoneNumber(url) {
-  const urlParams = new URLSearchParams(url.split('?')[1]);
-  let phoneNumber = urlParams.get('mobile_number');
+  const urlParams = new URLSearchParams(url.split("?")[1]);
+  let phoneNumber = urlParams.get("mobile_number");
   if (phoneNumber) {
-      phoneNumber = phoneNumber.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
+    phoneNumber = phoneNumber.replace(/(\d{4})(\d{3})(\d{3})/, "$1 $2 $3");
   }
   return phoneNumber;
 }
 
 // Function to add phone number column and populate it
 function addPhoneNumberColumn() {
-  const table = document.getElementById('sms-members');
-  const tbody = document.getElementById('sms-members-content');
+  const table = document.getElementById("sms-members");
+  const tbody = document.getElementById("sms-members-content");
 
   if (!table || !tbody) {
-      return;
+    return;
   }
 
   // Add Phone Number header
-  const headerRow = table.querySelector('thead tr');
-  const phoneNumberHeader = document.createElement('th');
-  phoneNumberHeader.textContent = 'Phone Number';
+  const headerRow = table.querySelector("thead tr");
+  const phoneNumberHeader = document.createElement("th");
+  phoneNumberHeader.textContent = "Phone Number";
   headerRow.insertBefore(phoneNumberHeader, headerRow.children[1]);
 
   // Add Phone Number data
-  const rows = tbody.querySelectorAll('tr');
-  rows.forEach(row => {
-      const etaCell = row.querySelector('td a[href*="mobile_number"]');
-      const phoneNumber = etaCell ? extractPhoneNumber(etaCell.href) : '';
+  const rows = tbody.querySelectorAll("tr");
+  rows.forEach((row) => {
+    const etaCell = row.querySelector('td a[href*="mobile_number"]');
+    const phoneNumber = etaCell ? extractPhoneNumber(etaCell.href) : "";
 
-      const phoneNumberCell = document.createElement('td');
-      phoneNumberCell.textContent = phoneNumber;
-      row.insertBefore(phoneNumberCell, row.children[1]);
+    const phoneNumberCell = document.createElement("td");
+    phoneNumberCell.textContent = phoneNumber;
+    row.insertBefore(phoneNumberCell, row.children[1]);
   });
 }
 
 // Execute the function when the content is loaded
-window.addEventListener('load', addPhoneNumberColumn);
+window.addEventListener("load", addPhoneNumberColumn);
 
-window.addEventListener('load', function() {
+window.addEventListener("load", function () {
   // Get the latitude and longitude input fields
-  var latInput = document.getElementById('incidentLatitude');
-  var lngInput = document.getElementById('incidentLongitude');
+  var latInput = document.getElementById("incidentLatitude");
+  var lngInput = document.getElementById("incidentLongitude");
 
   // Function to allow only numbers in the input fields
   function allowOnlyNumbers(event) {
-      var charCode = event.which ? event.which : event.keyCode;
-      if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
-          event.preventDefault();
-      }
+    var charCode = event.which ? event.which : event.keyCode;
+    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+    }
   }
 
   // Add event listeners to restrict input to numbers only
-  latInput.addEventListener('keypress', allowOnlyNumbers);
-  lngInput.addEventListener('keypress', allowOnlyNumbers);
+  latInput.addEventListener("keypress", allowOnlyNumbers);
+  lngInput.addEventListener("keypress", allowOnlyNumbers);
 
   // Optionally, you can force the input type to 'number' for better UX
-  latInput.setAttribute('type', 'number');
-  lngInput.setAttribute('type', 'number');
+  latInput.setAttribute("type", "number");
+  lngInput.setAttribute("type", "number");
 });
 
-window.addEventListener('load', function() {
+window.addEventListener("load", function () {
   // Create the card element
-  const newCard = document.createElement('div');
-  newCard.classList.add('card', 'card-primary', 'card-outline');
-  newCard.style.width = '100%';  // Set the card's width to 100%
+  const newCard = document.createElement("div");
+  newCard.classList.add("card", "card-primary", "card-outline");
+  newCard.style.width = "100%"; // Set the card's width to 100%
 
   // Create the card header
-  const cardHeader = document.createElement('div');
-  cardHeader.classList.add('card-header');
-  cardHeader.style.display = 'flex';
-  cardHeader.style.justifyContent = 'space-between';
-  cardHeader.style.alignItems = 'center';
+  const cardHeader = document.createElement("div");
+  cardHeader.classList.add("card-header");
+  cardHeader.style.display = "flex";
+  cardHeader.style.justifyContent = "space-between";
+  cardHeader.style.alignItems = "center";
 
   // Create the card title
-  const cardTitle = document.createElement('h3');
-  cardTitle.classList.add('card-title');
-  cardTitle.textContent = 'Incident Viewed by Log';
+  const cardTitle = document.createElement("h3");
+  cardTitle.classList.add("card-title");
+  cardTitle.textContent = "Incident Viewed by Log";
 
   // Create the download button
-  const downloadButton = document.createElement('button');
-  downloadButton.textContent = 'Download CSV';
-  downloadButton.classList.add('btn', 'btn-primary');
-  downloadButton.addEventListener('click', function(event) {
+  const downloadButton = document.createElement("button");
+  downloadButton.textContent = "Download CSV";
+  downloadButton.classList.add("btn", "btn-primary");
+  downloadButton.addEventListener("click", function (event) {
     event.preventDefault();
     downloadCSV();
   });
@@ -4368,24 +4605,29 @@ window.addEventListener('load', function() {
   cardHeader.appendChild(downloadButton);
 
   // Create the card body
-  const cardBody = document.createElement('div');
-  cardBody.classList.add('card-body');
-  cardBody.style.width = '100%';  // Ensure the card body takes up 100% width
+  const cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
+  cardBody.style.width = "100%"; // Ensure the card body takes up 100% width
 
   // Create the table
-  const table = document.createElement('table');
-  table.style.width = '100%';
-  table.classList.add('table', 'table-bordered');
+  const table = document.createElement("table");
+  table.style.width = "100%";
+  table.classList.add("table", "table-bordered");
 
   // Create the table header
-  const thead = document.createElement('thead');
-  const headerRow = document.createElement('tr');
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
 
-  const columns = ['User', '# Times Accessed', 'First Accessed', 'Last Accessed'];
-  columns.forEach(colName => {
-    const th = document.createElement('th');
+  const columns = [
+    "User",
+    "# Times Accessed",
+    "First Accessed",
+    "Last Accessed",
+  ];
+  columns.forEach((colName) => {
+    const th = document.createElement("th");
     th.textContent = colName;
-    th.style.width = '25%';  // Each column takes 25% of the table width
+    th.style.width = "25%"; // Each column takes 25% of the table width
     headerRow.appendChild(th);
   });
 
@@ -4393,7 +4635,7 @@ window.addEventListener('load', function() {
   table.appendChild(thead);
 
   // Create the table body (to be populated dynamically)
-  const tbody = document.createElement('tbody');
+  const tbody = document.createElement("tbody");
   table.appendChild(tbody);
 
   // Append the table to the card body
@@ -4404,40 +4646,46 @@ window.addEventListener('load', function() {
   newCard.appendChild(cardBody);
 
   // Find the target element to insert before
-  const targetElement = document.querySelector('.row .col-12.font-italic');
+  const targetElement = document.querySelector(".row .col-12.font-italic");
   if (targetElement) {
-      targetElement.parentNode.insertBefore(newCard, targetElement);
+    targetElement.parentNode.insertBefore(newCard, targetElement);
   }
 
   let currentPopout = null;
 
   // Function to add a row to the table
-  function addTableRow(user, timesAccessed, firstAccessed, lastAccessed, accessTimes) {
-    const row = document.createElement('tr');
+  function addTableRow(
+    user,
+    timesAccessed,
+    firstAccessed,
+    lastAccessed,
+    accessTimes
+  ) {
+    const row = document.createElement("tr");
 
-    const userCell = document.createElement('td');
+    const userCell = document.createElement("td");
     userCell.textContent = user;
     row.appendChild(userCell);
 
-    const timesAccessedCell = document.createElement('td');
+    const timesAccessedCell = document.createElement("td");
     timesAccessedCell.textContent = timesAccessed;
-    timesAccessedCell.classList.add('times-accessed-cell');
+    timesAccessedCell.classList.add("times-accessed-cell");
     row.appendChild(timesAccessedCell);
 
-    const firstAccessedCell = document.createElement('td');
+    const firstAccessedCell = document.createElement("td");
     firstAccessedCell.textContent = firstAccessed;
     row.appendChild(firstAccessedCell);
 
-    const lastAccessedCell = document.createElement('td');
+    const lastAccessedCell = document.createElement("td");
     lastAccessedCell.textContent = lastAccessed;
     row.appendChild(lastAccessedCell);
 
-    timesAccessedCell.addEventListener('mouseover', function() {
+    timesAccessedCell.addEventListener("mouseover", function () {
       showPopout(timesAccessedCell, accessTimes);
     });
 
-    timesAccessedCell.addEventListener('mouseout', function() {
-      if (!timesAccessedCell.popout.matches(':hover')) {
+    timesAccessedCell.addEventListener("mouseout", function () {
+      if (!timesAccessedCell.popout.matches(":hover")) {
         hidePopout();
       }
     });
@@ -4451,22 +4699,25 @@ window.addEventListener('load', function() {
       currentPopout.remove();
     }
 
-    const popout = document.createElement('div');
-    popout.classList.add('popout');
-    popout.style.position = 'absolute';
-    popout.style.backgroundColor = 'white';
-    popout.style.border = '1px solid black';
-    popout.style.padding = '10px';
-    popout.style.zIndex = '1000';
-    popout.style.maxHeight = '200px';  // Set max height for scrollable area
-    popout.style.overflowY = 'auto';
+    const popout = document.createElement("div");
+    popout.classList.add("popout");
+    popout.style.position = "absolute";
+    popout.style.backgroundColor = "white";
+    popout.style.border = "1px solid black";
+    popout.style.padding = "10px";
+    popout.style.zIndex = "1000";
+    popout.style.maxHeight = "200px"; // Set max height for scrollable area
+    popout.style.overflowY = "auto";
 
-    const timesList = document.createElement('div');
-    accessTimes.slice().reverse().forEach(time => {
-      const listItem = document.createElement('div');
-      listItem.textContent = time;
-      timesList.appendChild(listItem);
-    });
+    const timesList = document.createElement("div");
+    accessTimes
+      .slice()
+      .reverse()
+      .forEach((time) => {
+        const listItem = document.createElement("div");
+        listItem.textContent = time;
+        timesList.appendChild(listItem);
+      });
 
     popout.appendChild(timesList);
     document.body.appendChild(popout);
@@ -4489,26 +4740,29 @@ window.addEventListener('load', function() {
     cell.popout = popout;
     currentPopout = popout;
 
-    popout.addEventListener('mouseout', function() {
-      if (!cell.matches(':hover')) {
+    popout.addEventListener("mouseout", function () {
+      if (!cell.matches(":hover")) {
         hidePopout();
       }
     });
 
-    popout.addEventListener('mouseover', function() {
-      cell.removeEventListener('mouseout', hidePopout);
+    popout.addEventListener("mouseover", function () {
+      cell.removeEventListener("mouseout", hidePopout);
     });
 
-    popout.addEventListener('mouseout', function() {
-      cell.addEventListener('mouseout', hidePopout);
+    popout.addEventListener("mouseout", function () {
+      cell.addEventListener("mouseout", hidePopout);
     });
 
-    cell.addEventListener('wheel', function(event) {
+    cell.addEventListener("wheel", function (event) {
       if (popout.scrollHeight > popout.clientHeight) {
         const scrollTop = popout.scrollTop;
         const maxScrollTop = popout.scrollHeight - popout.clientHeight;
 
-        if ((event.deltaY < 0 && scrollTop > 0) || (event.deltaY > 0 && scrollTop < maxScrollTop)) {
+        if (
+          (event.deltaY < 0 && scrollTop > 0) ||
+          (event.deltaY > 0 && scrollTop < maxScrollTop)
+        ) {
           popout.scrollTop += event.deltaY;
           event.preventDefault(); // Prevent default scrolling of the page if not at top or bottom
         }
@@ -4527,15 +4781,19 @@ window.addEventListener('load', function() {
   // Function to parse and update the table
   function updateTable() {
     // Clear the current table body
-    tbody.innerHTML = '';
+    tbody.innerHTML = "";
 
     // Parse the message log
-    const messageLog = document.querySelectorAll('.direct-chat-msg .direct-chat-text');
+    const messageLog = document.querySelectorAll(
+      ".direct-chat-msg .direct-chat-text"
+    );
     const accessLogs = {};
 
-    messageLog.forEach(msg => {
+    messageLog.forEach((msg) => {
       const textContent = msg.textContent;
-      const match = textContent.match(/"([^"]+)" accessed this incident at "([^"]+)"/);
+      const match = textContent.match(
+        /"([^"]+)" accessed this incident at "([^"]+)"/
+      );
 
       if (match) {
         const user = match[1];
@@ -4546,7 +4804,7 @@ window.addEventListener('load', function() {
             timesAccessed: 1,
             firstAccessed: timestamp,
             lastAccessed: timestamp,
-            accessTimes: [timestamp]
+            accessTimes: [timestamp],
           };
         } else {
           accessLogs[user].timesAccessed++;
@@ -4559,18 +4817,28 @@ window.addEventListener('load', function() {
     // Populate the table with parsed data
     for (const user in accessLogs) {
       const log = accessLogs[user];
-      addTableRow(user, log.timesAccessed, log.lastAccessed, log.firstAccessed, log.accessTimes);
+      addTableRow(
+        user,
+        log.timesAccessed,
+        log.lastAccessed,
+        log.firstAccessed,
+        log.accessTimes
+      );
     }
   }
 
   // Function to download the log data as CSV
   function downloadCSV() {
-    const messageLog = document.querySelectorAll('.direct-chat-msg .direct-chat-text');
+    const messageLog = document.querySelectorAll(
+      ".direct-chat-msg .direct-chat-text"
+    );
     const logEntries = [];
 
-    messageLog.forEach(msg => {
+    messageLog.forEach((msg) => {
       const textContent = msg.textContent;
-      const match = textContent.match(/"([^"]+)" accessed this incident at "([^"]+)"/);
+      const match = textContent.match(
+        /"([^"]+)" accessed this incident at "([^"]+)"/
+      );
 
       if (match) {
         const user = match[1];
@@ -4584,30 +4852,30 @@ window.addEventListener('load', function() {
 
     // Get the current date and time
     const now = new Date();
-    const formattedDate = now.toLocaleString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
+    const formattedDate = now.toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
     });
 
     // Convert to CSV format
-    const csvRows = ['User,Timestamp,,Accurate as of ' + formattedDate];
-    logEntries.forEach(entry => {
+    const csvRows = ["User,Timestamp,,Accurate as of " + formattedDate];
+    logEntries.forEach((entry) => {
       csvRows.push(`${entry.user},${entry.timestamp}`);
     });
 
-    const csvString = csvRows.join('\n');
-    const blob = new Blob([csvString], { type: 'text/csv' });
+    const csvString = csvRows.join("\n");
+    const blob = new Blob([csvString], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
 
     // Extract incident number from the URL
-    const incidentNumber = window.location.pathname.split('/').pop();
+    const incidentNumber = window.location.pathname.split("/").pop();
     const filename = `${incidentNumber} Access Log.csv`;
 
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = filename;
     a.click();
@@ -4622,115 +4890,130 @@ window.addEventListener('load', function() {
   setTimeout(updateTable, 5000);
 });
 
-window.addEventListener('load', function () {
+window.addEventListener("load", function () {
   console.log("Page loaded. Current URL: " + window.location.href);
   console.log("Referrer URL: " + document.referrer);
 
   // Check if the current URL matches the incident edit page pattern
-  if (window.location.href.includes("https://surfcom.sls.com.au/incidents/edit/")) {
-      // Check if the referrer does not contain specific paths
-      const excludedReferrers = [
-          "https://surfcom.sls.com.au/incidents/edit/",
-          "https://surfcom.sls.com.au/incidents/record/",
-          "https://surfcom.sls.com.au/incidents/view-incident-log/",
-          "https://surfcom.sls.com.au/incidents/close/"
-      ];
+  if (
+    window.location.href.includes("https://surfcom.sls.com.au/incidents/edit/")
+  ) {
+    // Check if the referrer does not contain specific paths
+    const excludedReferrers = [
+      "https://surfcom.sls.com.au/incidents/edit/",
+      "https://surfcom.sls.com.au/incidents/record/",
+      "https://surfcom.sls.com.au/incidents/view-incident-log/",
+      "https://surfcom.sls.com.au/incidents/close/",
+    ];
 
-      let shouldRun = true;
-      for (let excludedReferrer of excludedReferrers) {
-          if (document.referrer.includes(excludedReferrer)) {
-              shouldRun = false;
-              break;
-          }
+    let shouldRun = true;
+    for (let excludedReferrer of excludedReferrers) {
+      if (document.referrer.includes(excludedReferrer)) {
+        shouldRun = false;
+        break;
       }
+    }
 
-      if (shouldRun) {
-          console.log("Running script because referrer does not contain excluded paths");
+    if (shouldRun) {
+      console.log(
+        "Running script because referrer does not contain excluded paths"
+      );
 
-          // Extract username and email from the dropdown menu
-          let userDropdown = document.querySelector('.dropdown-menu-lg .dropdown-item p');
-          if (userDropdown) {
-              let userText = userDropdown.innerHTML;
-              let userName = userText.split('<br>')[0].trim(); // Extract the full name
-              let userHandle = userText.split('<small>')[1].split('</small>')[0].trim(); // Extract the username
+      // Extract username and email from the dropdown menu
+      let userDropdown = document.querySelector(
+        ".dropdown-menu-lg .dropdown-item p"
+      );
+      if (userDropdown) {
+        let userText = userDropdown.innerHTML;
+        let userName = userText.split("<br>")[0].trim(); // Extract the full name
+        let userHandle = userText
+          .split("<small>")[1]
+          .split("</small>")[0]
+          .trim(); // Extract the username
 
-              // Get the current date and time in the format dd/mm/yyyy hh:mm:ss
-              let now = new Date();
-              let day = String(now.getDate()).padStart(2, '0');
-              let month = String(now.getMonth() + 1).padStart(2, '0');
-              let year = now.getFullYear();
-              let hours = String(now.getHours()).padStart(2, '0');
-              let minutes = String(now.getMinutes()).padStart(2, '0');
-              let seconds = String(now.getSeconds()).padStart(2, '0');
-              let formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+        // Get the current date and time in the format dd/mm/yyyy hh:mm:ss
+        let now = new Date();
+        let day = String(now.getDate()).padStart(2, "0");
+        let month = String(now.getMonth() + 1).padStart(2, "0");
+        let year = now.getFullYear();
+        let hours = String(now.getHours()).padStart(2, "0");
+        let minutes = String(now.getMinutes()).padStart(2, "0");
+        let seconds = String(now.getSeconds()).padStart(2, "0");
+        let formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 
-              // Prepare the message content
-              let messageContent = `"${userName} (${userHandle})" accessed this incident at "${formattedDateTime}"`;
+        // Prepare the message content
+        let messageContent = `"${userName} (${userHandle})" accessed this incident at "${formattedDateTime}"`;
 
-              // Fill the textarea with the prepared message
-              let textArea = document.querySelector('#message');
-              if (textArea) {
-                  textArea.value = messageContent;
-                  console.log("Message content set in text area.");
-              } else {
-                  console.error("Text area not found");
-              }
+        // Fill the textarea with the prepared message
+        let textArea = document.querySelector("#message");
+        if (textArea) {
+          textArea.value = messageContent;
+          console.log("Message content set in text area.");
+        } else {
+          console.error("Text area not found");
+        }
 
-              // Set 'From' and 'To' dropdowns to "Surfcom"
-              let fromSelect = document.querySelector('#msg_from');
-              let toSelect = document.querySelector('#msg_to');
+        // Set 'From' and 'To' dropdowns to "Surfcom"
+        let fromSelect = document.querySelector("#msg_from");
+        let toSelect = document.querySelector("#msg_to");
 
-              if (fromSelect) {
-                  fromSelect.value = "unit_1996";
-                  console.log("'From' dropdown set to Surfcom.");
-              } else {
-                  console.error("'From' dropdown not found");
-              }
+        if (fromSelect) {
+          fromSelect.value = "unit_1996";
+          console.log("'From' dropdown set to Surfcom.");
+        } else {
+          console.error("'From' dropdown not found");
+        }
 
-              if (toSelect) {
-                  toSelect.value = "unit_1997";
-                  console.log("'To' dropdown set to Surfcom.");
-              } else {
-                  console.error("'To' dropdown not found");
-              }
+        if (toSelect) {
+          toSelect.value = "unit_1997";
+          console.log("'To' dropdown set to Surfcom.");
+        } else {
+          console.error("'To' dropdown not found");
+        }
 
-              // Trigger the 'Record' button click and then clear the text area
-              let recordButton = document.querySelector('#post_comment');
-              if (recordButton) {
-                  recordButton.click();
-                  console.log("Record button clicked.");
+        // Trigger the 'Record' button click and then clear the text area
+        let recordButton = document.querySelector("#post_comment");
+        if (recordButton) {
+          recordButton.click();
+          console.log("Record button clicked.");
 
-                  // Clear the text area after a short delay
-                  setTimeout(() => {
-                      if (textArea) {
-                          textArea.value = '';
-                          console.log("Text area cleared.");
-                      }
-                  }, 250); // Adjust the delay as needed
-              } else {
-                  console.error("Record button not found.");
-              }
-          } else {
-              console.error("User dropdown not found.");
-          }
+          // Clear the text area after a short delay
+          setTimeout(() => {
+            if (textArea) {
+              textArea.value = "";
+              console.log("Text area cleared.");
+            }
+          }, 250); // Adjust the delay as needed
+        } else {
+          console.error("Record button not found.");
+        }
       } else {
-          console.log("Script not running because referrer contains an excluded path");
+        console.error("User dropdown not found.");
       }
+    } else {
+      console.log(
+        "Script not running because referrer contains an excluded path"
+      );
+    }
   } else {
-      console.log("Script not running because current URL does not match 'https://surfcom.sls.com.au/incidents/edit/' pattern");
+    console.log(
+      "Script not running because current URL does not match 'https://surfcom.sls.com.au/incidents/edit/' pattern"
+    );
   }
 });
 
 // Function to extract the username from the email before the @ symbol
 function extractUsername() {
-  let emailElement = document.querySelector('.dropdown-menu .dropdown-item small:last-of-type');
+  let emailElement = document.querySelector(
+    ".dropdown-menu .dropdown-item small:last-of-type"
+  );
   if (emailElement) {
-      let email = emailElement.textContent;
-      let username = email.split('@')[0].toUpperCase();
-      if (username === "soc") {
-          return promptForUsername();
-      }
-      return username;
+    let email = emailElement.textContent;
+    let username = email.split("@")[0].toUpperCase();
+    if (username === "soc") {
+      return promptForUsername();
+    }
+    return username;
   }
   return promptForUsername();
 }
@@ -4739,47 +5022,47 @@ function extractUsername() {
 function promptForUsername() {
   let firstInitial;
   do {
-      firstInitial = prompt("Please enter your first initial:");
+    firstInitial = prompt("Please enter your first initial:");
   } while (!firstInitial || firstInitial.length !== 1);
-  
+
   let surname = prompt("Please enter your surname:");
   return `${firstInitial}${surname}`.toUpperCase();
 }
 
 // Function to create the role selection buttons and the remove button
 function createRoleButtons(callback) {
-  let container = document.createElement('div');
-  container.id = 'role-buttons-container';
-  container.style.marginTop = '10px';
+  let container = document.createElement("div");
+  container.id = "role-buttons-container";
+  container.style.marginTop = "10px";
 
-  let title = document.createElement('p');
-  title.innerHTML = '<strong>Add me to incident as:</strong>';
+  let title = document.createElement("p");
+  title.innerHTML = "<strong>Add me to incident as:</strong>";
   container.appendChild(title);
 
-  let roles = ['ERO', 'UAVERO', 'SERO', 'SDO'];
-  roles.forEach(role => {
-      let button = document.createElement('button');
-      button.textContent = role;
-      button.style.marginRight = '10px';
-      button.onclick = (e) => {
-          e.preventDefault();
-          callback(role);
-      };
-      container.appendChild(button);
+  let roles = ["ERO", "UAVERO", "SERO", "SDO"];
+  roles.forEach((role) => {
+    let button = document.createElement("button");
+    button.textContent = role;
+    button.style.marginRight = "10px";
+    button.onclick = (e) => {
+      e.preventDefault();
+      callback(role);
+    };
+    container.appendChild(button);
   });
 
   // Create the remove button with red bin icon
-  let removeButton = document.createElement('button');
+  let removeButton = document.createElement("button");
   removeButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
-  removeButton.style.marginLeft = '10px';
-  removeButton.style.float = 'right';
-  removeButton.style.color = 'red';
-  removeButton.style.background = 'none';
-  removeButton.style.border = 'none';
-  removeButton.style.cursor = 'pointer';
+  removeButton.style.marginLeft = "10px";
+  removeButton.style.float = "right";
+  removeButton.style.color = "red";
+  removeButton.style.background = "none";
+  removeButton.style.border = "none";
+  removeButton.style.cursor = "pointer";
   removeButton.onclick = (e) => {
-      e.preventDefault();
-      removeUser();
+    e.preventDefault();
+    removeUser();
   };
   container.appendChild(removeButton);
 
@@ -4788,48 +5071,49 @@ function createRoleButtons(callback) {
 
 // Function to insert the role selection buttons next to the SLS contact field
 function insertRoleButtons() {
-  let targetDiv = document.querySelector('#incidentSLSContact').parentNode.parentNode.parentNode;
+  let targetDiv = document.querySelector("#incidentSLSContact").parentNode
+    .parentNode.parentNode;
   let addButtonContainer = createRoleButtons((role) => {
-      let username = extractUsername();
-      if (username) {
-          let inputField = document.querySelector('#incidentSLSContact');
-          if (inputField) {
-              let currentValue = inputField.value;
-              let newEntry = `${username} (${role})`;
-              let entries = currentValue ? currentValue.split(' / ') : [];
-              let entryExists = false;
+    let username = extractUsername();
+    if (username) {
+      let inputField = document.querySelector("#incidentSLSContact");
+      if (inputField) {
+        let currentValue = inputField.value;
+        let newEntry = `${username} (${role})`;
+        let entries = currentValue ? currentValue.split(" / ") : [];
+        let entryExists = false;
 
-              for (let i = 0; i < entries.length; i++) {
-                  if (entries[i].includes(username)) {
-                      entries[i] = newEntry;
-                      entryExists = true;
-                      break;
-                  }
-              }
-
-              if (!entryExists) {
-                  entries.push(newEntry);
-              }
-
-              entries.sort((a, b) => {
-                  let rolesOrder = ['ERO', 'UAVERO', 'SERO', 'SDO'];
-                  let roleA = a.match(/\(([^)]+)\)/)[1];
-                  let roleB = b.match(/\(([^)]+)\)/)[1];
-                  return rolesOrder.indexOf(roleA) - rolesOrder.indexOf(roleB);
-              });
-
-              inputField.value = entries.join(' / ');
+        for (let i = 0; i < entries.length; i++) {
+          if (entries[i].includes(username)) {
+            entries[i] = newEntry;
+            entryExists = true;
+            break;
           }
-      } else {
-          alert('Username not found.');
+        }
+
+        if (!entryExists) {
+          entries.push(newEntry);
+        }
+
+        entries.sort((a, b) => {
+          let rolesOrder = ["ERO", "UAVERO", "SERO", "SDO"];
+          let roleA = a.match(/\(([^)]+)\)/)[1];
+          let roleB = b.match(/\(([^)]+)\)/)[1];
+          return rolesOrder.indexOf(roleA) - rolesOrder.indexOf(roleB);
+        });
+
+        inputField.value = entries.join(" / ");
       }
+    } else {
+      alert("Username not found.");
+    }
   });
 
   if (targetDiv) {
-      let newColDiv = document.createElement('div');
-      newColDiv.className = 'col-12 col-md-6';
-      newColDiv.appendChild(addButtonContainer);
-      targetDiv.appendChild(newColDiv);
+    let newColDiv = document.createElement("div");
+    newColDiv.className = "col-12 col-md-6";
+    newColDiv.appendChild(addButtonContainer);
+    targetDiv.appendChild(newColDiv);
   }
 }
 
@@ -4837,94 +5121,100 @@ function insertRoleButtons() {
 function removeUser() {
   let username = extractUsername();
   if (username) {
-      let inputField = document.querySelector('#incidentSLSContact');
-      if (inputField) {
-          let currentValue = inputField.value;
-          let entries = currentValue ? currentValue.split(' / ') : [];
-          let updatedEntries = entries.filter(entry => !entry.includes(username));
+    let inputField = document.querySelector("#incidentSLSContact");
+    if (inputField) {
+      let currentValue = inputField.value;
+      let entries = currentValue ? currentValue.split(" / ") : [];
+      let updatedEntries = entries.filter((entry) => !entry.includes(username));
 
-          inputField.value = updatedEntries.join(' / ');
-      }
+      inputField.value = updatedEntries.join(" / ");
+    }
   } else {
-      alert('Username not found.');
+    alert("Username not found.");
   }
 }
 
 // Wait for the DOM to load before running the script
-window.addEventListener('load', insertRoleButtons);
+window.addEventListener("load", insertRoleButtons);
 
-window.addEventListener('load', function() {
+window.addEventListener("load", function () {
   // Lock the input field on window load
-  const inputField = document.getElementById('incidentSLSContact');
+  const inputField = document.getElementById("incidentSLSContact");
   if (inputField) {
-      inputField.readOnly = true;
-      
-      // Add horizontal scrollbar to the input field
-      inputField.style.overflowX = 'auto';
-      inputField.style.whiteSpace = 'nowrap';
+    inputField.readOnly = true;
 
-      // Create the scroll buttons
-      const scrollLeftButton = document.createElement('button');
-      scrollLeftButton.id = 'scrollLeft';
-      scrollLeftButton.innerHTML = '&lt;';
-      scrollLeftButton.style.marginRight = '5px';
-      
-      const scrollRightButton = document.createElement('button');
-      scrollRightButton.id = 'scrollRight';
-      scrollRightButton.innerHTML = '&gt;';
-      scrollRightButton.style.marginLeft = '5px';
-      
-      // Insert the buttons after the input field
-      inputField.parentNode.insertBefore(scrollLeftButton, inputField.nextSibling);
-      inputField.parentNode.insertBefore(scrollRightButton, scrollLeftButton.nextSibling);
+    // Add horizontal scrollbar to the input field
+    inputField.style.overflowX = "auto";
+    inputField.style.whiteSpace = "nowrap";
 
-      // Add event listeners to the scroll buttons
-      scrollLeftButton.addEventListener('click', function(event) {
-          event.preventDefault();
-          inputField.scrollLeft -= 10; // Adjust the value as needed
-      });
+    // Create the scroll buttons
+    const scrollLeftButton = document.createElement("button");
+    scrollLeftButton.id = "scrollLeft";
+    scrollLeftButton.innerHTML = "&lt;";
+    scrollLeftButton.style.marginRight = "5px";
 
-      scrollRightButton.addEventListener('click', function(event) {
-          event.preventDefault();
-          inputField.scrollLeft += 10; // Adjust the value as needed
-      });
+    const scrollRightButton = document.createElement("button");
+    scrollRightButton.id = "scrollRight";
+    scrollRightButton.innerHTML = "&gt;";
+    scrollRightButton.style.marginLeft = "5px";
+
+    // Insert the buttons after the input field
+    inputField.parentNode.insertBefore(
+      scrollLeftButton,
+      inputField.nextSibling
+    );
+    inputField.parentNode.insertBefore(
+      scrollRightButton,
+      scrollLeftButton.nextSibling
+    );
+
+    // Add event listeners to the scroll buttons
+    scrollLeftButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      inputField.scrollLeft -= 10; // Adjust the value as needed
+    });
+
+    scrollRightButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      inputField.scrollLeft += 10; // Adjust the value as needed
+    });
   }
 
   // Add an event listener to the button to unlock the input field and run the function
-  const button = document.querySelector('button.check-incident-status');
+  const button = document.querySelector("button.check-incident-status");
   if (button) {
-      button.addEventListener('click', function(event) {
-          event.preventDefault();
-          if (inputField) {
-              inputField.readOnly = false;
-          }
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
+      if (inputField) {
+        inputField.readOnly = false;
+      }
 
-          // Run the function associated with the button
-          const form = document.getElementById('saveIncidentForm');
-          if (form) {
-              form.submit();
-          }
-      });
+      // Run the function associated with the button
+      const form = document.getElementById("saveIncidentForm");
+      if (form) {
+        form.submit();
+      }
+    });
   }
 });
 
-window.addEventListener('load', function() {
+window.addEventListener("load", function () {
   // Select the element with the incidentSLSContact field
-  var incidentSLSContactElement = document.querySelector('#incidentSLSContact');
+  var incidentSLSContactElement = document.querySelector("#incidentSLSContact");
 
   // Navigate to the parent .col-12.col-md-6 div
   if (incidentSLSContactElement) {
-      var parentColDiv = incidentSLSContactElement.closest('.col-12.col-md-6');
+    var parentColDiv = incidentSLSContactElement.closest(".col-12.col-md-6");
 
-      // Check if the next sibling exists and has the empty .form-group
-      if (parentColDiv && parentColDiv.nextElementSibling) {
-          var nextSiblingColDiv = parentColDiv.nextElementSibling;
-          var emptyFormGroup = nextSiblingColDiv.querySelector('.form-group');
+    // Check if the next sibling exists and has the empty .form-group
+    if (parentColDiv && parentColDiv.nextElementSibling) {
+      var nextSiblingColDiv = parentColDiv.nextElementSibling;
+      var emptyFormGroup = nextSiblingColDiv.querySelector(".form-group");
 
-          // Remove the next sibling .col-12.col-md-6 if it contains an empty .form-group
-          if (emptyFormGroup && emptyFormGroup.children.length === 0) {
-              nextSiblingColDiv.remove();
-          }
+      // Remove the next sibling .col-12.col-md-6 if it contains an empty .form-group
+      if (emptyFormGroup && emptyFormGroup.children.length === 0) {
+        nextSiblingColDiv.remove();
       }
+    }
   }
 });
