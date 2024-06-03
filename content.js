@@ -5171,12 +5171,12 @@ window.addEventListener("load", function () {
     // Add event listeners to the scroll buttons
     scrollLeftButton.addEventListener("click", function (event) {
       event.preventDefault();
-      inputField.scrollLeft -= 10; // Adjust the value as needed
+      inputField.scrollLeft -= 50; // Adjust the value as needed
     });
 
     scrollRightButton.addEventListener("click", function (event) {
       event.preventDefault();
-      inputField.scrollLeft += 10; // Adjust the value as needed
+      inputField.scrollLeft += 50; // Adjust the value as needed
     });
   }
 
@@ -5218,3 +5218,52 @@ window.addEventListener("load", function () {
     }
   }
 });
+
+// Function to filter messages
+function filterMessages() {
+  const messages = document.querySelectorAll('.direct-chat-msg');
+  const showSystemMessages = document.querySelector('#display-system-messages').checked;
+
+  messages.forEach((message) => {
+    const messageFrom = message.querySelector('.direct-chat-name').innerText;
+
+    if (!showSystemMessages && messageFrom.includes('``user`` to ``systemLog``')) {
+      message.style.display = 'none';
+    } else {
+      message.style.display = 'block';
+    }
+  });
+}
+
+// Add filter checkbox to the UI
+function addFilterCheckbox() {
+  const filterContainer = document.createElement('div');
+  filterContainer.classList.add('form-group');
+  filterContainer.style.marginTop = '0px';
+
+  const filterLabel = document.createElement('label');
+  filterLabel.classList.add('checkbox-inline');
+  filterLabel.innerHTML = '<input type="checkbox" id="display-system-messages"> Display SurfPlus System Messages';
+  filterContainer.appendChild(filterLabel);
+
+  const messageLogContainer = document.querySelector('.direct-chat-messages').parentNode.parentNode;
+  messageLogContainer.parentNode.insertBefore(filterContainer, messageLogContainer);
+
+  const checkbox = document.querySelector('#display-system-messages');
+  checkbox.addEventListener('change', filterMessages);
+}
+
+// Mutation observer to monitor changes in the message log
+function observeMessageLog() {
+  const messageLog = document.querySelector('.direct-chat-messages');
+  const observer = new MutationObserver(() => {
+    filterMessages();
+  });
+
+  observer.observe(messageLog, { childList: true });
+}
+
+// Initialize filter and observer
+addFilterCheckbox();
+filterMessages();
+observeMessageLog();
