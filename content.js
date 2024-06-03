@@ -5010,7 +5010,7 @@ function extractUsername() {
   if (emailElement) {
     let email = emailElement.textContent;
     let username = email.split("@")[0].toUpperCase();
-    if (username === "soc") {
+    if (username === "SOC") {
       return promptForUsername();
     }
     return username;
@@ -5022,10 +5022,10 @@ function extractUsername() {
 function promptForUsername() {
   let firstInitial;
   do {
-    firstInitial = prompt("Please enter your first initial:");
+    firstInitial = prompt("Please enter your first initial:").replace(/\s+/g, '');
   } while (!firstInitial || firstInitial.length !== 1);
 
-  let surname = prompt("Please enter your surname:");
+  let surname = prompt("Please enter your surname:").replace(/\s+/g, '');
   return `${firstInitial}${surname}`.toUpperCase();
 }
 
@@ -5082,9 +5082,10 @@ function insertRoleButtons() {
         let newEntry = `${username} (${role})`;
         let entries = currentValue ? currentValue.split(" / ") : [];
         let entryExists = false;
+        let usernamePattern = new RegExp(`^${username} \\(`);
 
         for (let i = 0; i < entries.length; i++) {
-          if (entries[i].includes(username)) {
+          if (usernamePattern.test(entries[i])) {
             entries[i] = newEntry;
             entryExists = true;
             break;
@@ -5125,9 +5126,14 @@ function removeUser() {
     if (inputField) {
       let currentValue = inputField.value;
       let entries = currentValue ? currentValue.split(" / ") : [];
-      let updatedEntries = entries.filter((entry) => !entry.includes(username));
+      let usernamePattern = new RegExp(`^${username} \\(`);
+      let updatedEntries = entries.filter((entry) => !usernamePattern.test(entry));
 
-      inputField.value = updatedEntries.join(" / ");
+      if (updatedEntries.length === entries.length) {
+        alert("User is not part of this incident.");
+      } else {
+        inputField.value = updatedEntries.join(" / ");
+      }
     }
   } else {
     alert("Username not found.");
