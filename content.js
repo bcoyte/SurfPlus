@@ -633,36 +633,34 @@ window.addEventListener("load", function () {
     areAllFieldsLocked = true;
   }
 
-  if (areAllFieldsLocked) {
-    // Create the Unlock All button
-    let unlockAllButton = document.createElement("button");
-    unlockAllButton.className = "btn btn-app";
-    unlockAllButton.innerHTML = `
-      <svg class="svg-inline--fa fa-unlock" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="unlock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
-        <path fill="currentColor" d="M400 224H112V144C112 64.47 176.5 0 256 0S400 64.47 400 144v16c0 8.836-7.164 16-16 16H336c-8.836 0-16-7.164-16-16V144c0-44.11-35.89-80-80-80S160 99.89 160 144v80h-48V448c0 35.35 28.65 64 64 64h208c35.35 0 64-28.65 64-64V256C448 238.3 433.7 224 416 224z"></path>
-      </svg>
-      Unlock All
-    `;
+  // Create the Unlock All button
+  let unlockAllButton = document.createElement("button");
+  unlockAllButton.className = "btn btn-app";
+  unlockAllButton.innerHTML = `
+    <svg class="svg-inline--fa fa-unlock" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="unlock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+      <path fill="currentColor" d="M400 224H112V144C112 64.47 176.5 0 256 0S400 64.47 400 144v16c0 8.836-7.164 16-16 16H336c-8.836 0-16-7.164-16-16V144c0-44.11-35.89-80-80-80S160 99.89 160 144v80h-48V448c0 35.35 28.65 64 64 64h208c35.35 0 64-28.65 64-64V256C448 238.3 433.7 224 416 224z"></path>
+    </svg>
+    Unlock All
+  `;
 
-    // Add the button to the DOM
-    let buttonContainer = document.querySelector(".row.mb-4");
-    buttonContainer.appendChild(unlockAllButton);
+  // Add the button to the DOM
+  let buttonContainer = document.querySelector(".row.mb-4");
+  buttonContainer.appendChild(unlockAllButton);
 
-    // Add event listener to the Unlock All button
-    unlockAllButton.addEventListener("click", function (event) {
-      event.preventDefault(); // Prevent the default action
+  // Add event listener to the Unlock All button
+  unlockAllButton.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default action
 
-      // Unlock the specific fields
-      nameField.disabled = false;
-      orgField.disabled = false;
-      numberField.disabled = false;
-      locationField.disabled = false;
-      tpiField.disabled = false;
-      serviceField.disabled = false;
-      latField.disabled = false;
-      lngField.disabled = false;
-    });
-  }
+    // Unlock the specific fields
+    nameField.disabled = false;
+    orgField.disabled = false;
+    numberField.disabled = false;
+    locationField.disabled = false;
+    tpiField.disabled = false;
+    serviceField.disabled = false;
+    latField.disabled = false;
+    lngField.disabled = false;
+  });
 
   // Remove button with type="reset" and class="btn btn-app"
   var resetButtons = document.querySelectorAll('button[type="reset"]');
@@ -676,6 +674,31 @@ window.addEventListener("load", function () {
   var anchor = document.querySelector('a.btn.btn-app[href="https://surfcom.sls.com.au/incidents/view/0"]');
   if (anchor) {
     anchor.remove();
+  }
+});
+
+
+window.addEventListener('load', function() {
+  // Function to unlock the input field
+  function unlockField() {
+    const inputField = document.getElementById('incidentSLSContact');
+    if (inputField) {
+      inputField.removeAttribute('readonly');
+      inputField.style.backgroundColor = "#fff"; // Optional: change background color to indicate it's editable
+    }
+  }
+
+  // Find the specific button containing the SVG element
+  const unlockButton = document.querySelector('button.btn.btn-app .fa-unlock').parentElement;
+
+  // Add click event listener to the button
+  if (unlockButton) {
+    unlockButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      unlockField();
+    });
+  } else {
+    console.error('Unlock button not found');
   }
 });
 
@@ -4698,9 +4721,24 @@ function extractUsername() {
   let emailElement = document.querySelector('.dropdown-menu .dropdown-item small:last-of-type');
   if (emailElement) {
       let email = emailElement.textContent;
-      return email.split('@')[0].toUpperCase();
+      let username = email.split('@')[0].toUpperCase();
+      if (username === "soc") {
+          return promptForUsername();
+      }
+      return username;
   }
-  return '';
+  return promptForUsername();
+}
+
+// Function to prompt the user for their first initial and surname
+function promptForUsername() {
+  let firstInitial;
+  do {
+      firstInitial = prompt("Please enter your first initial:");
+  } while (!firstInitial || firstInitial.length !== 1);
+  
+  let surname = prompt("Please enter your surname:");
+  return `${firstInitial}${surname}`.toUpperCase();
 }
 
 // Function to create the role selection buttons and the remove button
