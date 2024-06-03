@@ -4207,14 +4207,14 @@ window.addEventListener("load", function () {
 
         if (fromSelect) {
           fromSelect.value = "unit_1996";
-          console.log("'From' dropdown set to Surfcom.");
+          console.log("'From' dropdown set to ``user``.");
         } else {
           console.error("'From' dropdown not found");
         }
 
         if (toSelect) {
           toSelect.value = "unit_1997";
-          console.log("'To' dropdown set to Surfcom.");
+          console.log("'To' dropdown set to ``systemLog``.");
         } else {
           console.error("'To' dropdown not found");
         }
@@ -5312,24 +5312,7 @@ addFilterCheckbox();
 filterMessages();
 observeMessageLog();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-window.addEventListener('load', function () {
+function applyToggleButtons() {
   // Select all "Delivered to" messages
   const deliveredToMessages = document.querySelectorAll('.direct-chat-text ul li');
 
@@ -5339,7 +5322,7 @@ window.addEventListener('load', function () {
       
       if (startIndex !== -1) {
           const visiblePart = deliveredText.slice(0, startIndex).trim();
-          const hiddenPart = deliveredText.slice(startIndex).trim();
+          const hiddenPart = ' ' + deliveredText.slice(startIndex).trim(); // Add a space before hidden part
 
           // Create a span for the hidden content
           const hiddenSpan = document.createElement('span');
@@ -5348,7 +5331,7 @@ window.addEventListener('load', function () {
 
           // Create a button to toggle the visibility
           const toggleButton = document.createElement('button');
-          toggleButton.textContent = 'Show More';
+          toggleButton.textContent = 'Show Contacts';
           toggleButton.style.marginLeft = '10px';
           toggleButton.style.cursor = 'pointer';
 
@@ -5356,10 +5339,10 @@ window.addEventListener('load', function () {
               event.preventDefault();
               if (hiddenSpan.style.display === 'none') {
                   hiddenSpan.style.display = 'inline';
-                  toggleButton.textContent = 'Show Less';
+                  toggleButton.textContent = 'Hide';
               } else {
                   hiddenSpan.style.display = 'none';
-                  toggleButton.textContent = 'Show More';
+                  toggleButton.textContent = 'Show Contacts';
               }
           });
 
@@ -5370,4 +5353,56 @@ window.addEventListener('load', function () {
           message.appendChild(toggleButton);
       }
   });
+}
+
+function observeMessageLog2() {
+  const messageLog = document.querySelector('.direct-chat-messages');
+  if (messageLog) {
+    const observer = new MutationObserver(() => {
+      applyToggleButtons();
+    });
+
+    observer.observe(messageLog, { childList: true });
+  }
+}
+
+window.addEventListener('load', function () {
+  applyToggleButtons();
+  observeMessageLog2();
 });
+
+// Function to click the OK button within the specific div
+function clickOkButton() {
+  const okButton = document.querySelector('.swal2-confirm.swal2-styled.swal2-default-outline');
+  if (okButton) {
+    okButton.click();
+  }
+}
+
+// Observer to detect the appearance of the specific div
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.type === 'childList') {
+      clickOkButton();
+    }
+  });
+});
+
+// Function to start the observer if the URL matches
+function autoDismiss() {
+  const currentUrl = window.location.href;
+  const urlPattern = /^https:\/\/surfcom\.sls\.com\.au\/incidents\/edit/;
+  
+  if (urlPattern.test(currentUrl)) {
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    // Initial check in case the div is already present
+    clickOkButton();
+  }
+}
+
+// Initialize the script
+autoDismiss();
