@@ -3495,7 +3495,7 @@ if (
     function createStatusCard(title, count) {
       const card = document.createElement("div");
       card.style.cssText =
-        "margin: 0 3px; padding: 6px 12px; background-color: #f0f0f0; border-radius: 5px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);";
+        "margin: 0 3px; padding: 5px 10px; background-color: #f0f0f0; border-radius: 4px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);";
 
       const statusElement = document.createElement("div");
       statusElement.textContent = title;
