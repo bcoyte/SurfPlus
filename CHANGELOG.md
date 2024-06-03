@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.9.0](https://github.com/rporteous1/SurfPlus/compare/v2.8.0...v2.9.0) (2024-06-03)
+
+
+### Features
+
+* :sparkles: added autodismiss to save popup ([923b5f0](https://github.com/rporteous1/SurfPlus/commit/923b5f076ed854b9a55529f441020ef936711903))
+* :sparkles: added collapsing to sms and email contacts ([923b5f0](https://github.com/rporteous1/SurfPlus/commit/923b5f076ed854b9a55529f441020ef936711903))
+
 ## [2.8.0](https://github.com/rporteous1/SurfPlus/compare/v2.7.0...v2.8.0) (2024-06-03)
 
 
