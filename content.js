@@ -2077,7 +2077,8 @@ document.addEventListener("keydown", function (event) {
 });
 
 if (window.location.href.startsWith("https://surfcom.sls.com.au/")) {
-  function modifyText() {
+  // Function to modify text with dynamic version number
+  function modifyText(version) {
     // Query all span elements with the specific class
     const elements = document.querySelectorAll(
       "span.brand-text.font-weight-light"
@@ -2094,7 +2095,7 @@ if (window.location.href.startsWith("https://surfcom.sls.com.au/")) {
           "SurfCom Management System with enhancements and extra features, Contact Riley Porteous for extra details!";
         // Add '+' and the version number with styling
         element.innerHTML =
-          'Surfcom + <span class="version-number" style="color: lightgrey; font-size: smaller; font-style: italic;">v2.5</span>';
+          `Surfcom + <span class="version-number" style="color: lightgrey; font-size: smaller; font-style: italic;">v${version}</span>`;
       }
     });
   }
@@ -2103,7 +2104,9 @@ if (window.location.href.startsWith("https://surfcom.sls.com.au/")) {
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       // Call modifyText on each mutation observed
-      modifyText();
+      chrome.runtime.sendMessage({ action: "getVersion" }, (response) => {
+        modifyText(response.version);
+      });
     });
   });
 
@@ -2114,7 +2117,9 @@ if (window.location.href.startsWith("https://surfcom.sls.com.au/")) {
   observer.observe(document.body, config);
 
   // Also call modifyText on initial load
-  modifyText();
+  chrome.runtime.sendMessage({ action: "getVersion" }, (response) => {
+    modifyText(response.version);
+  });
 }
 
 function colorMessageLogs() {

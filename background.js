@@ -65,3 +65,12 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.action.onClicked.addListener((tab) => {
   chrome.sidePanel.open({ tabId: tab.id });
 });
+
+// Listen for a message to get the version number
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "getVersion") {
+    // Fetch the version number from manifest.json
+    const version = chrome.runtime.getManifest().version;
+    sendResponse({ version });
+  }
+});
