@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.8.0](https://github.com/rporteous1/SurfPlus/compare/v2.7.0...v2.8.0) (2024-06-03)
+
+
+### Features
+
+* :sparkles: added ability to hide surfplus system messages from log ([be879c5](https://github.com/rporteous1/SurfPlus/commit/be879c59a8241f0b0604771aba168ee0ac6be5cc))
+
+
+### Bug Fixes
+
+* :bug: fixed an issue where version number displayed in SurfCom was sometimes behind ([d622a25](https://github.com/rporteous1/SurfPlus/commit/d622a25b47d37bad5444e9c6438057d2ffc73c1e))
+* :bug: fixed issue where sls contact could have a space ([ffbfdab](https://github.com/rporteous1/SurfPlus/commit/ffbfdabd97ce1c954958ac678d91b6eba956a64b))
+* :bug: fixed issue where sls contact did not add if there was no email ([7fa1cd6](https://github.com/rporteous1/SurfPlus/commit/7fa1cd61f5fed9f40d69fbe0a2b998feea3b5681))
+* :bug: fixed issue where sls contact would replace other names if start was the same ([ffbfdab](https://github.com/rporteous1/SurfPlus/commit/ffbfdabd97ce1c954958ac678d91b6eba956a64b))
+
 ## [2.7.0](https://github.com/rporteous1/SurfPlus/compare/v2.6.0...v2.7.0) (2024-06-02)
 
 
