@@ -3954,20 +3954,6 @@ window.addEventListener("load", function () {
   updateETATimes();
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 window.addEventListener("load", function () {
   // Define the SVG icon with proper viewBox and styling to ensure full visibility
   const svgHTML = `
@@ -4290,15 +4276,6 @@ window.addEventListener("load", function () {
     }
   });
 });
-
-
-
-
-
-
-
-
-
 
 window.addEventListener("load", function () {
   const surfCheckbox = document.querySelector("#callerDetails13Surf");
