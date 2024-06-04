@@ -5293,8 +5293,7 @@ function filterMessages() {
 
     const shouldHideSurfComMessage =
       messageText.includes("Further Information Log (") ||
-      (messageText.includes("Incident #") &&
-        messageText.includes("Priority: ")) ||
+      (messageText.includes("Incident #") && messageText.includes("Priority: ")) ||
       messageText.includes("Attachment added to Incident") ||
       messageText.includes("Unit Clear :: ") ||
       messageText.includes("has been added to Incident #") ||
