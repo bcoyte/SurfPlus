@@ -95,8 +95,11 @@ window.addEventListener("load", function () {
 
   // Define groups for SMS
   const smsGroups = [
-     {
-      name: ["66118_01-1 FNC Serious Incident Notification SMS", "82448_QLD Notifications"],
+    {
+      name: [
+        "66118_01-1 FNC Serious Incident Notification SMS",
+        "82448_QLD Notifications",
+      ],
       start: -10.287612,
       end: -28.164557,
     },
@@ -155,8 +158,11 @@ window.addEventListener("load", function () {
       start: -35.664119,
       end: -37.528407,
     },
-     {
-      name: ["66159_11-1 FSC Serious Incident Notification SMS", "82449_VIC Notifications"],
+    {
+      name: [
+        "66159_11-1 FSC Serious Incident Notification SMS",
+        "82449_VIC Notifications",
+      ],
       start: -37.528407,
       end: -39.025418,
     },
@@ -5425,3 +5431,67 @@ function autoDismiss() {
 
 // Initialize the script
 autoDismiss();
+
+window.addEventListener("load", function () {
+  formatCalloutMessages();
+  addObserverForMessageLog();
+});
+
+function formatCalloutMessages() {
+  // Select all direct chat messages
+  const messages = document.querySelectorAll(".direct-chat-msg");
+
+  messages.forEach(function (message) {
+    // Check if the message ends with "Confirmation via SMS" and starts with "Incident #"
+    const textElement = message.querySelector(".direct-chat-text");
+    if (
+      textElement &&
+      textElement.textContent.trim().endsWith("Confirmation via SMS")
+    ) {
+      const textContent = textElement.textContent.trim();
+
+      // Extracting necessary details using regex
+      const incidentRegex = /Incident #(L\d{9})/;
+      const respondentRegex = / - ([\w\s-]+ \([\w\s]+\))/;
+      const respondentMobileRegex = /\((\d{10})\)/;
+      const locationRegex = /Current location ([^\.]+)\./;
+      const etaRegex = /ETA (\d+) Minutes/;
+
+      const incidentMatch = textContent.match(incidentRegex);
+      const respondentMatch = textContent.match(respondentRegex);
+      const respondentMobileMatch = textContent.match(respondentMobileRegex);
+      const locationMatch = textContent.match(locationRegex);
+      const etaMatch = textContent.match(etaRegex);
+
+      if (
+        incidentMatch &&
+        respondentMatch &&
+        respondentMobileMatch &&
+        locationMatch &&
+        etaMatch
+      ) {
+        const formattedMessage = `Incident #${incidentMatch[1]} - ${respondentMatch[1]} (${respondentMobileMatch[1]}) is responding to incident. Current location ${locationMatch[1]}. ETA ${etaMatch[1]} Minutes.`;
+
+        // Update the text content
+        textElement.innerHTML = `<span style="color:#000"><b>${formattedMessage}</b></span>`;
+      }
+    }
+  });
+}
+
+function addObserverForMessageLog() {
+  const messageLog = document.querySelector(".direct-chat-messages");
+
+  if (messageLog) {
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+          formatCalloutMessages();
+        }
+      });
+    });
+
+    const config = { childList: true, subtree: true };
+    observer.observe(messageLog, config);
+  }
+}
