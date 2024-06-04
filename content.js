@@ -153,7 +153,7 @@ window.addEventListener("load", function () {
     {
       name: ["66159_11-1 FSC Serious Incident Notification SMS"],
       start: -35.664119,
-      end: -39.025418,
+      end: -37.528407,
     },
      {
       name: ["66159_11-1 FSC Serious Incident Notification SMS", "82449_VIC Notifications"],
