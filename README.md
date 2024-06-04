@@ -5,16 +5,16 @@ This project enhances the SurfCom Management System with additional features and
 ## Features
 
 1. **Hotkey Shortcuts**: Various hotkey shortcuts are defined to automate tasks and streamline users workflow. For example:
-  - `F1`: Extracts incident data and formats it for pager messages.
-  - `F2`: Extracts incident data, formats it for further information, and saves the form.
-  - `F3`: Formats a standdown message and inserts it into the pager message field.
-  - `F7`: Creates a dropdown menu for selecting Emergency Response Beacons (ERBs).
-  - `F8`: Inserts a generic Close of Business message into the radio log screen, confirming handover.
-  - `F9` to `F12`: Prefills caller details for specific organizations.
-  - `Ctrl + S`: Saves the form.
-  - `Ctrl + R`: Switches between record and edit mode.
-  - `Ctrl + I`: Navigates to the incident view page.
-  - `Ctrl + B`: Navigates to the incident add page.
+ - `F1`: Extracts incident data and formats it for pager messages.
+ - `F2`: Extracts incident data, formats it for further information, and saves the form.
+ - `F3`: Formats a standdown message and inserts it into the pager message field.
+ - `F7`: Creates a dropdown menu for selecting Emergency Response Beacons (ERBs).
+ - `F8`: Inserts a generic Close of Business message into the radio log screen, confirming handover.
+ - `F9` to `F12`: Prefills caller details for specific organizations.
+ - `Ctrl + S`: Saves the form.
+ - `Ctrl + R`: Switches between record and edit mode.
+ - `Ctrl + I`: Navigates to the incident view page.
+ - `Ctrl + B`: Navigates to the incident add page.
 
 2. **Bulk Sign Off**: Adds a "Bulk Sign Off All" button to the support services page, allowing users to sign off all services in bulk.
 
@@ -59,6 +59,26 @@ This project enhances the SurfCom Management System with additional features and
 22. **Priority Dropdown Validation**: Removes the "Low (1)" priority option from the dropdown when the "13SURF" checkbox is checked, ensuring 13SURF incidents cannot be set to low priority.
 
 23. **Shark Attack Incident Alert**: Displays an alert reminding the user to notify the NSW Department of Primary Industries when the incident type is set to "Shark Attack (IRD)".
+
+24. **Critical Incident Type Alert**: Displays an alert prompting the user to notify Marine Area Command (MAC) and log the radio transmission when specific critical incident types are selected.
+
+25. **Input Field Character Limits**: Adds character counters and enforces maximum character limits for various input fields such as incident location, third party, SLS contact, caller details, and coordinates.
+
+26. **Phone Number Column in Response Table**: Adds a "Phone Number" column to the response table, extracting and formatting the phone numbers from the ETA links.
+
+27. **Numeric Input Validation**: Restricts the latitude and longitude input fields to accept only numeric values.
+
+28. **Role Selection Buttons**: Adds role selection buttons (ERO, UAVERO, SERO, SDO) and a remove button next to the SLS contact field, allowing users to quickly add or remove themselves from the incident with the selected role.
+
+29. **Scrollable SLS Contact Field**: Makes the SLS contact field read-only and adds horizontal scrolling functionality with scroll buttons.
+
+30. **Empty Form Group Removal**: Removes the empty form group next to the SLS contact field for better layout.
+
+31. **System Message Filtering**: Adds a checkbox to toggle the display of system messages in the message log.
+
+32. **Collapsible "Delivered to" Messages**: Hides the contact details in "Delivered to" messages by default and provides a toggle button to show or hide the details.
+
+33. **Auto-Dismiss Alert**: Automatically clicks the OK button on the alert modal when the incident edit page loads.
 
 ## Installation
 

@@ -4151,10 +4151,12 @@ window.addEventListener("load", function () {
       const textArea = document.querySelector('.form-control[name="message"]');
       const regex = /\{\{\{([^{}]*)\}\}\}/;
 
-      const messages = document.querySelectorAll(".direct-chat-msg .direct-chat-text");
+      const messages = document.querySelectorAll(
+        ".direct-chat-msg .direct-chat-text"
+      );
       let matchFound = false;
 
-      messages.forEach(message => {
+      messages.forEach((message) => {
         const match = regex.exec(message.innerHTML);
         if (match && !matchFound) {
           const defaults = match[1].split(", ").reduce((acc, curr) => {
@@ -4188,8 +4190,8 @@ window.addEventListener("load", function () {
 
         textArea.value = existingText;
 
-        const fromSelect = document.querySelector('#from');
-        const toSelect = document.querySelector('#to');
+        const fromSelect = document.querySelector("#from");
+        const toSelect = document.querySelector("#to");
 
         if (fromSelect) {
           fromSelect.value = "unit_1996";
@@ -4243,10 +4245,12 @@ window.addEventListener("load", function () {
 
       // Check for text within {{{}}} in the direct chat messages
       const regex = /\{\{\{(.+?)\}\}\}/;
-      const messages = document.querySelectorAll(".direct-chat-msg .direct-chat-text");
+      const messages = document.querySelectorAll(
+        ".direct-chat-msg .direct-chat-text"
+      );
       let matchFound = false;
 
-      messages.forEach(message => {
+      messages.forEach((message) => {
         const match = regex.exec(message.innerHTML);
         if (match && !matchFound) {
           matchFound = true;
@@ -5046,10 +5050,13 @@ function extractUsername() {
 function promptForUsername() {
   let firstInitial;
   do {
-    firstInitial = prompt("Please enter your first initial:").replace(/\s+/g, '');
+    firstInitial = prompt("Please enter your first initial:").replace(
+      /\s+/g,
+      ""
+    );
   } while (!firstInitial || firstInitial.length !== 1);
 
-  let surname = prompt("Please enter your surname:").replace(/\s+/g, '');
+  let surname = prompt("Please enter your surname:").replace(/\s+/g, "");
   return `${firstInitial}${surname}`.toUpperCase();
 }
 
@@ -5151,7 +5158,9 @@ function removeUser() {
       let currentValue = inputField.value;
       let entries = currentValue ? currentValue.split(" / ") : [];
       let usernamePattern = new RegExp(`^${username} \\(`);
-      let updatedEntries = entries.filter((entry) => !usernamePattern.test(entry));
+      let updatedEntries = entries.filter(
+        (entry) => !usernamePattern.test(entry)
+      );
 
       if (updatedEntries.length === entries.length) {
         alert("User is not part of this incident.");
@@ -5251,41 +5260,51 @@ window.addEventListener("load", function () {
 
 // Function to filter messages
 function filterMessages() {
-  const messages = document.querySelectorAll('.direct-chat-msg');
-  const showSystemMessages = document.querySelector('#display-system-messages').checked;
+  const messages = document.querySelectorAll(".direct-chat-msg");
+  const showSystemMessages = document.querySelector(
+    "#display-system-messages"
+  ).checked;
 
   messages.forEach((message) => {
-    const messageFrom = message.querySelector('.direct-chat-name').innerText;
+    const messageFrom = message.querySelector(".direct-chat-name").innerText;
 
-    if (!showSystemMessages && messageFrom.includes('``user`` to ``systemLog``')) {
-      message.style.display = 'none';
+    if (
+      !showSystemMessages &&
+      messageFrom.includes("``user`` to ``systemLog``")
+    ) {
+      message.style.display = "none";
     } else {
-      message.style.display = 'block';
+      message.style.display = "block";
     }
   });
 }
 
 // Add filter checkbox to the UI
 function addFilterCheckbox() {
-  const filterContainer = document.createElement('div');
-  filterContainer.classList.add('form-group');
-  filterContainer.style.marginTop = '0px';
+  const filterContainer = document.createElement("div");
+  filterContainer.classList.add("form-group");
+  filterContainer.style.marginTop = "0px";
 
-  const filterLabel = document.createElement('label');
-  filterLabel.classList.add('checkbox-inline');
-  filterLabel.innerHTML = '<input type="checkbox" id="display-system-messages"> Display SurfPlus System Messages';
+  const filterLabel = document.createElement("label");
+  filterLabel.classList.add("checkbox-inline");
+  filterLabel.innerHTML =
+    '<input type="checkbox" id="display-system-messages"> Display SurfPlus System Messages';
   filterContainer.appendChild(filterLabel);
 
-  const messageLogContainer = document.querySelector('.direct-chat-messages').parentNode.parentNode;
-  messageLogContainer.parentNode.insertBefore(filterContainer, messageLogContainer);
+  const messageLogContainer = document.querySelector(".direct-chat-messages")
+    .parentNode.parentNode;
+  messageLogContainer.parentNode.insertBefore(
+    filterContainer,
+    messageLogContainer
+  );
 
-  const checkbox = document.querySelector('#display-system-messages');
-  checkbox.addEventListener('change', filterMessages);
+  const checkbox = document.querySelector("#display-system-messages");
+  checkbox.addEventListener("change", filterMessages);
 }
 
 // Mutation observer to monitor changes in the message log
 function observeMessageLog() {
-  const messageLog = document.querySelector('.direct-chat-messages');
+  const messageLog = document.querySelector(".direct-chat-messages");
   const observer = new MutationObserver(() => {
     filterMessages();
   });
@@ -5300,49 +5319,51 @@ observeMessageLog();
 
 function applyToggleButtons() {
   // Select all "Delivered to" messages
-  const deliveredToMessages = document.querySelectorAll('.direct-chat-text ul li');
+  const deliveredToMessages = document.querySelectorAll(
+    ".direct-chat-text ul li"
+  );
 
-  deliveredToMessages.forEach(message => {
-      const deliveredText = message.innerHTML;
-      const startIndex = deliveredText.indexOf('(');
-      
-      if (startIndex !== -1) {
-          const visiblePart = deliveredText.slice(0, startIndex).trim();
-          const hiddenPart = ' ' + deliveredText.slice(startIndex).trim(); // Add a space before hidden part
+  deliveredToMessages.forEach((message) => {
+    const deliveredText = message.innerHTML;
+    const startIndex = deliveredText.indexOf("(");
 
-          // Create a span for the hidden content
-          const hiddenSpan = document.createElement('span');
-          hiddenSpan.style.display = 'none';
-          hiddenSpan.innerHTML = hiddenPart;
+    if (startIndex !== -1) {
+      const visiblePart = deliveredText.slice(0, startIndex).trim();
+      const hiddenPart = " " + deliveredText.slice(startIndex).trim(); // Add a space before hidden part
 
-          // Create a button to toggle the visibility
-          const toggleButton = document.createElement('button');
-          toggleButton.textContent = 'Show Contacts';
-          toggleButton.style.marginLeft = '10px';
-          toggleButton.style.cursor = 'pointer';
+      // Create a span for the hidden content
+      const hiddenSpan = document.createElement("span");
+      hiddenSpan.style.display = "none";
+      hiddenSpan.innerHTML = hiddenPart;
 
-          toggleButton.addEventListener('click', function (event) {
-              event.preventDefault();
-              if (hiddenSpan.style.display === 'none') {
-                  hiddenSpan.style.display = 'inline';
-                  toggleButton.textContent = 'Hide';
-              } else {
-                  hiddenSpan.style.display = 'none';
-                  toggleButton.textContent = 'Show Contacts';
-              }
-          });
+      // Create a button to toggle the visibility
+      const toggleButton = document.createElement("button");
+      toggleButton.textContent = "Show Contacts";
+      toggleButton.style.marginLeft = "10px";
+      toggleButton.style.cursor = "pointer";
 
-          // Clear the existing content and add the new elements
-          message.innerHTML = '';
-          message.appendChild(document.createTextNode(visiblePart));
-          message.appendChild(hiddenSpan);
-          message.appendChild(toggleButton);
-      }
+      toggleButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        if (hiddenSpan.style.display === "none") {
+          hiddenSpan.style.display = "inline";
+          toggleButton.textContent = "Hide";
+        } else {
+          hiddenSpan.style.display = "none";
+          toggleButton.textContent = "Show Contacts";
+        }
+      });
+
+      // Clear the existing content and add the new elements
+      message.innerHTML = "";
+      message.appendChild(document.createTextNode(visiblePart));
+      message.appendChild(hiddenSpan);
+      message.appendChild(toggleButton);
+    }
   });
 }
 
 function observeMessageLog2() {
-  const messageLog = document.querySelector('.direct-chat-messages');
+  const messageLog = document.querySelector(".direct-chat-messages");
   if (messageLog) {
     const observer = new MutationObserver(() => {
       applyToggleButtons();
@@ -5352,14 +5373,16 @@ function observeMessageLog2() {
   }
 }
 
-window.addEventListener('load', function () {
+window.addEventListener("load", function () {
   applyToggleButtons();
   observeMessageLog2();
 });
 
 // Function to click the OK button within the specific div
 function clickOkButton() {
-  const okButton = document.querySelector('.swal2-confirm.swal2-styled.swal2-default-outline');
+  const okButton = document.querySelector(
+    ".swal2-confirm.swal2-styled.swal2-default-outline"
+  );
   if (okButton) {
     okButton.click();
   }
@@ -5368,7 +5391,7 @@ function clickOkButton() {
 // Observer to detect the appearance of the specific div
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
-    if (mutation.type === 'childList') {
+    if (mutation.type === "childList") {
       clickOkButton();
     }
   });
@@ -5378,7 +5401,7 @@ const observer = new MutationObserver((mutations) => {
 function autoDismiss() {
   const currentUrl = window.location.href;
   const urlPattern = /^https:\/\/surfcom\.sls\.com\.au\/incidents\/edit/;
-  
+
   if (urlPattern.test(currentUrl)) {
     observer.observe(document.body, {
       childList: true,
