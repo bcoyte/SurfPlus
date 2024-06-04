@@ -4,6 +4,7 @@ document.addEventListener("keydown", function (event) {
 
     // Branch identifiers and their latitudinal boundaries
     const branches = [
+      { name: "QLD", start: -10.287612, end: -28.164557 },
       { name: "FNC", start: -28.164557, end: -29.610527 },
       { name: "NC", start: -29.610527, end: -30.665687 },
       { name: "MNC", start: -30.665687, end: -31.636052 },
@@ -14,7 +15,9 @@ document.addEventListener("keydown", function (event) {
       { name: "SYD", start: -33.82506, end: -34.191638 },
       { name: "ILL", start: -34.191638, end: -34.548028 },
       { name: "SC", start: -34.548028, end: -35.664119 },
-      { name: "FSC", start: -35.664119, end: -36.0 },
+      { name: "FSC", start: -35.664119, end: -37.528407 },
+      { name: "FSC", start: -35.664119, end: -37.528407 },
+      { name: "VIC", start: -37.528407, end: -39.025418 },
     ];
 
     // Function to determine the branch based on latitude
@@ -92,11 +95,13 @@ window.addEventListener("load", function () {
 
   // Define groups for SMS
   const smsGroups = [
+     {
+      name: ["66118_01-1 FNC Serious Incident Notification SMS", "82448_QLD Notifications"],
+      start: -10.287612,
+      end: -28.164557,
+    },
     {
-      name: [
-        "66118_01-1 FNC Serious Incident Notification SMS",
-        "82448_QLD Notifications",
-      ],
+      name: ["66118_01-1 FNC Serious Incident Notification SMS"],
       start: -28.164557,
       end: -29.610527,
     },
@@ -148,7 +153,12 @@ window.addEventListener("load", function () {
     {
       name: ["66159_11-1 FSC Serious Incident Notification SMS"],
       start: -35.664119,
-      end: -36.0,
+      end: -39.025418,
+    },
+     {
+      name: ["66159_11-1 FSC Serious Incident Notification SMS", "82449_VIC Notifications"],
+      start: -35.664119,
+      end: -39.025418,
     },
   ];
 
