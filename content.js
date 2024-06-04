@@ -2446,6 +2446,9 @@ function applyColorsToMessages(container) {
     } else if (text.includes(" accessed this incident at ")) {
       log.style.backgroundColor = "black";
       log.style.color = "white";
+    } else if (text.includes("{{memberInjury:")) {
+      log.style.backgroundColor = "black";
+      log.style.color = "white";
     }
     // No need for a default action
   });
@@ -5495,3 +5498,113 @@ function addObserverForMessageLog() {
     observer.observe(messageLog, config);
   }
 }
+
+window.addEventListener('load', function () {
+  const injuryCheckbox = document.getElementById('incidentMemberInjury');
+
+  injuryCheckbox.addEventListener('change', function () {
+      if (injuryCheckbox.checked) {
+          handleActivitySelection();
+      }
+  });
+
+  function handleActivitySelection() {
+      let activity;
+      while (!activity) {
+          activity = promptActivity();
+          if (!activity) {
+              injuryCheckbox.checked = false; // Uncheck the checkbox if user cancels
+              return;
+          }
+          const confirmed = confirm(`Did you mean to select ${activity}?`);
+          if (!confirmed) {
+              activity = null; // Reset activity if not confirmed
+          }
+      }
+      const messageBox = document.getElementById('message');
+      messageBox.value = `{{memberInjury: ${activity}}}`;
+      
+      const incidentDescriptionInput = document.getElementById('incidentBriefDescription');
+      if (incidentDescriptionInput) {
+          incidentDescriptionInput.value += ` - ${activity}`;
+          console.log(`Activity appended to incident description: ${activity}`);
+      } else {
+          console.error("'incidentBriefDescription' input not found");
+      }
+
+      // Additional functionality to set dropdowns and trigger button
+      setDropdownValuesAndTriggerButton();
+  }
+
+  function promptActivity() {
+      const activities = [
+          'IRB Operations',
+          'IRB Training',
+          'IRB Racing',
+          'RWC Operations',
+          'RWC Training',
+          'Patrol/Bronze training/proficiency',
+          'Surf Sports Water',
+          'Surf Sports Sand',
+          'Surf Sports Boats',
+          'Other/unknown'
+      ];
+
+      let options = activities.map((activity, index) => `${index + 1}. ${activity}`).join('\n');
+      let promptMessage = `What was the activity at the time of injury? Please enter the number of the activity:\n\n${options}`;
+
+      let choice = null;
+      do {
+          choice = prompt(promptMessage);
+          if (choice === null) return null; // User cancelled the prompt
+      } while (!choice || isNaN(choice) || choice < 1 || choice > activities.length);
+
+      return activities[choice - 1];
+  }
+
+  function setDropdownValuesAndTriggerButton() {
+      const fromSelect = document.querySelector("#from");
+      const toSelect = document.querySelector("#to");
+
+      if (fromSelect) {
+          fromSelect.value = "unit_1996";
+          console.log("'From' dropdown set to 'unit_1996'.");
+      } else {
+          console.error("'From' dropdown not found");
+      }
+
+      if (toSelect) {
+          toSelect.value = "unit_1997";
+          console.log("'To' dropdown set to 'unit_1997'.");
+      } else {
+          console.error("'To' dropdown not found");
+      }
+
+      // Trigger the 'Record' button click and then clear the text area
+      let recordButton = document.querySelector("#post_comment");
+      if (recordButton) {
+          recordButton.click();
+          console.log("Record button clicked.");
+
+          // Clear the text area after a short delay
+          setTimeout(() => {
+              const textArea = document.getElementById('message');
+              if (textArea) {
+                  textArea.value = "";
+                  console.log("Text area cleared.");
+              }
+          }, 250); // Adjust the delay as needed
+      } else {
+          console.error("'Record' button not found");
+      }
+
+      // Click the save button
+      let saveButton = document.querySelector(".btn.btn-app.check-incident-status");
+      if (saveButton) {
+          saveButton.click();
+          console.log("Save button clicked.");
+      } else {
+          console.error("'Save' button not found");
+      }
+  }
+});
