@@ -5283,13 +5283,32 @@ function filterMessages() {
   const showSystemMessages = document.querySelector(
     "#display-system-messages"
   ).checked;
+  const showSurfComMessages = document.querySelector(
+    "#display-surfcom-messages"
+  ).checked;
 
   messages.forEach((message) => {
     const messageFrom = message.querySelector(".direct-chat-name").innerText;
+    const messageText = message.querySelector(".direct-chat-text").innerText;
+
+    const shouldHideSurfComMessage =
+      messageText.includes("Further Information Log (") ||
+      (messageText.includes("Incident #") &&
+        messageText.includes("Priority: ")) ||
+      messageText.includes("Attachment added to Incident") ||
+      messageText.includes("Unit Clear :: ") ||
+      messageText.includes("has been added to Incident #") ||
+      messageText.includes("Status Change :: ");
 
     if (
       !showSystemMessages &&
       messageFrom.includes("``user`` to ``systemLog``")
+    ) {
+      message.style.display = "none";
+    } else if (
+      !showSurfComMessages &&
+      messageFrom.includes("Surfcom") &&
+      shouldHideSurfComMessage
     ) {
       message.style.display = "none";
     } else {
@@ -5306,9 +5325,17 @@ function addFilterCheckbox() {
 
   const filterLabel = document.createElement("label");
   filterLabel.classList.add("checkbox-inline");
+  filterLabel.style.paddingLeft = "10px";
   filterLabel.innerHTML =
     '<input type="checkbox" id="display-system-messages"> Display SurfPlus System Messages';
   filterContainer.appendChild(filterLabel);
+
+  const surfComFilterLabel = document.createElement("label");
+  surfComFilterLabel.classList.add("checkbox-inline");
+  surfComFilterLabel.style.paddingLeft = "10px";
+  surfComFilterLabel.innerHTML =
+    '<input type="checkbox" id="display-surfcom-messages"> Display SurfCom System Messages';
+  filterContainer.appendChild(surfComFilterLabel);
 
   const messageLogContainer = document.querySelector(".direct-chat-messages")
     .parentNode.parentNode;
@@ -5317,8 +5344,10 @@ function addFilterCheckbox() {
     messageLogContainer
   );
 
-  const checkbox = document.querySelector("#display-system-messages");
-  checkbox.addEventListener("change", filterMessages);
+  const systemCheckbox = document.querySelector("#display-system-messages");
+  const surfcomCheckbox = document.querySelector("#display-surfcom-messages");
+  systemCheckbox.addEventListener("change", filterMessages);
+  surfcomCheckbox.addEventListener("change", filterMessages);
 }
 
 // Mutation observer to monitor changes in the message log
@@ -5499,112 +5528,118 @@ function addObserverForMessageLog() {
   }
 }
 
-window.addEventListener('load', function () {
-  const injuryCheckbox = document.getElementById('incidentMemberInjury');
+window.addEventListener("load", function () {
+  const injuryCheckbox = document.getElementById("incidentMemberInjury");
 
-  injuryCheckbox.addEventListener('change', function () {
-      if (injuryCheckbox.checked) {
-          handleActivitySelection();
-      }
+  injuryCheckbox.addEventListener("change", function () {
+    if (injuryCheckbox.checked) {
+      handleActivitySelection();
+    }
   });
 
   function handleActivitySelection() {
-      let activity;
-      while (!activity) {
-          activity = promptActivity();
-          if (!activity) {
-              injuryCheckbox.checked = false; // Uncheck the checkbox if user cancels
-              return;
-          }
-          const confirmed = confirm(`Did you mean to select ${activity}?`);
-          if (!confirmed) {
-              activity = null; // Reset activity if not confirmed
-          }
+    let activity;
+    while (!activity) {
+      activity = promptActivity();
+      if (!activity) {
+        injuryCheckbox.checked = false; // Uncheck the checkbox if user cancels
+        return;
       }
-      const messageBox = document.getElementById('message');
-      messageBox.value = `{{memberInjury: ${activity}}}`;
-      
-      const incidentDescriptionInput = document.getElementById('incidentBriefDescription');
-      if (incidentDescriptionInput) {
-          incidentDescriptionInput.value += ` - ${activity}`;
-          console.log(`Activity appended to incident description: ${activity}`);
-      } else {
-          console.error("'incidentBriefDescription' input not found");
+      const confirmed = confirm(`Did you mean to select ${activity}?`);
+      if (!confirmed) {
+        activity = null; // Reset activity if not confirmed
       }
+    }
+    const messageBox = document.getElementById("message");
+    messageBox.value = `{{memberInjury: ${activity}}}`;
 
-      // Additional functionality to set dropdowns and trigger button
-      setDropdownValuesAndTriggerButton();
+    const incidentDescriptionInput = document.getElementById(
+      "incidentBriefDescription"
+    );
+    if (incidentDescriptionInput) {
+      incidentDescriptionInput.value += ` - ${activity}`;
+      console.log(`Activity appended to incident description: ${activity}`);
+    } else {
+      console.error("'incidentBriefDescription' input not found");
+    }
+
+    // Additional functionality to set dropdowns and trigger button
+    setDropdownValuesAndTriggerButton();
   }
 
   function promptActivity() {
-      const activities = [
-          'IRB Operations',
-          'IRB Training',
-          'IRB Racing',
-          'RWC Operations',
-          'RWC Training',
-          'Patrol/Bronze training/proficiency',
-          'Surf Sports Water',
-          'Surf Sports Sand',
-          'Surf Sports Boats',
-          'Other/unknown'
-      ];
+    const activities = [
+      "IRB Operations",
+      "IRB Training",
+      "IRB Racing",
+      "RWC Operations",
+      "RWC Training",
+      "Patrol/Bronze training/proficiency",
+      "Surf Sports Water",
+      "Surf Sports Sand",
+      "Surf Sports Boats",
+      "Other/unknown",
+    ];
 
-      let options = activities.map((activity, index) => `${index + 1}. ${activity}`).join('\n');
-      let promptMessage = `What was the activity at the time of injury? Please enter the number of the activity:\n\n${options}`;
+    let options = activities
+      .map((activity, index) => `${index + 1}. ${activity}`)
+      .join("\n");
+    let promptMessage = `What was the activity at the time of injury? Please enter the number of the activity:\n\n${options}`;
 
-      let choice = null;
-      do {
-          choice = prompt(promptMessage);
-          if (choice === null) return null; // User cancelled the prompt
-      } while (!choice || isNaN(choice) || choice < 1 || choice > activities.length);
+    let choice = null;
+    do {
+      choice = prompt(promptMessage);
+      if (choice === null) return null; // User cancelled the prompt
+    } while (!choice || isNaN(choice) || choice < 1 || choice > activities.length);
 
-      return activities[choice - 1];
+    return activities[choice - 1];
   }
 
   function setDropdownValuesAndTriggerButton() {
-      const fromSelect = document.querySelector("#from");
-      const toSelect = document.querySelector("#to");
+    const fromSelect = document.querySelector("#from");
+    const toSelect = document.querySelector("#to");
 
-      if (fromSelect) {
-          fromSelect.value = "unit_1996";
-          console.log("'From' dropdown set to 'unit_1996'.");
-      } else {
-          console.error("'From' dropdown not found");
-      }
+    if (fromSelect) {
+      fromSelect.value = "unit_1996";
+      console.log("'From' dropdown set to 'unit_1996'.");
+    } else {
+      console.error("'From' dropdown not found");
+    }
 
-      if (toSelect) {
-          toSelect.value = "unit_1997";
-          console.log("'To' dropdown set to 'unit_1997'.");
-      } else {
-          console.error("'To' dropdown not found");
-      }
+    if (toSelect) {
+      toSelect.value = "unit_1997";
+      console.log("'To' dropdown set to 'unit_1997'.");
+    } else {
+      console.error("'To' dropdown not found");
+    }
 
-      // Trigger the 'Record' button click and then clear the text area
-      let recordButton = document.querySelector("#post_comment");
-      if (recordButton) {
-          recordButton.click();
-          console.log("Record button clicked.");
+    // Trigger the 'Record' button click and then clear the text area
+    let recordButton = document.querySelector("#post_comment");
+    if (recordButton) {
+      recordButton.click();
+      console.log("Record button clicked.");
 
-          // Clear the text area after a short delay
-          setTimeout(() => {
-              const textArea = document.getElementById('message');
-              if (textArea) {
-                  textArea.value = "";
-                  console.log("Text area cleared.");
-              }
-          }, 250); // Adjust the delay as needed
-      } else {
-          console.error("'Record' button not found");
-      }
+      // Clear the text area after a short delay
+      setTimeout(() => {
+        const textArea = document.getElementById("message");
+        if (textArea) {
+          textArea.value = "";
+          console.log("Text area cleared.");
+        }
+      }, 250); // Adjust the delay as needed
+    } else {
+      console.error("'Record' button not found");
+    }
 
-      // Click the save button
-      let saveButton = document.querySelector(".btn.btn-app.check-incident-status");
-      if (saveButton) {
-          saveButton.click();
-          console.log("Save button clicked.");
-      } else {
-          console.error("'Save' button not found");
-      }
+    // Click the save button
+    let saveButton = document.querySelector(
+      ".btn.btn-app.check-incident-status"
+    );
+    if (saveButton) {
+      saveButton.click();
+      console.log("Save button clicked.");
+    } else {
+      console.error("'Save' button not found");
+    }
   }
 });
