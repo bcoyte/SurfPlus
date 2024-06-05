@@ -2252,6 +2252,12 @@ function applyColorsToMessages(container) {
     } else if (text.includes("{{memberInjury:")) {
       log.style.backgroundColor = "black";
       log.style.color = "white";
+    } else if (text.includes("Beach Hazards for ")) {
+      log.style.backgroundColor = "black";
+      log.style.color = "white";
+    } else if (text.includes("{{{taskingIssues: ")) {
+      log.style.backgroundColor = "black";
+      log.style.color = "white";
     }
     // No need for a default action
   });
@@ -3754,267 +3760,360 @@ window.addEventListener("load", function () {
   </svg>
   `;
 
-  // Select the element next to which the SVG icon should be appended
-  const globeButton = document.querySelector("#inline");
+  // Function to add the SVG icon and event listener
+  function addSvgIcon() {
+    // Select the element next to which the SVG icon should be appended
+    const globeButton = document.querySelector("#inline");
 
-  if (globeButton) {
-    // Create a span to contain the SVG
-    const iconSpan = document.createElement("span");
-    iconSpan.innerHTML = svgHTML;
-    iconSpan.style.display = "inline-block";
-    iconSpan.style.verticalAlign = "top";
-    iconSpan.style.width = "28.8px";
-    iconSpan.style.height = "28.8px";
-    iconSpan.style.marginLeft = "10px";
-    iconSpan.style.overflow = "visible";
+    if (globeButton && !document.querySelector("#infoSvgIcon")) {
+      // Create a span to contain the SVG
+      const iconSpan = document.createElement("span");
+      iconSpan.id = "infoSvgIcon";  // Adding an ID to prevent duplicate icons
+      iconSpan.innerHTML = svgHTML;
+      iconSpan.style.display = "inline-block";
+      iconSpan.style.verticalAlign = "top";
+      iconSpan.style.width = "28.8px";
+      iconSpan.style.height = "28.8px";
+      iconSpan.style.marginLeft = "10px";
+      iconSpan.style.overflow = "visible";
 
-    // Append the span with SVG next to the globe button
-    globeButton.parentNode.insertBefore(iconSpan, globeButton.nextSibling);
+      // Append the span with SVG next to the globe button
+      globeButton.parentNode.insertBefore(iconSpan, globeButton.nextSibling);
 
-    // Add click event to open a window with placeholder text
-    iconSpan.addEventListener("click", function () {
-      const formHTML = `
-      <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Extra Information for 13SURF Database</title>
-      <style>
-          body {
-              font-family: Arial, sans-serif;
-          }
-          #inputForm {
-              width: 60%;
-              margin: 20px auto;
-              padding: 20px;
-              background-color: #f4f4f4;
-              border: 1px solid #ddd;
-              box-shadow: 0 0 10px #ccc;
-          }
-          label {
-              display: block;
-              margin-bottom: 10px;
-          }
-          select, input[type="number"] {
-              width: calc(100% - 22px);
-              padding: 10px;
-              margin-top: 6px;
-          }
-          button {
-              width: 100%;
-              padding: 10px;
-              background-color: #0056b3;
-              color: white;
-              border: none;
-              cursor: pointer;
-              font-size: 16px;
-          }
-          button:hover {
-              background-color: #004494;
-          }
-          h1 {
-              text-align: center;
-              color: #333;
-          }
-      </style>
-  </head>
-  <body>
-  <form id="inputForm" style="text-align: center;">
-      <h1>Extra Information for Database</h1>
-      <label>Tasking Issues? <span style="color: red;">*</span>
-          <select name="taskingIssues" required>
-              <option value="">Select...</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-          </select>
-      </label><br>
-      <label>Activity at time of incident <span style="color: red;">*</span>
-          <select name="activity" required>
-              <option value="">Select...</option>
-              <option value="swimming">Swimming</option>
-              <option value="boating">Boating</option>
-              <option value="tsunami">Tsunami</option>
-              <option value="crowdControl">Crowd Control</option>
-              <option value="debris">Debris</option>
-              <option value="divingSnorkelling">Diving/Snorkelling</option>
-              <option value="suicideSelfHarm">Suicide/Self Harm</option>
-              <option value="environmental">Environmental</option>
-              <option value="floodAssistance">Flood assistance</option>
-              <option value="other">Other</option>
-              <option value="rockFishing">Rockfishing</option>
-              <option value="missingPersonLand">Missing Person - Land</option>
-              <option value="sup">Surfcraft (non-powered) - SUP</option>
-              <option value="kayak">Surfcraft (non-powered) - Kayak</option>
-              <option value="surfing">Surfcraft (non-powered) - Surfing</option>
-              <option value="windsurfer">Surfcraft (non-powered) - Windsurfer</option>
-              <option value="parachuteParasail">Other - Parachute/parasail</option>
-              <option value="lightAircraftCrash">Other - Light aircraft crash</option>
-              <option value="landBasedObservation">Other - land based observation</option>
-              <option value="aerialBasedObservation">Other - aerial based observation</option>
-              <option value="rockCliffRelated">Rock/Cliff related</option>
-              <option value="unknown">Unknown</option>
-          </select>
-      </label><br>
-      <label>Approximate Age <span style="color: red;">*</span>
-          <input type="number" name="age" min="0" required/>
-      </label><br>
-      <label>Wearing a life jacket? <span style="color: red;">*</span>
-          <select name="lifeJacket" required>
-              <option value="">Select...</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-          </select>
-      </label><br>
-      <label>Patrolled Location? <span style="color: red;">*</span>
-          <select name="patrolledLocation" required>
-              <option value="">Select...</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-          </select>
-      </label><br>
-      <label>Distance to nearest patrolled location <span style="color: red;">*</span>
-          <select name="distancePatrolled" required>
-              <option value="">Select...</option>
-              <option value="<1km">&lt;1km</option>
-              <option value="1-5km">1-5km</option>
-              <option value=">5km">&gt;5km</option>
-          </select>
-      </label><br>
-      <label>During Patrol Hours (of location) <span style="color: red;">*</span>
-          <select name="patrolHours" required>
-              <option value="">Select...</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-          </select>
-      </label><br>
-      <label>Distance Of Responding Resource <span style="color: red;">*</span>
-          <select name="distanceResource" required>
-              <option value="">Select...</option>
-              <option value="onLocation">On Patrol At Location</option>
-              <option value="patrol1-5km">Patrol 1-5km away</option>
-              <option value="patrol>5km">Patrol &gt;5km away</option>
-              <option value="callout">Callout</option>
-              <option value="dutyOnly">Duty Officer Only</option>
-              <option value="dutyHelicopter">Duty Officer + Helicopter</option>
-              <option value="helicopterOnly">Helicopter Only</option>
-              <option value="noResponse">No Response</option>
-              <option value="calloutDuty">Callout + Duty Officer</option>
-              <option value="dutyRWC">Duty Officer + RWC</option>
-          </select>
-      </label><br>
-      <label>Summary Outcome <span style="color: red;">*</span>
-          <select name="summaryOutcome" required>
-              <option value="">Select...</option>
-              <option value="patientsRescued">Patients Rescued</option>
-              <option value="stoodDown">Stood Down Before Response/Enroute</option>
-              <option value="rescued">Rescued</option>
-              <option value="personFound">Person Found</option>
-              <option value="noActionNothingFound">No Further Action; Nothing Found/No Assistance Required</option>
-              <option value="gotOut">No Further Action; Got Out By Themselves</option>
-              <option value="rescuedByOthers">No Further Action; Rescued By Others</option>
-              <option value="drowningDeaths">Drowning / Deaths</option>
-              <option value="noFurtherAction">No Further Action</option>
-              <option value="medical">Medical</option>
-              <option value="otherOutcome">Other</option>
-          </select>
-      </label><br>
-      <label>In-Water Search Conducted? <span style="color: red;">*</span>
-          <select name="inWaterSearch" required>
-              <option value="">Select...</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-          </select>
-      </label><br>
-      <label>DSW Active <span style="color: red;">*</span>
-          <select name="dswActive" required>
-              <option value="">Select...</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-          </select>
-      </label><br>
-      <button type="submit">Submit & Save Incident</button>
-      </form>
-      </body>
-  
+      // Add click event to open a window with placeholder text
+      iconSpan.addEventListener("click", function () {
+        const checkbox1 = document.querySelector("#incidentAmbulanceCalled");
+        const checkbox2 = document.querySelector("#callerDetails13Surf");
+
+        let formHTML = `
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Extra Information</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+            #inputForm {
+                width: 60%;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #f4f4f4;
+                border: 1px solid #ddd;
+                box-shadow: 0 0 10px #ccc;
+            }
+            label {
+                display: block;
+                margin-bottom: 10px;
+            }
+            select, input[type="number"] {
+                width: calc(100% - 22px);
+                padding: 10px;
+                margin-top: 6px;
+            }
+            button {
+                width: 100%;
+                padding: 10px;
+                background-color: #0056b3;
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            button:hover {
+                background-color: #004494;
+            }
+            h1 {
+                text-align: center;
+                color: #333;
+            }
+        </style>
+    </head>
+    <body>
+    <form id="inputForm" style="text-align: center;">
+        <h2>Extra Information for Ambulance Database</h2>
         `;
 
-      const popup = window.open("", "", "width=600,height=600");
-      popup.document.write(formHTML);
-
-      const textArea = document.querySelector('.form-control[name="message"]');
-      const regex = /\{\{\{([^{}]*)\}\}\}/;
-
-      const messages = document.querySelectorAll(
-        ".direct-chat-msg .direct-chat-text"
-      );
-      let matchFound = false;
-
-      messages.forEach((message) => {
-        const match = regex.exec(message.innerHTML);
-        if (match && !matchFound) {
-          const defaults = match[1].split(", ").reduce((acc, curr) => {
-            const [key, value] = curr.split(": ");
-            acc[key.trim()] = value.trim();
-            return acc;
-          }, {});
-
-          Object.entries(defaults).forEach(([key, value]) => {
-            const input = popup.document.querySelector(`[name="${key}"]`);
-            if (input) input.value = value;
-          });
-
-          matchFound = true; // Stop after finding the first match
+        if (checkbox1.checked) {
+          formHTML += `
+            <label>Service Type <span style="color: red;">*</span>
+                <select name="serviceType" required>
+                    <option value="">Select...</option>
+                    <option value="SLS">SLS</option>
+                    <option value="ALS">ALS</option>
+                    <option value="Council">Council</option>
+                </select>
+            </label><br>
+            <label>Type of injury <span style="color: red;">*</span>
+                <select name="injuryType" required>
+                    <option value="">Select...</option>
+                    <option value="Other">Other</option>
+                    <option value="Dislocation/Fracture/Sprain">Dislocation/Fracture/Sprain</option>
+                    <option value="Laceration/External Wounds">Laceration/External Wounds</option>
+                    <option value="Spinal Injuries">Spinal Injuries</option>
+                    <option value="CPR">CPR</option>
+                    <option value="Fainting/Collapse">Fainting/Collapse</option>
+                    <option value="Penetrating Injury">Penetrating Injury</option>
+                    <option value="Sting/Bite">Sting/Bite</option>
+                    <option value="Fit/Seizure">Fit/Seizure</option>
+                    <option value="Drowning/Near Drowning">Drowning/Near Drowning</option>
+                    <option value="Shock">Shock</option>
+                    <option value="Asthma/Breathing Difficulties">Asthma/Breathing Difficulties</option>
+                    <option value="Allergic Reaction">Allergic Reaction</option>
+                    <option value="Chest Pain/Heart Attack">Chest Pain/Heart Attack</option>
+                    <option value="Stroke">Stroke</option>
+                    <option value="Head Injury/Concussion">Head Injury/Concussion</option>
+                    <option value="Intoxication/Overdose">Intoxication/Overdose</option>
+                    <option value="Diabetic Event">Diabetic Event</option>
+                    <option value="Heat Exhaustion/Hypothermia">Heat Exhaustion/Hypothermia</option>
+                    <option value="Burn Related">Burn Related</option>
+                    <option value="Possible Internal Injury">Possible Internal Injury</option>
+                    <option value="Self Harm">Self Harm</option>
+                    <option value="Fall From Height">Fall From Height</option>
+                    <option value="Member Injury">Member Injury</option>
+                </select>
+            </label><br>
+            <label>Did SurfCom call NSWA? <span style="color: red;">*</span>
+                <select name="surfComCall" required>
+                    <option value="">Select...</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+            </label><br>
+            <label>Was the patient transported? <span style="color: red;">*</span>
+                <select name="patientTransported" required>
+                    <option value="">Select...</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                </select>
+            </label><br>
+          `;
         }
+
+        if (checkbox2.checked) {
+          formHTML += `
+            <h2>Extra Information for 13SURF Database</h2>
+            <label>Tasking Issues? <span style="color: red;">*</span>
+                <select name="taskingIssues" required>
+                    <option value="">Select...</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </label><br>
+            <label>Activity at time of incident <span style="color: red;">*</span>
+                <select name="activity" required>
+                    <option value="">Select...</option>
+                    <option value="swimming">Swimming</option>
+                    <option value="boating">Boating</option>
+                    <option value="tsunami">Tsunami</option>
+                    <option value="crowdControl">Crowd Control</option>
+                    <option value="debris">Debris</option>
+                    <option value="divingSnorkelling">Diving/Snorkelling</option>
+                    <option value="suicideSelfHarm">Suicide/Self Harm</option>
+                    <option value="environmental">Environmental</option>
+                    <option value="floodAssistance">Flood assistance</option>
+                    <option value="other">Other</option>
+                    <option value="rockFishing">Rockfishing</option>
+                    <option value="missingPersonLand">Missing Person - Land</option>
+                    <option value="sup">Surfcraft (non-powered) - SUP</option>
+                    <option value="kayak">Surfcraft (non-powered) - Kayak</option>
+                    <option value="surfing">Surfcraft (non-powered) - Surfing</option>
+                    <option value="windsurfer">Surfcraft (non-powered) - Windsurfer</option>
+                    <option value="parachuteParasail">Other - Parachute/parasail</option>
+                    <option value="lightAircraftCrash">Other - Light aircraft crash</option>
+                    <option value="landBasedObservation">Other - land based observation</option>
+                    <option value="aerialBasedObservation">Other - aerial based observation</option>
+                    <option value="rockCliffRelated">Rock/Cliff related</option>
+                    <option value="unknown">Unknown</option>
+                </select>
+            </label><br>
+            <label>Approximate Age <span style="color: red;">*</span>
+                <input type="number" name="age" min="0" required/>
+            </label><br>
+            <label>Wearing a life jacket? <span style="color: red;">*</span>
+                <select name="lifeJacket" required>
+                    <option value="">Select...</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </label><br>
+            <label>Patrolled Location? <span style="color: red;">*</span>
+                <select name="patrolledLocation" required>
+                    <option value="">Select...</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </label><br>
+            <label>Distance to nearest patrolled location <span style="color: red;">*</span>
+                <select name="distancePatrolled" required>
+                    <option value="">Select...</option>
+                    <option value="<1km">&lt;1km</option>
+                    <option value="1-5km">1-5km</option>
+                    <option value=">5km">&gt;5km</option>
+                </select>
+            </label><br>
+            <label>During Patrol Hours (of location) <span style="color: red;">*</span>
+                <select name="patrolHours" required>
+                    <option value="">Select...</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </label><br>
+            <label>Distance Of Responding Resource <span style="color: red;">*</span>
+                <select name="distanceResource" required>
+                    <option value="">Select...</option>
+                    <option value="onLocation">On Patrol At Location</option>
+                    <option value="patrol1-5km">Patrol 1-5km away</option>
+                    <option value="patrol>5km">Patrol &gt;5km away</option>
+                    <option value="callout">Callout</option>
+                    <option value="dutyOnly">Duty Officer Only</option>
+                    <option value="dutyHelicopter">Duty Officer + Helicopter</option>
+                    <option value="helicopterOnly">Helicopter Only</option>
+                    <option value="noResponse">No Response</option>
+                    <option value="calloutDuty">Callout + Duty Officer</option>
+                    <option value="dutyRWC">Duty Officer + RWC</option>
+                </select>
+            </label><br>
+            <label>Summary Outcome <span style="color: red;">*</span>
+                <select name="summaryOutcome" required>
+                    <option value="">Select...</option>
+                    <option value="patientsRescued">Patients Rescued</option>
+                    <option value="stoodDown">Stood Down Before Response/Enroute</option>
+                    <option value="rescued">Rescued</option>
+                    <option value="personFound">Person Found</option>
+                    <option value="noActionNothingFound">No Further Action; Nothing Found/No Assistance Required</option>
+                    <option value="gotOut">No Further Action; Got Out By Themselves</option>
+                    <option value="rescuedByOthers">No Further Action; Rescued By Others</option>
+                    <option value="drowningDeaths">Drowning / Deaths</option>
+                    <option value="noFurtherAction">No Further Action</option>
+                    <option value="medical">Medical</option>
+                    <option value="otherOutcome">Other</option>
+                </select>
+            </label><br>
+            <label>In-Water Search Conducted? <span style="color: red;">*</span>
+                <select name="inWaterSearch" required>
+                    <option value="">Select...</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </label><br>
+            <label>DSW Active <span style="color: red;">*</span>
+                <select name="dswActive" required>
+                    <option value="">Select...</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </label><br>
+          `;
+        }
+
+        formHTML += `<button type="submit">Submit & Save Incident</button></form></body>`;
+
+        const popup = window.open("", "", "width=600,height=600");
+        popup.document.write(formHTML);
+
+        const textArea = document.querySelector('.form-control[name="message"]');
+        const regex = /\{\{\{([^{}]*)\}\}\}/;
+
+        const messages = document.querySelectorAll(
+          ".direct-chat-msg .direct-chat-text"
+        );
+        let matchFound = false;
+
+        messages.forEach((message) => {
+          const match = regex.exec(message.innerHTML);
+          if (match && !matchFound) {
+            const defaults = match[1].split(", ").reduce((acc, curr) => {
+              const [key, value] = curr.split(": ");
+              acc[key.trim()] = value.trim();
+              return acc;
+            }, {});
+
+            Object.entries(defaults).forEach(([key, value]) => {
+              const input = popup.document.querySelector(`[name="${key}"]`);
+              if (input) input.value = value;
+            });
+
+            matchFound = true; // Stop after finding the first match
+          }
+        });
+
+        popup.document.getElementById("inputForm").onsubmit = function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          let newData = "{{{";
+          formData.forEach((value, key) => {
+            newData += `${key}: ${value}, `;
+          });
+          newData = newData.slice(0, -2) + "}}}";
+
+          let existingText = textArea.value;
+          existingText = regex.test(existingText)
+            ? existingText.replace(regex, newData)
+            : existingText + newData;
+
+          textArea.value = existingText;
+
+          const fromSelect = document.querySelector("#from");
+          const toSelect = document.querySelector("#to");
+
+          if (fromSelect) {
+            fromSelect.value = "unit_1996";
+          } else {
+            console.error("'From' dropdown not found");
+          }
+
+          if (toSelect) {
+            toSelect.value = "unit_1997";
+          } else {
+            console.error("'To' dropdown not found");
+          }
+
+          // Trigger the 'Record' button click and then clear the text area
+          let recordButton = document.querySelector("#post_comment");
+          if (recordButton) {
+            recordButton.click();
+
+            // Clear the text area after a short delay
+            setTimeout(() => {
+              if (textArea) {
+                textArea.value = "";
+              }
+            }, 250); // Adjust the delay as needed
+          }
+
+          popup.close();
+          return false;
+        };
+      });
+    }
+  }
+
+  // Function to observe changes and add the icon if either or both checkboxes are checked
+  function observeCheckboxes() {
+    const checkbox1 = document.querySelector("#incidentAmbulanceCalled");
+    const checkbox2 = document.querySelector("#callerDetails13Surf");
+
+    function checkAndAddIcon() {
+      if (checkbox1.checked || checkbox2.checked) {
+        addSvgIcon();
+      }
+    }
+
+    if (checkbox1 && checkbox2) {
+      const observer = new MutationObserver(() => {
+        checkAndAddIcon();
       });
 
-      popup.document.getElementById("inputForm").onsubmit = function (e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        let newData = "{{{";
-        formData.forEach((value, key) => {
-          newData += `${key}: ${value}, `;
-        });
-        newData = newData.slice(0, -2) + "}}}";
+      observer.observe(checkbox1, { attributes: true });
+      observer.observe(checkbox2, { attributes: true });
 
-        let existingText = textArea.value;
-        existingText = regex.test(existingText)
-          ? existingText.replace(regex, newData)
-          : existingText + newData;
-
-        textArea.value = existingText;
-
-        const fromSelect = document.querySelector("#from");
-        const toSelect = document.querySelector("#to");
-
-        if (fromSelect) {
-          fromSelect.value = "unit_1996";
-        } else {
-          console.error("'From' dropdown not found");
-        }
-
-        if (toSelect) {
-          toSelect.value = "unit_1997";
-        } else {
-          console.error("'To' dropdown not found");
-        }
-
-        // Trigger the 'Record' button click and then clear the text area
-        let recordButton = document.querySelector("#post_comment");
-        if (recordButton) {
-          recordButton.click();
-
-          // Clear the text area after a short delay
-          setTimeout(() => {
-            if (textArea) {
-              textArea.value = "";
-            }
-          }, 250); // Adjust the delay as needed
-        }
-
-        popup.close();
-        return false;
-      };
-    });
+      // Check if either or both checkboxes are already checked on load
+      checkAndAddIcon();
+    }
   }
+
+  observeCheckboxes();
 });
 
 window.addEventListener("load", function () {
