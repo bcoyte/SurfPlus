@@ -4472,20 +4472,51 @@ window.addEventListener("load", function () {
   var latInput = document.getElementById("incidentLatitude");
   var lngInput = document.getElementById("incidentLongitude");
 
-  // Function to allow only numbers in the input fields
+  // Function to allow only numbers, decimal points, and negative signs in the input fields
   function allowOnlyNumbers(event) {
     var charCode = event.which ? event.which : event.keyCode;
-    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+    // Allow numbers, decimal points, and negative signs
+    if (
+      charCode != 46 && // Period
+      charCode != 45 && // Negative sign
+      charCode > 31 &&
+      (charCode < 48 || charCode > 57) // Numbers
+    ) {
       event.preventDefault();
     }
   }
 
-  // Add event listeners to restrict input to numbers only
+  // Add event listeners to restrict input to numbers, decimal points, and negative signs
   latInput.addEventListener("input", function (event) {
-    this.value = this.value.replace(/[^0-9.]/g, "");
+    this.value = this.value.replace(/[^0-9.-]/g, "");
+    // Ensure only one period is present
+    if ((this.value.match(/\./g) || []).length > 1) {
+      this.value = this.value.slice(0, this.value.lastIndexOf("."));
+    }
+    // Ensure only one negative sign is present and it is at the beginning
+    if (
+      (this.value.match(/-/g) || []).length > 1 ||
+      this.value.indexOf("-") > 0
+    ) {
+      this.value = this.value.replace(/-/g, "");
+      this.value = "-" + this.value;
+    }
   });
+
   lngInput.addEventListener("input", function (event) {
-    this.value = this.value.replace(/[^0-9.]/g, "");
+    this.value = this.value.replace(/[^0-9.-]/g, "");
+    // Ensure only one period is present
+    if ((this.value.match(/\./g) || []).length > 1) {
+      this.value = this.value.slice(0, this.value.lastIndexOf("."));
+    }
+    // Ensure only one negative sign is present and it is at the beginning
+    if (
+      (this.value.match(/-/g) || []).length > 1 ||
+      this.value.indexOf("-") > 0
+    ) {
+      this.value = this.value.replace(/-/g, "");
+      this.value = "-" + this.value;
+    }
   });
 
   // Set the input type to 'text' to avoid the up/down buttons
@@ -5491,4 +5522,131 @@ window.addEventListener("load", function () {
       console.error("'Save' button not found");
     }
   }
+});
+
+window.addEventListener("load", () => {
+  const initialValues = {};
+  const monitoredFields = [
+    "primary_service",
+    "secondary_service",
+    "incidentLocation",
+    "incidentType",
+    "priority",
+    "incidentLatitude",
+    "incidentLongitude",
+    "incident_description",
+    "date_open",
+    "time_open",
+    "date_closed",
+    "time_closed",
+    "incidentMemberInjury",
+    "incidentAmbulanceCalled",
+    "ambulance_time",
+    "incidentThirdParty",
+    "incidentSLSContact",
+    "callerDetailsName",
+    "callerDetailsOrganisation",
+    "callerDetailsNumber",
+    "callerDetails13Surf",
+  ];
+
+  function captureInitialValues() {
+    monitoredFields.forEach((field) => {
+      const element = document.querySelector(`[name="${field}"], #${field}`);
+      if (element) {
+        if (element.tagName === "SELECT") {
+          initialValues[field] = element.options[element.selectedIndex].text;
+        } else if (element.type === "checkbox") {
+          initialValues[field] = element.checked;
+        } else {
+          initialValues[field] = element.value;
+        }
+      }
+    });
+  }
+
+  function getFormChanges() {
+    const changes = [];
+    monitoredFields.forEach((field) => {
+      const element = document.querySelector(`[name="${field}"], #${field}`);
+      if (element) {
+        const initialValue = initialValues[field];
+        let currentValue;
+        if (element.tagName === "SELECT") {
+          currentValue = element.options[element.selectedIndex].text;
+        } else if (element.type === "checkbox") {
+          currentValue = element.checked;
+        } else {
+          currentValue = element.value;
+        }
+        if (initialValue !== currentValue) {
+          changes.push({
+            field: field,
+            was: initialValue,
+            now: currentValue,
+          });
+        }
+      }
+    });
+    return changes;
+  }
+
+  function setDropdownValuesAndTriggerButton() {
+    const fromSelect = document.querySelector("#msg_from");
+    const toSelect = document.querySelector("#msg_to");
+
+    if (fromSelect) {
+      fromSelect.value = "unit_1996";
+      fromSelect.dispatchEvent(new Event("change"));
+    } else {
+      console.error("'From' dropdown not found");
+    }
+
+    if (toSelect) {
+      toSelect.value = "unit_1997";
+      toSelect.dispatchEvent(new Event("change"));
+    } else {
+      console.error("'To' dropdown not found");
+    }
+
+    // Trigger the 'Record' button click and then clear the text area
+    let recordButton = document.querySelector("#post_comment");
+    if (recordButton) {
+      recordButton.click();
+
+      // Clear the text area after a short delay
+      setTimeout(() => {
+        const textArea = document.getElementById("message");
+        if (textArea) {
+          textArea.value = "";
+        }
+      }, 250); // Adjust the delay as needed
+    } else {
+      console.error("'Record' button not found");
+    }
+  }
+
+  captureInitialValues();
+
+  document
+    .querySelector(".check-incident-status")
+    .addEventListener("click", () => {
+      const changes = getFormChanges();
+
+      if (changes.length > 0) {
+        const changeLog = changes.map((change) => {
+          return `${change.field} was "${change.was}" now "${change.now}"`;
+        });
+
+        const changeLogFormatted = `[{${changeLog.join(", ")}}]`;
+        const messageTextarea = document.getElementById("message");
+        if (messageTextarea) {
+          messageTextarea.value = changeLogFormatted;
+        }
+
+        setDropdownValuesAndTriggerButton();
+      } else {
+        console.log("No changes detected.");
+      }
+    });
 });
