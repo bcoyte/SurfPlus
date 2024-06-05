@@ -89,7 +89,6 @@ window.addEventListener("load", function () {
   const servicesTable = document.getElementById("servicesTable");
 
   if (!emailTemplateSelect || !mailingGroupSelect || !servicesTable) {
-    console.log("Required elements not found on the page.");
     return;
   }
 
@@ -704,12 +703,8 @@ document.addEventListener("keydown", function (event) {
       if (groupedErbs[branch]) {
         appendOptionsToGroup(branch, groupedErbs[branch]);
       } else {
-        console.log(`Branch not found in ERBs: ${branch}`);
       }
     });
-
-    // Check if options are correctly added to the dropdown
-    console.log("Dropdown options added:", dropdown.innerHTML);
 
     // Find the second column in the first row where the dropdown should be appended
     let targetColumn = document.querySelector(
@@ -979,14 +974,12 @@ window.addEventListener("load", function () {
   const currentPageUrl = window.location.href;
 
   // Use console logging to confirm the script is running
-  console.log("Page fully loaded", currentPageUrl);
 
   if (currentPageUrl.includes("https://surfcom.sls.com.au/support-services")) {
     const targetDivSelector = ".col-12.col-md-4 .form-group";
     const targetDiv = document.querySelector(targetDivSelector);
 
     // Log the targetDiv to ensure it's found
-    console.log("Target Div:", targetDiv);
 
     if (targetDiv) {
       const button = document.createElement("button");
@@ -1009,23 +1002,15 @@ window.addEventListener("load", function () {
               let href = link.getAttribute("href");
               // Append "&bulkSupportOpsSignOff" to the href
               href += "&bulkSupportOpsSignOff";
-              console.log("Opening link:", href); // Log the href being opened
               window.open(href, "_blank");
             });
         } else {
           // Log or handle the incorrect input or cancel action
-          console.log(
-            "Bulk sign off not confirmed by the user or incorrect input."
-          );
         }
       });
 
       targetDiv.appendChild(button);
     } else {
-      console.log(
-        "Failed to find the target div using selector:",
-        targetDivSelector
-      );
     }
   }
 });
@@ -1034,7 +1019,6 @@ window.addEventListener("load", function () {
   const currentPageUrl = window.location.href;
 
   // Use console logging to confirm the script is running
-  console.log("Page fully loaded", currentPageUrl);
 
   // Check if the URL matches the desired pattern using RegExp
   if (
@@ -1046,7 +1030,6 @@ window.addEventListener("load", function () {
     const targetDiv = document.querySelector(".card-footer");
 
     // Log the targetDiv to ensure it's found
-    console.log("Target Div:", targetDiv);
 
     if (targetDiv) {
       const button = document.createElement("button");
@@ -1077,19 +1060,16 @@ window.addEventListener("load", function () {
       // Append the button to the .card-footer div
       targetDiv.appendChild(button);
     } else {
-      console.log("Failed to find the target div using selector: .card-footer");
     }
   }
 });
 
 function BulkSignOffBoxes() {
   const currentPageUrl = window.location.href;
-  console.log("Page fully loaded", currentPageUrl);
 
   if (currentPageUrl.includes("https://surfcom.sls.com.au/support-services")) {
     const targetDivSelector = ".col-12.col-md-4 .form-group";
     const targetDiv = document.querySelector(targetDivSelector);
-    console.log("Target Div:", targetDiv);
 
     if (targetDiv) {
       // Check for the existence of the bulk sign-off button to prevent duplicates
@@ -1114,7 +1094,6 @@ function BulkSignOffBoxes() {
             .forEach((checkbox) => {
               let href = checkbox.getAttribute("data-href");
               href += "&bulkSupportOpsSignOff"; // Append the query parameter
-              console.log("Opening link:", href);
               window.open(href, "_blank");
             });
         });
@@ -1162,10 +1141,6 @@ function BulkSignOffBoxes() {
       // Update button state initially
       updateButtonState();
     } else {
-      console.log(
-        "Failed to find the target div using selector:",
-        targetDivSelector
-      );
     }
   }
 }
@@ -1711,7 +1686,6 @@ window.addEventListener("load", function () {
       // Append the icon to the target div
       targetDiv.appendChild(swapButton);
     } else {
-      console.log("Failed to find the target div");
     }
   }
 });
@@ -1720,10 +1694,7 @@ window.addEventListener("load", initializeButtonAddition);
 document.addEventListener("click", initializeButtonAddition); // Triggers on page clicks as well.
 
 function initializeButtonAddition() {
-  console.log("Initialization triggered.");
-
   const currentPageUrl = window.location.href;
-  console.log("Current page URL:", currentPageUrl);
 
   if (
     currentPageUrl.includes("https://surfcom.sls.com.au/incidents/view") ||
@@ -1731,20 +1702,13 @@ function initializeButtonAddition() {
       "https://surfcom.sls.com.au/incidents/search/submit"
     )
   ) {
-    console.log("Correct page detected for script execution.");
-
     const table = document.getElementById("incidentSummaryTable");
     if (table) {
-      console.log("Found the incidentSummaryTable.");
-
       const rows = table.querySelectorAll("tbody tr");
-      console.log(`Found ${rows.length} rows in the table.`);
 
       rows.forEach((row, index) => {
         const statusCell = row.cells[7]; // Assuming the "Status" column is the 8th column
         if (statusCell && statusCell.textContent.trim() === "CLOSED") {
-          console.log(`Row ${index + 1}: Status is 'CLOSED'.`);
-
           const actionsCell = row.cells[row.cells.length - 1]; // The last cell is the "Actions" cell
 
           if (actionsCell) {
@@ -1756,11 +1720,6 @@ function initializeButtonAddition() {
                   incidentCell.querySelector("a.btn");
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
-                  console.log(
-                    `Row ${
-                      index + 1
-                    }: Creating new button for incidentId: ${incidentId}`
-                  );
 
                   const newButton = document.createElement("a");
                   newButton.className = "btn btn-dark btn-block btn-xs"; // Apply success button class
@@ -1787,34 +1746,19 @@ function initializeButtonAddition() {
                   });
 
                   actionsCell.appendChild(newButton);
-                  console.log(
-                    `Row ${
-                      index + 1
-                    }: New 'Reopen' button added with confirmation dialog.`
-                  );
                 } else {
-                  console.log(
-                    `Row ${index + 1}: No button found in "Incident #" cell.`
-                  );
                 }
               }
             } else {
-              console.log(
-                `Row ${index + 1}: 'Reopen' button already exists, skipping.`
-              );
             }
           } else {
-            console.log(`Row ${index + 1}: Could not find necessary cells.`);
           }
         } else {
-          console.log(`Row ${index + 1}: Status is not 'CLOSED', skipping.`);
         }
       });
     } else {
-      console.log("Incident table not found.");
     }
   } else {
-    console.log("Script is not on the correct page for execution.");
   }
 }
 
@@ -1822,10 +1766,7 @@ window.addEventListener("load", initializeButtonAddition22);
 document.addEventListener("click", initializeButtonAddition22); // Triggers on page clicks as well.
 
 function initializeButtonAddition22() {
-  console.log("Initialization triggered.");
-
   const currentPageUrl = window.location.href;
-  console.log("Current page URL:", currentPageUrl);
 
   if (
     currentPageUrl.includes("https://surfcom.sls.com.au/incidents/view") ||
@@ -1833,20 +1774,13 @@ function initializeButtonAddition22() {
       "https://surfcom.sls.com.au/incidents/search/submit"
     )
   ) {
-    console.log("Correct page detected for script execution.");
-
     const table = document.getElementById("incidentSummaryTable");
     if (table) {
-      console.log("Found the incidentSummaryTable.");
-
       const rows = table.querySelectorAll("tbody tr");
-      console.log(`Found ${rows.length} rows in the table.`);
 
       rows.forEach((row, index) => {
         const statusCell = row.cells[7]; // Assuming the "Status" column is the 8th column
         if (statusCell && statusCell.textContent.trim() === "CLOSED") {
-          console.log(`Row ${index + 1}: Status is 'CLOSED'.`);
-
           const actionsCell = row.cells[row.cells.length - 1]; // The last cell is the "Actions" cell
 
           if (actionsCell) {
@@ -1858,11 +1792,6 @@ function initializeButtonAddition22() {
                   incidentCell.querySelector("a.btn");
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
-                  console.log(
-                    `Row ${
-                      index + 1
-                    }: Creating new button for incidentId: ${incidentId}`
-                  );
 
                   const newButton = document.createElement("a");
                   newButton.className = "btn btn-outline-danger"; // Apply success button class
@@ -1878,34 +1807,19 @@ function initializeButtonAddition22() {
                   newButton.target = "_blank"; // Open in a new tab
 
                   actionsCell.appendChild(newButton);
-                  console.log(
-                    `Row ${index + 1}: New 'Download PDF' button added.`
-                  );
                 } else {
-                  console.log(
-                    `Row ${index + 1}: No button found in "Incident #" cell.`
-                  );
                 }
               }
             } else {
-              console.log(
-                `Row ${
-                  index + 1
-                }: 'Download PDF' button already exists, skipping.`
-              );
             }
           } else {
-            console.log(`Row ${index + 1}: Could not find necessary cells.`);
           }
         } else {
-          console.log(`Row ${index + 1}: Status is not 'CLOSED', skipping.`);
         }
       });
     } else {
-      console.log("Incident table not found.");
     }
   } else {
-    console.log("Script is not on the correct page for execution.");
   }
 }
 
@@ -1913,10 +1827,7 @@ window.addEventListener("load", initializeButtonAddition12);
 document.addEventListener("click", initializeButtonAddition12); // Triggers on page clicks as well.
 
 function initializeButtonAddition12() {
-  console.log("Initialization triggered.");
-
   const currentPageUrl = window.location.href;
-  console.log("Current page URL:", currentPageUrl);
 
   if (
     currentPageUrl.includes("https://surfcom.sls.com.au/incidents/view") ||
@@ -1924,20 +1835,13 @@ function initializeButtonAddition12() {
       "https://surfcom.sls.com.au/incidents/search/submit"
     )
   ) {
-    console.log("Correct page detected for script execution.");
-
     const table = document.getElementById("incidentSummaryTable");
     if (table) {
-      console.log("Found the incidentSummaryTable.");
-
       const rows = table.querySelectorAll("tbody tr");
-      console.log(`Found ${rows.length} rows in the table.`);
 
       rows.forEach((row, index) => {
         const statusCell = row.cells[7]; // Assuming the "Status" column is the 8th column
         if (statusCell && statusCell.textContent.trim() === "CLOSED") {
-          console.log(`Row ${index + 1}: Status is 'CLOSED'.`);
-
           const actionsCell = row.cells[row.cells.length - 1]; // The last cell is the "Actions" cell
 
           if (actionsCell) {
@@ -1950,11 +1854,6 @@ function initializeButtonAddition12() {
                   incidentCell.querySelector("a.btn");
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
-                  console.log(
-                    `Row ${
-                      index + 1
-                    }: Creating new button for incidentId: ${incidentId}`
-                  );
 
                   const newButton = document.createElement("a");
                   newButton.className = "btn btn-outline-success"; // Changed to btn-outline-success for green outline
@@ -1969,34 +1868,19 @@ function initializeButtonAddition12() {
                   newButton.href = `https://surfcom.sls.com.au/incidents/xls/${incidentId}`; // Changed to a hypothetical CSV download link
                   newButton.target = "_blank"; // Open in a new tab
                   actionsCell.appendChild(newButton);
-                  console.log(
-                    `Row ${index + 1}: New 'Download CSV' button added.`
-                  );
                 } else {
-                  console.log(
-                    `Row ${index + 1}: No button found in "Incident #" cell.`
-                  );
                 }
               }
             } else {
-              console.log(
-                `Row ${
-                  index + 1
-                }: 'Download CSV' button already exists, skipping.`
-              );
             }
           } else {
-            console.log(`Row ${index + 1}: Could not find necessary cells.`);
           }
         } else {
-          console.log(`Row ${index + 1}: Status is not 'CLOSED', skipping.`);
         }
       });
     } else {
-      console.log("Incident table not found.");
     }
   } else {
-    console.log("Script is not on the correct page for execution.");
   }
 }
 
@@ -2004,10 +1888,7 @@ window.addEventListener("load", initializeButtonAddition3);
 document.addEventListener("click", initializeButtonAddition3); // Triggers on page clicks as well.
 
 function initializeButtonAddition3() {
-  console.log("Initialization2 triggered.");
-
   const currentPageUrl = window.location.href;
-  console.log("Current page URL:", currentPageUrl);
 
   if (
     currentPageUrl.includes("https://surfcom.sls.com.au/incidents/view") ||
@@ -2015,20 +1896,13 @@ function initializeButtonAddition3() {
       "https://surfcom.sls.com.au/incidents/search/submit"
     )
   ) {
-    console.log("Correct page detected for script execution.");
-
     const table = document.getElementById("incidentSummaryTable");
     if (table) {
-      console.log("Found the incidentSummaryTable.");
-
       const rows = table.querySelectorAll("tbody tr");
-      console.log(`Found ${rows.length} rows in the table.`);
 
       rows.forEach((row, index) => {
         const statusCell = row.cells[7]; // Assuming the "Status" column is the 8th column
         if (statusCell && statusCell.textContent.trim() === "Open") {
-          console.log(`Row ${index + 1}: Status is 'Open'.`);
-
           const actionsCell = row.cells[row.cells.length - 1]; // The last cell is the "Actions" cell
 
           if (actionsCell) {
@@ -2040,11 +1914,6 @@ function initializeButtonAddition3() {
                   incidentCell.querySelector("a.btn");
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
-                  console.log(
-                    `Row ${
-                      index + 1
-                    }: Creating new button for incidentId: ${incidentId}`
-                  );
 
                   const newButton = document.createElement("a");
                   newButton.className = "btn btn-danger btn-block btn-xs"; // Apply success button class
@@ -2066,34 +1935,19 @@ function initializeButtonAddition3() {
                   });
 
                   actionsCell.appendChild(newButton);
-                  console.log(
-                    `Row ${
-                      index + 1
-                    }: New 'Reopen' button added with confirmation dialog.`
-                  );
                 } else {
-                  console.log(
-                    `Row ${index + 1}: No button found in "Incident #" cell.`
-                  );
                 }
               }
             } else {
-              console.log(
-                `Row ${index + 1}: 'Reopen' button already exists, skipping.`
-              );
             }
           } else {
-            console.log(`Row ${index + 1}: Could not find necessary cells.`);
           }
         } else {
-          console.log(`Row ${index + 1}: Status is not 'CLOSED', skipping.`);
         }
       });
     } else {
-      console.log("Incident table not found.");
     }
   } else {
-    console.log("Script is not on the correct page for execution.");
   }
 }
 
@@ -2101,10 +1955,7 @@ window.addEventListener("load", initializeButtonAddition2);
 document.addEventListener("click", initializeButtonAddition2); // Triggers on page clicks as well.
 
 function initializeButtonAddition2() {
-  console.log("Initialization2 triggered.");
-
   const currentPageUrl = window.location.href;
-  console.log("Current page URL:", currentPageUrl);
 
   if (
     currentPageUrl.includes("https://surfcom.sls.com.au/incidents/view") ||
@@ -2112,20 +1963,13 @@ function initializeButtonAddition2() {
       "https://surfcom.sls.com.au/incidents/search/submit"
     )
   ) {
-    console.log("Correct page detected for script execution.");
-
     const table = document.getElementById("incidentSummaryTable");
     if (table) {
-      console.log("Found the incidentSummaryTable.");
-
       const rows = table.querySelectorAll("tbody tr");
-      console.log(`Found ${rows.length} rows in the table.`);
 
       rows.forEach((row, index) => {
         const statusCell = row.cells[7]; // Assuming the "Status" column is the 8th column
         if (statusCell && statusCell.textContent.trim() === "Open") {
-          console.log(`Row ${index + 1}: Status is 'Open'.`);
-
           const actionsCell = row.cells[row.cells.length - 1]; // The last cell is the "Actions" cell
 
           if (actionsCell) {
@@ -2137,11 +1981,6 @@ function initializeButtonAddition2() {
                   incidentCell.querySelector("a.btn");
                 if (buttonInIncidentCell) {
                   const incidentId = buttonInIncidentCell.textContent.trim();
-                  console.log(
-                    `Row ${
-                      index + 1
-                    }: Creating new button for incidentId: ${incidentId}`
-                  );
 
                   const newButton = document.createElement("a");
                   newButton.className = "btn btn-warning btn-block btn-xs"; // Apply success button class
@@ -2163,34 +2002,19 @@ function initializeButtonAddition2() {
                   });
 
                   actionsCell.appendChild(newButton);
-                  console.log(
-                    `Row ${
-                      index + 1
-                    }: New 'Reopen' button added with confirmation dialog.`
-                  );
                 } else {
-                  console.log(
-                    `Row ${index + 1}: No button found in "Incident #" cell.`
-                  );
                 }
               }
             } else {
-              console.log(
-                `Row ${index + 1}: 'Reopen' button already exists, skipping.`
-              );
             }
           } else {
-            console.log(`Row ${index + 1}: Could not find necessary cells.`);
           }
         } else {
-          console.log(`Row ${index + 1}: Status is not 'CLOSED', skipping.`);
         }
       });
     } else {
-      console.log("Incident table not found.");
     }
   } else {
-    console.log("Script is not on the correct page for execution.");
   }
 }
 
@@ -2198,10 +2022,7 @@ window.addEventListener("load", initializeStatusFormatting);
 document.addEventListener("click", initializeStatusFormatting); // Triggers on page clicks as well.
 
 function initializeStatusFormatting() {
-  console.log("Initialization for status formatting triggered.");
-
   const currentPageUrl = window.location.href;
-  console.log("Current page URL:", currentPageUrl);
 
   if (
     currentPageUrl.includes("https://surfcom.sls.com.au/incidents/view") ||
@@ -2209,43 +2030,25 @@ function initializeStatusFormatting() {
       "https://surfcom.sls.com.au/incidents/search/submit"
     )
   ) {
-    console.log("Correct page detected for script execution.");
-
     const table = document.getElementById("incidentSummaryTable");
     if (table) {
-      console.log("Found the incidentSummaryTable.");
-
       const rows = table.querySelectorAll("tbody tr");
-      console.log(`Found ${rows.length} rows in the table.`);
 
       rows.forEach((row, index) => {
         const statusCell = row.cells[7]; // Assuming the "Status" column is the 8th column
         if (statusCell) {
           const statusText = statusCell.textContent.trim();
           if (statusText === "Open") {
-            console.log(
-              `Row ${
-                index + 1
-              }: Status is 'Open'. Formatting with pastel green.`
-            );
             statusCell.innerHTML = `<span style="display: block; padding: 2px 5px; margin: 0; background-color: #b8d8b8; color: #3a5335; border-radius: 4px;">Open</span>`;
           } else if (statusText === "CLOSED") {
-            console.log(
-              `Row ${
-                index + 1
-              }: Status is 'CLOSED'. Formatting with pastel red.`
-            );
             statusCell.innerHTML = `<span style="display: block; padding: 2px 5px; margin: 0; background-color: #f4bfbf; color: #7c2a2a; border-radius: 4px;">CLOSED</span>`;
           }
         } else {
-          console.log(`Row ${index + 1}: Status cell not found.`);
         }
       });
     } else {
-      console.log("Incident table not found.");
     }
   } else {
-    console.log("Script is not on the correct page for execution.");
   }
 }
 
@@ -2541,53 +2344,34 @@ function colorTimelineMessages() {
 colorTimelineMessages();
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("DOMContentLoaded event fired. Running the script.");
-
   const changeColors = () => {
     // Select all table rows in the document
     const rows = document.querySelectorAll("table tbody tr");
-    console.log(`Found ${rows.length} rows in the document.`);
 
     // Loop through each row to check its content
     rows.forEach((row, index) => {
       const message = row.innerText;
-      console.log(`Row ${index}: "${message}"`);
 
       // Define your conditions and the corresponding style changes
       if (message.includes("{KEY}")) {
         row.style.backgroundColor = "MediumPurple";
         row.style.color = "white";
-        console.log(
-          `Applied MediumPurple background to row ${index} due to {KEY}.`
-        );
       } else if (message.includes("{STANDDOWN}")) {
         row.style.backgroundColor = "DarkBlue";
         row.style.color = "white";
-        console.log(
-          `Applied DarkBlue background to row ${index} due to {STANDDOWN}.`
-        );
       } else if (message.includes("{OPERATORCOMMENT}")) {
         row.style.backgroundColor = "Bisque";
         row.style.color = "white";
-        console.log(
-          `Applied Bisque background to row ${index} due to {OPERATORCOMMENT}.`
-        );
       }
 
       // Additional conditions
       if (message.includes("Status Change :: Unit=")) {
         row.style.backgroundColor = "SlateGrey";
         row.style.color = "white";
-        console.log(
-          `Applied SlateGrey background to row ${index} due to status change.`
-        );
       }
       if (message.includes("Attachment added to Incident ")) {
         row.style.backgroundColor = "PapayaWhip";
         row.style.color = "black";
-        console.log(
-          `Applied PapayaWhip background to row ${index} due to attachment addition.`
-        );
       }
       // You can add more conditions here following the same structure
     });
@@ -2610,9 +2394,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Check if the button exists and click it
     if (button) {
       button.click();
-      console.log("Yey");
     } else {
-      console.log("Button not found!");
     }
   }
 });
@@ -2621,7 +2403,6 @@ window.addEventListener("load", function () {
   const currentPageUrl = window.location.href;
 
   // Use console logging to confirm the script is running
-  console.log("Page fully loaded", currentPageUrl);
 
   // Check if the URL matches the desired pattern for automatic trigger
   if (/&bulkSupportOpsSignOff$/.test(currentPageUrl)) {
@@ -2631,9 +2412,7 @@ window.addEventListener("load", function () {
     );
     if (currentLocationInput) {
       currentLocationInput.value = "BASE";
-      console.log('Location prefilled with "BASE".');
     } else {
-      console.log("Failed to find the current location input.");
     }
 
     // Simulate the submit button click
@@ -2642,12 +2421,10 @@ window.addEventListener("load", function () {
     );
     if (submitButton) {
       submitButton.click();
-      console.log("Submit button clicked.");
 
       // Optionally, close the window after a delay if that's still desired
       setTimeout(() => window.close(), 1000);
     } else {
-      console.log("Failed to find the submit button.");
     }
   }
 });
@@ -2757,11 +2534,11 @@ addRadioButtonsAboveTextarea();
 //   var statusDropdown = document.getElementById("select-status");
 //   if (statusDropdown) {
 //     statusDropdown.value = "Online";
-//     console.log("Dropdown value set to Online");
+//
 //     // Optional: submit the form
 //     document.status_form.submit();
 //   } else {
-//     console.log("Dropdown not found.");
+//
 //   }
 // }
 
@@ -2852,7 +2629,7 @@ window.addEventListener("load", function () {
     }
 
     // Example: Log to console or handle as needed
-    console.log(selectedUnits);
+
     // Here you might send the selectedUnits array to your server, or process it as needed
   });
 });
@@ -2991,7 +2768,6 @@ window.addEventListener("load", function () {
               response.data.forecastData
             );
           } else if (response.error) {
-            console.log("Error fetching weather data:", response.error);
           }
         }
       );
@@ -3310,9 +3086,7 @@ function openWeatherBoard() {
     .then((data) => {
       showWeatherModal(data);
     })
-    .catch((error) => {
-      console.log("Error fetching weather data:", error);
-    });
+    .catch((error) => {});
 }
 
 function showWeatherModal(weatherData) {
@@ -3648,7 +3422,6 @@ function changeCardTitle(newTitle) {
     cardTitleElement.innerText = newTitle;
   } else {
     // Log an error if the card title element is not found
-    console.log("Card title element not found.");
   }
 }
 
@@ -4214,14 +3987,12 @@ window.addEventListener("load", function () {
 
         if (fromSelect) {
           fromSelect.value = "unit_1996";
-          console.log("'From' dropdown set to ``user``.");
         } else {
           console.error("'From' dropdown not found");
         }
 
         if (toSelect) {
           toSelect.value = "unit_1997";
-          console.log("'To' dropdown set to ``systemLog``.");
         } else {
           console.error("'To' dropdown not found");
         }
@@ -4230,13 +4001,11 @@ window.addEventListener("load", function () {
         let recordButton = document.querySelector("#post_comment");
         if (recordButton) {
           recordButton.click();
-          console.log("Record button clicked.");
 
           // Clear the text area after a short delay
           setTimeout(() => {
             if (textArea) {
               textArea.value = "";
-              console.log("Text area cleared.");
             }
           }, 250); // Adjust the delay as needed
         }
@@ -4613,10 +4382,10 @@ window.addEventListener("load", function () {
 
   // Add event listeners to restrict input to numbers only
   latInput.addEventListener("input", function (event) {
-    this.value = this.value.replace(/[^0-9.]/g, '');
+    this.value = this.value.replace(/[^0-9.]/g, "");
   });
   lngInput.addEventListener("input", function (event) {
-    this.value = this.value.replace(/[^0-9.]/g, '');
+    this.value = this.value.replace(/[^0-9.]/g, "");
   });
 
   // Set the input type to 'text' to avoid the up/down buttons
@@ -4942,9 +4711,6 @@ window.addEventListener("load", function () {
 });
 
 window.addEventListener("load", function () {
-  console.log("Page loaded. Current URL: " + window.location.href);
-  console.log("Referrer URL: " + document.referrer);
-
   // Check if the current URL matches the incident edit page pattern
   if (
     window.location.href.includes("https://surfcom.sls.com.au/incidents/edit/")
@@ -4966,10 +4732,6 @@ window.addEventListener("load", function () {
     }
 
     if (shouldRun) {
-      console.log(
-        "Running script because referrer does not contain excluded paths"
-      );
-
       // Extract username and email from the dropdown menu
       let userDropdown = document.querySelector(
         ".dropdown-menu-lg .dropdown-item p"
@@ -4999,7 +4761,6 @@ window.addEventListener("load", function () {
         let textArea = document.querySelector("#message");
         if (textArea) {
           textArea.value = messageContent;
-          console.log("Message content set in text area.");
         } else {
           console.error("Text area not found");
         }
@@ -5010,14 +4771,12 @@ window.addEventListener("load", function () {
 
         if (fromSelect) {
           fromSelect.value = "unit_1996";
-          console.log("'From' dropdown set to Surfcom.");
         } else {
           console.error("'From' dropdown not found");
         }
 
         if (toSelect) {
           toSelect.value = "unit_1997";
-          console.log("'To' dropdown set to Surfcom.");
         } else {
           console.error("'To' dropdown not found");
         }
@@ -5026,13 +4785,11 @@ window.addEventListener("load", function () {
         let recordButton = document.querySelector("#post_comment");
         if (recordButton) {
           recordButton.click();
-          console.log("Record button clicked.");
 
           // Clear the text area after a short delay
           setTimeout(() => {
             if (textArea) {
               textArea.value = "";
-              console.log("Text area cleared.");
             }
           }, 250); // Adjust the delay as needed
         } else {
@@ -5042,14 +4799,8 @@ window.addEventListener("load", function () {
         console.error("User dropdown not found.");
       }
     } else {
-      console.log(
-        "Script not running because referrer contains an excluded path"
-      );
     }
   } else {
-    console.log(
-      "Script not running because current URL does not match 'https://surfcom.sls.com.au/incidents/edit/' pattern"
-    );
   }
 });
 
@@ -5297,7 +5048,8 @@ function filterMessages() {
 
     const shouldHideSurfComMessage =
       messageText.includes("Further Information Log (") ||
-      (messageText.includes("Incident #") && messageText.includes("Priority: ")) ||
+      (messageText.includes("Incident #") &&
+        messageText.includes("Priority: ")) ||
       messageText.includes("Attachment added to Incident") ||
       messageText.includes("Unit Clear :: ") ||
       messageText.includes("has been added to Incident #") ||
@@ -5561,7 +5313,6 @@ window.addEventListener("load", function () {
     );
     if (incidentDescriptionInput) {
       incidentDescriptionInput.value += ` - ${activity}`;
-      console.log(`Activity appended to incident description: ${activity}`);
     } else {
       console.error("'incidentBriefDescription' input not found");
     }
@@ -5604,14 +5355,12 @@ window.addEventListener("load", function () {
 
     if (fromSelect) {
       fromSelect.value = "unit_1996";
-      console.log("'From' dropdown set to 'unit_1996'.");
     } else {
       console.error("'From' dropdown not found");
     }
 
     if (toSelect) {
       toSelect.value = "unit_1997";
-      console.log("'To' dropdown set to 'unit_1997'.");
     } else {
       console.error("'To' dropdown not found");
     }
@@ -5620,14 +5369,12 @@ window.addEventListener("load", function () {
     let recordButton = document.querySelector("#post_comment");
     if (recordButton) {
       recordButton.click();
-      console.log("Record button clicked.");
 
       // Clear the text area after a short delay
       setTimeout(() => {
         const textArea = document.getElementById("message");
         if (textArea) {
           textArea.value = "";
-          console.log("Text area cleared.");
         }
       }, 250); // Adjust the delay as needed
     } else {
@@ -5640,7 +5387,6 @@ window.addEventListener("load", function () {
     );
     if (saveButton) {
       saveButton.click();
-      console.log("Save button clicked.");
     } else {
       console.error("'Save' button not found");
     }
