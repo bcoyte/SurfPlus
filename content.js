@@ -3768,7 +3768,7 @@ window.addEventListener("load", function () {
     if (globeButton && !document.querySelector("#infoSvgIcon")) {
       // Create a span to contain the SVG
       const iconSpan = document.createElement("span");
-      iconSpan.id = "infoSvgIcon";  // Adding an ID to prevent duplicate icons
+      iconSpan.id = "infoSvgIcon"; // Adding an ID to prevent duplicate icons
       iconSpan.innerHTML = svgHTML;
       iconSpan.style.display = "inline-block";
       iconSpan.style.verticalAlign = "top";
@@ -3870,21 +3870,20 @@ window.addEventListener("load", function () {
                     <option value="Possible Internal Injury">Possible Internal Injury</option>
                     <option value="Self Harm">Self Harm</option>
                     <option value="Fall From Height">Fall From Height</option>
-                    <option value="Member Injury">Member Injury</option>
                 </select>
             </label><br>
             <label>Did SurfCom call NSWA? <span style="color: red;">*</span>
                 <select name="surfComCall" required>
                     <option value="">Select...</option>
-                    <option value="YES">YES</option>
-                    <option value="NO">NO</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
                 </select>
             </label><br>
             <label>Was the patient transported? <span style="color: red;">*</span>
                 <select name="patientTransported" required>
                     <option value="">Select...</option>
-                    <option value="YES">YES</option>
-                    <option value="NO">NO</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
                 </select>
             </label><br>
           `;
@@ -4012,7 +4011,9 @@ window.addEventListener("load", function () {
         const popup = window.open("", "", "width=600,height=600");
         popup.document.write(formHTML);
 
-        const textArea = document.querySelector('.form-control[name="message"]');
+        const textArea = document.querySelector(
+          '.form-control[name="message"]'
+        );
         const regex = /\{\{\{([^{}]*)\}\}\}/;
 
         const messages = document.querySelectorAll(
