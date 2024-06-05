@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.10.0](https://github.com/rporteous1/SurfPlus/compare/v2.9.0...v2.10.0) (2024-06-05)
+
+
+### Features
+
+* :sparkles: added a display surfcom sys messages checkbox in addition to surfplus ([4e99260](https://github.com/rporteous1/SurfPlus/commit/4e99260545e51f2c64c4df128091baf6f7f466f7))
+* :sparkles: added extra ambulance questions to database popout ([43188dc](https://github.com/rporteous1/SurfPlus/commit/43188dc7a1b29e19499b6c0ddf6dd0e76c4d6201))
+* :sparkles: added extra information for 13surf databse popout ([43188dc](https://github.com/rporteous1/SurfPlus/commit/43188dc7a1b29e19499b6c0ddf6dd0e76c4d6201))
+* :sparkles: added log of changes to all incident fields, allowing autitable information ([c052468](https://github.com/rporteous1/SurfPlus/commit/c052468e59c57e95ed86ec967bb777ba14904b16))
+* :sparkles: added member injury dropdown for checkbox ([8f69ac4](https://github.com/rporteous1/SurfPlus/commit/8f69ac4bd1ba04f4ba51f51c24a6f5503c90f1bc))
+* :sparkles: shortened the default sms page message log for readability ([b651b10](https://github.com/rporteous1/SurfPlus/commit/b651b106ea4403a103a1d90988fff985dc87afaa))
+
+
+### Bug Fixes
+
+* :bug: fixed VIC mailing group lnglat ([7ce416e](https://github.com/rporteous1/SurfPlus/commit/7ce416ec1e6410e8e1d3cd116bc2fbddaabd1192))
+* :bug: removed the number modifier buttons from lnglat field ([e65236a](https://github.com/rporteous1/SurfPlus/commit/e65236ae2ba7f5bf20ba22a0a82c0f315a521d12))
+
 ## [2.9.0](https://github.com/rporteous1/SurfPlus/compare/v2.8.0...v2.9.0) (2024-06-03)
 
 
