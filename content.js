@@ -4612,12 +4612,16 @@ window.addEventListener("load", function () {
   }
 
   // Add event listeners to restrict input to numbers only
-  latInput.addEventListener("keypress", allowOnlyNumbers);
-  lngInput.addEventListener("keypress", allowOnlyNumbers);
+  latInput.addEventListener("input", function (event) {
+    this.value = this.value.replace(/[^0-9.]/g, '');
+  });
+  lngInput.addEventListener("input", function (event) {
+    this.value = this.value.replace(/[^0-9.]/g, '');
+  });
 
-  // Optionally, you can force the input type to 'number' for better UX
-  latInput.setAttribute("type", "number");
-  lngInput.setAttribute("type", "number");
+  // Set the input type to 'text' to avoid the up/down buttons
+  latInput.setAttribute("type", "text");
+  lngInput.setAttribute("type", "text");
 });
 
 window.addEventListener("load", function () {
