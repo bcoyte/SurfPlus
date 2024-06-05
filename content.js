@@ -1150,6 +1150,22 @@ window.addEventListener("load", BulkSignOffBoxes);
 // Example of attaching to a specific clickable element, replace 'yourClickableElementSelector' with your actual selector
 document.addEventListener("click", BulkSignOffBoxes);
 
+
+// Function to replace "Organisation" with "Org"
+function replaceText() {
+  // Select the label element
+  var labelElement = document.querySelector('label[for="callerDetailsOrganisation"]');
+  
+  // Check if the label element exists
+  if (labelElement) {
+      // Replace the text content
+      labelElement.textContent = "Org:";
+  }
+}
+
+// Event listener to run the function when the page is loaded
+window.addEventListener('load', replaceText);
+
 // Define your locations array with latitudes, longitudes, and the service value that corresponds to each location.
 const locationsArray = [
   { lat: -37.0598, lng: 149.91031, serviceValue: "940" }, // Aslings (Lifeguards)
