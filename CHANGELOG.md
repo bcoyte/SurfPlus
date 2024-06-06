@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.2](https://github.com/rporteous1/SurfPlus/compare/v2.10.1...v2.10.2) (2024-06-06)
+
+
+### Bug Fixes
+
+* :bug: fixed issue with fram and to fields not setting with system logs ([c37edec](https://github.com/rporteous1/SurfPlus/commit/c37edec837488345ec1ad80374ecfa0a26522223))
+
 ## [2.10.1](https://github.com/rporteous1/SurfPlus/compare/v2.10.0...v2.10.1) (2024-06-06)
 
 
