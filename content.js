@@ -4092,11 +4092,7 @@ window.addEventListener("load", function () {
             recordButton.click();
 
             // Clear the text area after a short delay
-            setTimeout(() => {
-              if (textArea) {
-                textArea.value = "";
-              }
-            }, 250); // Adjust the delay as needed
+
           }
 
           popup.close();
@@ -4933,12 +4929,6 @@ window.addEventListener("load", function () {
         if (recordButton) {
           recordButton.click();
 
-          // Clear the text area after a short delay
-          setTimeout(() => {
-            if (textArea) {
-              textArea.value = "";
-            }
-          }, 250); // Adjust the delay as needed
         } else {
           console.error("Record button not found.");
         }
@@ -5518,12 +5508,7 @@ window.addEventListener("load", function () {
       recordButton.click();
 
       // Clear the text area after a short delay
-      setTimeout(() => {
-        const textArea = document.getElementById("message");
-        if (textArea) {
-          textArea.value = "";
-        }
-      }, 250); // Adjust the delay as needed
+
     } else {
       console.error("'Record' button not found");
     }
@@ -5631,12 +5616,7 @@ window.addEventListener("load", () => {
       recordButton.click();
 
       // Clear the text area after a short delay
-      setTimeout(() => {
-        const textArea = document.getElementById("message");
-        if (textArea) {
-          textArea.value = "";
-        }
-      }, 250); // Adjust the delay as needed
+
     } else {
       console.error("'Record' button not found");
     }
