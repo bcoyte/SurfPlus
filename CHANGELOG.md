@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.1](https://github.com/rporteous1/SurfPlus/compare/v2.10.0...v2.10.1) (2024-06-06)
+
+
+### Bug Fixes
+
+* :bug: fixed error when posting SurfPlus system logs ([c2fe0d9](https://github.com/rporteous1/SurfPlus/commit/c2fe0d99acd8f9dbfc14e96829c2b87e1eb45f48))
+
 ## [2.10.0](https://github.com/rporteous1/SurfPlus/compare/v2.9.0...v2.10.0) (2024-06-05)
 
 
