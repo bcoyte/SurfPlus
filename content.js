@@ -1150,21 +1150,22 @@ window.addEventListener("load", BulkSignOffBoxes);
 // Example of attaching to a specific clickable element, replace 'yourClickableElementSelector' with your actual selector
 document.addEventListener("click", BulkSignOffBoxes);
 
-
 // Function to replace "Organisation" with "Org"
 function replaceText() {
   // Select the label element
-  var labelElement = document.querySelector('label[for="callerDetailsOrganisation"]');
-  
+  var labelElement = document.querySelector(
+    'label[for="callerDetailsOrganisation"]'
+  );
+
   // Check if the label element exists
   if (labelElement) {
-      // Replace the text content
-      labelElement.textContent = "Org:";
+    // Replace the text content
+    labelElement.textContent = "Org:";
   }
 }
 
 // Event listener to run the function when the page is loaded
-window.addEventListener('load', replaceText);
+window.addEventListener("load", replaceText);
 
 // Define your locations array with latitudes, longitudes, and the service value that corresponds to each location.
 const locationsArray = [
@@ -4071,17 +4072,19 @@ window.addEventListener("load", function () {
 
           textArea.value = existingText;
 
-          const fromSelect = document.querySelector("#from");
-          const toSelect = document.querySelector("#to");
+          const fromSelect = document.querySelector("#msg_from");
+          const toSelect = document.querySelector("#msg_to");
 
           if (fromSelect) {
             fromSelect.value = "unit_1996";
+            fromSelect.dispatchEvent(new Event("change"));
           } else {
             console.error("'From' dropdown not found");
           }
 
           if (toSelect) {
             toSelect.value = "unit_1997";
+            toSelect.dispatchEvent(new Event("change"));
           } else {
             console.error("'To' dropdown not found");
           }
@@ -4092,7 +4095,6 @@ window.addEventListener("load", function () {
             recordButton.click();
 
             // Clear the text area after a short delay
-
           }
 
           popup.close();
@@ -4909,17 +4911,19 @@ window.addEventListener("load", function () {
         }
 
         // Set 'From' and 'To' dropdowns to "Surfcom"
-        let fromSelect = document.querySelector("#msg_from");
-        let toSelect = document.querySelector("#msg_to");
+        const fromSelect = document.querySelector("#msg_from");
+        const toSelect = document.querySelector("#msg_to");
 
         if (fromSelect) {
           fromSelect.value = "unit_1996";
+          fromSelect.dispatchEvent(new Event("change"));
         } else {
           console.error("'From' dropdown not found");
         }
 
         if (toSelect) {
           toSelect.value = "unit_1997";
+          toSelect.dispatchEvent(new Event("change"));
         } else {
           console.error("'To' dropdown not found");
         }
@@ -4928,7 +4932,6 @@ window.addEventListener("load", function () {
         let recordButton = document.querySelector("#post_comment");
         if (recordButton) {
           recordButton.click();
-
         } else {
           console.error("Record button not found.");
         }
@@ -5487,17 +5490,19 @@ window.addEventListener("load", function () {
   }
 
   function setDropdownValuesAndTriggerButton() {
-    const fromSelect = document.querySelector("#from");
-    const toSelect = document.querySelector("#to");
+    const fromSelect = document.querySelector("#msg_from");
+    const toSelect = document.querySelector("#msg_to");
 
     if (fromSelect) {
       fromSelect.value = "unit_1996";
+      fromSelect.dispatchEvent(new Event("change"));
     } else {
       console.error("'From' dropdown not found");
     }
 
     if (toSelect) {
       toSelect.value = "unit_1997";
+      toSelect.dispatchEvent(new Event("change"));
     } else {
       console.error("'To' dropdown not found");
     }
@@ -5508,7 +5513,6 @@ window.addEventListener("load", function () {
       recordButton.click();
 
       // Clear the text area after a short delay
-
     } else {
       console.error("'Record' button not found");
     }
@@ -5616,7 +5620,6 @@ window.addEventListener("load", () => {
       recordButton.click();
 
       // Clear the text area after a short delay
-
     } else {
       console.error("'Record' button not found");
     }
@@ -5645,4 +5648,4 @@ window.addEventListener("load", () => {
         console.log("No changes detected.");
       }
     });
-});
+});''
