@@ -5187,7 +5187,7 @@ function filterMessages() {
     const messageText = message.querySelector(".direct-chat-text").innerText;
 
     const shouldHideSurfComMessage =
-      messageText.includes("Further Information Log (") ||
+      messageText.includes("Further Information Updated") ||
       (messageText.includes("Incident #") &&
         messageText.includes("Priority: ")) ||
       messageText.includes("Attachment added to Incident") ||
@@ -5649,3 +5649,69 @@ window.addEventListener("load", () => {
       }
     });
 });''
+
+function applyToggleButtons2() {
+  // Select all "Further Information Log" messages
+  const furtherInfoMessages = document.querySelectorAll('.direct-chat-text');
+
+  furtherInfoMessages.forEach((message) => {
+      if (message.innerText.includes('Further Information Log') && !message.querySelector('.toggle-button')) {
+          const messageText = message.innerHTML;
+          const startIndex = messageText.indexOf('(');
+
+          if (startIndex !== -1) {
+              const visiblePart = messageText.slice(0, startIndex).trim();
+              const hiddenPart = " " + messageText.slice(startIndex).trim(); // Add a space before hidden part
+
+              // Create a span for the hidden content
+              const hiddenSpan = document.createElement('span');
+              hiddenSpan.style.display = 'none';
+              hiddenSpan.innerHTML = hiddenPart;
+
+              // Create a button to toggle the visibility
+              const toggleButton = document.createElement('button');
+              toggleButton.textContent = 'Show';
+              toggleButton.className = 'toggle-button';
+              toggleButton.style.marginLeft = '10px';
+              toggleButton.style.cursor = 'pointer';
+
+              toggleButton.addEventListener('click', function (event) {
+                  event.preventDefault();
+                  if (hiddenSpan.style.display === 'none') {
+                      hiddenSpan.style.display = 'inline';
+                      toggleButton.textContent = 'Hide';
+                  } else {
+                      hiddenSpan.style.display = 'none';
+                      toggleButton.textContent = 'Show';
+                  }
+              });
+
+              // Update the visible part text
+              const updatedVisiblePart = visiblePart.replace('Further Information Log', 'Further Information Updated');
+
+              // Clear the existing content and add the new elements
+              message.innerHTML = "";
+              message.appendChild(document.createTextNode(updatedVisiblePart));
+              message.appendChild(hiddenSpan);
+              message.appendChild(toggleButton);
+          }
+      }
+  });
+}
+
+function observeMessageLog4() {
+  const messageLog = document.querySelector('.direct-chat-messages');
+  if (messageLog) {
+      const observer4 = new MutationObserver(() => {
+          applyToggleButtons2();
+      });
+
+      observer4.observe(messageLog, { childList: true, subtree: true });
+  }
+}
+
+window.addEventListener('load', function () {
+  applyToggleButtons2();
+  observeMessageLog4();
+});
+
