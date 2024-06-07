@@ -5229,7 +5229,7 @@ function addFilterCheckbox() {
   surfComFilterLabel.classList.add("checkbox-inline");
   surfComFilterLabel.style.paddingLeft = "10px";
   surfComFilterLabel.innerHTML =
-    '<input type="checkbox" id="display-surfcom-messages"> Display SurfCom System Messages';
+    '<input type="checkbox" id="display-surfcom-messages" checked> Display SurfCom System Messages';
   filterContainer.appendChild(surfComFilterLabel);
 
   const messageLogContainer = document.querySelector(".direct-chat-messages")
