@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.11.0](https://github.com/rporteous1/SurfPlus/compare/v2.10.2...v2.11.0) (2024-06-07)
+
+
+### Features
+
+* :sparkles: added collapse of further information update logs ([ce349ab](https://github.com/rporteous1/SurfPlus/commit/ce349ab7455dc75e0a7fce63d049986f157f6f82))
+* Refactor username prompt and button labels ([4f1d4bc](https://github.com/rporteous1/SurfPlus/commit/4f1d4bc035d444e978d875719d29a83a297475ab))
+
+
+### Bug Fixes
+
+* :bug: fixed surfcom system messages being off by default ([20edc85](https://github.com/rporteous1/SurfPlus/commit/20edc8531144beb999fd4e40771bb2634201fdd8))
+
 ## [2.10.2](https://github.com/rporteous1/SurfPlus/compare/v2.10.1...v2.10.2) (2024-06-06)
 
 
