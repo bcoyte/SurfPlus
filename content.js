@@ -4964,13 +4964,13 @@ function extractUsername() {
 function promptForUsername() {
   let firstInitial;
   do {
-    firstInitial = prompt("Please enter your first initial:").replace(
+    firstInitial = prompt("Please enter first initial:").replace(
       /\s+/g,
       ""
     );
   } while (!firstInitial || firstInitial.length !== 1);
 
-  let surname = prompt("Please enter your surname:").replace(/\s+/g, "");
+  let surname = prompt("Please enter surname:").replace(/\s+/g, "");
   return `${firstInitial}${surname}`.toUpperCase();
 }
 
@@ -4978,10 +4978,10 @@ function promptForUsername() {
 function createRoleButtons(callback) {
   let container = document.createElement("div");
   container.id = "role-buttons-container";
-  container.style.marginTop = "10px";
+  container.style.marginTop = "4px";
 
-  let title = document.createElement("p");
-  title.innerHTML = "<strong>Add me to incident as:</strong>";
+  let title = document.createElement("label");
+  title.htmlFor = "role-buttons";
   container.appendChild(title);
 
   let roles = ["ERO", "UAVERO", "SERO", "SDO"];
@@ -4992,6 +4992,13 @@ function createRoleButtons(callback) {
     button.onclick = (e) => {
       e.preventDefault();
       callback(role);
+    };
+    button.oncontextmenu = (e) => {
+      e.preventDefault();
+      let manualUsername = promptForUsername();
+      if (manualUsername) {
+        callback(role, manualUsername);
+      }
     };
     container.appendChild(button);
   });
@@ -5009,6 +5016,13 @@ function createRoleButtons(callback) {
     e.preventDefault();
     removeUser();
   };
+  removeButton.oncontextmenu = (e) => {
+    e.preventDefault();
+    let manualUsername = promptForUsername();
+    if (manualUsername) {
+      removeUser(manualUsername);
+    }
+  };
   container.appendChild(removeButton);
 
   return container;
@@ -5018,8 +5032,8 @@ function createRoleButtons(callback) {
 function insertRoleButtons() {
   let targetDiv = document.querySelector("#incidentSLSContact").parentNode
     .parentNode.parentNode;
-  let addButtonContainer = createRoleButtons((role) => {
-    let username = extractUsername();
+  let addButtonContainer = createRoleButtons((role, manualUsername) => {
+    let username = manualUsername || extractUsername();
     if (username) {
       let inputField = document.querySelector("#incidentSLSContact");
       if (inputField) {
@@ -5058,14 +5072,25 @@ function insertRoleButtons() {
   if (targetDiv) {
     let newColDiv = document.createElement("div");
     newColDiv.className = "col-12 col-md-6";
-    newColDiv.appendChild(addButtonContainer);
+
+    let formGroupDiv = document.createElement("div");
+    formGroupDiv.className = "form-group";
+    
+    let label = document.createElement("label");
+    label.htmlFor = "role-buttons";
+    label.innerHTML = "Add user: <span style='font-size: small; font-style: italic;'>left-click for self, right-click for others</span>";
+    
+    formGroupDiv.appendChild(label);
+    formGroupDiv.appendChild(addButtonContainer);
+    newColDiv.appendChild(formGroupDiv);
+
     targetDiv.appendChild(newColDiv);
   }
 }
 
 // Function to remove the user from the field
-function removeUser() {
-  let username = extractUsername();
+function removeUser(manualUsername) {
+  let username = manualUsername || extractUsername();
   if (username) {
     let inputField = document.querySelector("#incidentSLSContact");
     if (inputField) {
