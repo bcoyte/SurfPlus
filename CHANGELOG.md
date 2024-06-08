@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.1](https://github.com/rporteous1/SurfPlus/compare/v2.11.0...v2.11.1) (2024-06-08)
+
+
+### Bug Fixes
+
+* :bug: fixed popup not occuring if ambulance databse hasnt been completed ([97535c8](https://github.com/rporteous1/SurfPlus/commit/97535c8732b9d3a43b43cdc25b98462d02f5952f))
+
 ## [2.11.0](https://github.com/rporteous1/SurfPlus/compare/v2.10.2...v2.11.0) (2024-06-07)
 
 
