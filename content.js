@@ -4170,6 +4170,44 @@ window.addEventListener("load", function () {
 });
 
 window.addEventListener("load", function () {
+  const checkbox = document.querySelector("#incidentAmbulanceCalled");
+  const closeButton = document.querySelector(
+    "a.btn.btn-app.check-incident-status"
+  );
+  const textArea = document.querySelector(
+    'textarea.form-control[name="message"]'
+  );
+
+  closeButton.addEventListener("click", function (event) {
+    // Always prevent the default action of the button if the checkbox is checked
+    if (checkbox && checkbox.checked) {
+      event.preventDefault(); // Prevents the default button action
+
+      // Check for text within {{{}}} in the direct chat messages
+      const regex = /\{\{\{(.+?)\}\}\}/;
+      const messages = document.querySelectorAll(
+        ".direct-chat-msg .direct-chat-text"
+      );
+      let matchFound = false;
+
+      messages.forEach((message) => {
+        const match = regex.exec(message.innerHTML);
+        if (match && !matchFound) {
+          matchFound = true;
+        }
+      });
+
+      if (!matchFound) {
+        // If there's no text in {{{}}}, show an alert and keep the action stopped
+        alert(
+          'You haven\'t completed the "Extra Information for Database" window, click on the blue information circle next to the map!'
+        );
+      }
+    }
+  });
+});
+
+window.addEventListener("load", function () {
   const surfCheckbox = document.querySelector("#callerDetails13Surf");
   const priorityDropdown = document.querySelector("#priority");
 
@@ -4978,7 +5016,7 @@ function promptForUsername() {
 function createRoleButtons(callback) {
   let container = document.createElement("div");
   container.id = "role-buttons-container";
-  container.style.marginTop = "4px";
+  container.style.marginTop = "3px";
 
   let title = document.createElement("label");
   title.htmlFor = "role-buttons";
