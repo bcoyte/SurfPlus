@@ -647,6 +647,12 @@ document.addEventListener("keydown", function (event) {
         lon: 150.902805,
         branch: "Illawarra",
       },
+      {
+        name: "North Palm Beach ERB (Sydney Northern Beaches - Sydney)",
+        lat: -33.590413,
+        lon: 151.324914,
+        branch: "Illawarra",
+      },
     ];
 
     // Sort ERB names alphabetically within their branches
@@ -4247,7 +4253,7 @@ window.addEventListener("load", function () {
 });
 
 // Function to check the incident type and add the alert
-function checkIncidentTypeAndAddAlert() {
+function checkIncidentTypeAndAddAlert2() {
   const incidentTypeSelect = document.querySelector("#incidentType");
   const selectedIncidentType =
     incidentTypeSelect.options[incidentTypeSelect.selectedIndex].text;
@@ -4285,7 +4291,7 @@ function checkIncidentTypeAndAddAlert() {
 }
 
 // Call the function when the page loads
-window.addEventListener("load", checkIncidentTypeAndAddAlert);
+window.addEventListener("load", checkIncidentTypeAndAddAlert2);
 
 // Function to replace an existing element if it exists
 function replaceIfExists(parent, newElement) {
@@ -4363,7 +4369,7 @@ function messageToPoliceMACExists() {
     ".direct-chat-msg .direct-chat-name"
   );
   for (let msg of chatMessages) {
-    if (msg.textContent.includes("Surfcom to Police - Marine Area Command")) {
+    if (msg.textContent.includes("Surfcom to Police - Marine Area Command") || msg.textContent.includes("Police - Marine Area Command to Surfcom")) {
       return true;
     }
   }
