@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.2](https://github.com/rporteous1/SurfPlus/compare/v2.11.1...v2.11.2) (2024-06-11)
+
+
+### Bug Fixes
+
+* :bug: fixed notify mac popup appearing if mac notified surfcom ([19fa427](https://github.com/rporteous1/SurfPlus/commit/19fa427dcabe11954c6845a5245fe02c6d1c21c3))
+
 ## [2.11.1](https://github.com/rporteous1/SurfPlus/compare/v2.11.0...v2.11.1) (2024-06-08)
 
 
