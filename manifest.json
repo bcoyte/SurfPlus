@@ -11,7 +11,7 @@
     }
   },
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"]
   },
   "content_scripts": [
     {
@@ -33,5 +33,10 @@
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://api.weatherapi.com/v1/current.json https://api.weatherapi.com/v1/forecast.json https://api.weatherapi.com/v1/marine.json;"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{b1eeb2a0-2df3-45e8-998d-b2bb8b01234a}"
+    }
   }
 }

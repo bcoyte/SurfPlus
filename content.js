@@ -3775,6 +3775,19 @@ window.addEventListener("load", function () {
   updateETATimes();
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 window.addEventListener("load", function () {
   // Define the SVG icon with proper viewBox and styling to ensure full visibility
   const svgHTML = `
@@ -3949,14 +3962,16 @@ window.addEventListener("load", function () {
                     <option value="unknown">Unknown</option>
                 </select>
             </label><br>
-            <label>Approximate Age <span style="color: red;">*</span>
-                <input type="number" name="age" min="0" required/>
+            <label>Approximate Age (-2 if N/A, -1 if Unknown) <span style="color: red;">*</span>
+                <input type="number" name="age" min="-2" required/>
             </label><br>
             <label>Wearing a life jacket? <span style="color: red;">*</span>
                 <select name="lifeJacket" required>
                     <option value="">Select...</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
+                    <option value="unknown">Unknown</option>
+                    <option value="na">N/A</option>
                 </select>
             </label><br>
             <label>Patrolled Location? <span style="color: red;">*</span>
@@ -4014,13 +4029,6 @@ window.addEventListener("load", function () {
             </label><br>
             <label>In-Water Search Conducted? <span style="color: red;">*</span>
                 <select name="inWaterSearch" required>
-                    <option value="">Select...</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-            </label><br>
-            <label>DSW Active <span style="color: red;">*</span>
-                <select name="dswActive" required>
                     <option value="">Select...</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
@@ -4136,6 +4144,16 @@ window.addEventListener("load", function () {
 
   observeCheckboxes();
 });
+
+
+
+
+
+
+
+
+
+
 
 window.addEventListener("load", function () {
   const checkbox = document.querySelector("#callerDetails13Surf");
