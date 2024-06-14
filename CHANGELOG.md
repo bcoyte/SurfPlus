@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.3](https://github.com/rporteous1/SurfPlus/compare/v2.11.2...v2.11.3) (2024-06-14)
+
+
+### Bug Fixes
+
+* :bug: fixed 13surf popup questions ([196635c](https://github.com/rporteous1/SurfPlus/commit/196635cf7f20ddfd323126107aae80b3ea9e2ff8))
+
 ## [2.11.2](https://github.com/rporteous1/SurfPlus/compare/v2.11.1...v2.11.2) (2024-06-11)
 
 
