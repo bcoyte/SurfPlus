@@ -2284,6 +2284,9 @@ function applyColorsToMessages(container) {
     } else if (text.includes("{{{serviceType: ")) {
       log.style.backgroundColor = "black";
       log.style.color = "white";
+    } else if (text.includes("Incident Reopen :: ")) {
+      log.style.backgroundColor = "black";
+      log.style.color = "white";
     }
     // No need for a default action
   });
@@ -4287,7 +4290,7 @@ window.addEventListener("load", function () {
                     <option value="Pambula">Pambula</option>
                 </select>
             </label><br>
-            <label>Subsequent Clubs Responded (Multiple Choice) <span style="color: red;">*</span>
+            <label>Subsequent Clubs Responded (Multiple Choice, hold ctrl for multiple) <span style="color: red;">*</span>
                 <select name="subsequentClubsResponded" multiple required>
                     <option value="">Select...</option>
                     <option value="N/A">N/A</option>
@@ -4447,8 +4450,7 @@ window.addEventListener("load", function () {
                 </select>
             </label><br>
             <label>Other details as required <span style="color: red;">*</span>
-                
-            <textarea name="otherDetails" required>Nil Further</textarea>
+                <textarea name="otherDetails" required style="width: 319px; height: 80px;">Nil Further</textarea>
             </label><br>
           `;
         }
