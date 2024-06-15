@@ -2281,6 +2281,9 @@ function applyColorsToMessages(container) {
     } else if (text.includes("{{{taskingIssues: ")) {
       log.style.backgroundColor = "black";
       log.style.color = "white";
+    } else if (text.includes("{{{serviceType: ")) {
+      log.style.backgroundColor = "black";
+      log.style.color = "white";
     }
     // No need for a default action
   });
@@ -3789,22 +3792,18 @@ window.addEventListener("load", function () {
 
 
 window.addEventListener("load", function () {
-  // Define the SVG icon with proper viewBox and styling to ensure full visibility
   const svgHTML = `
   <svg xmlns="http://www.w3.org/2000/svg" fill="cadetblue" class="bi bi-info-circle-fill" viewBox="0 0 16 17" style="cursor: pointer; vertical-align: top; display: block;">
     <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
   </svg>
   `;
 
-  // Function to add the SVG icon and event listener
   function addSvgIcon() {
-    // Select the element next to which the SVG icon should be appended
     const globeButton = document.querySelector("#inline");
 
     if (globeButton && !document.querySelector("#infoSvgIcon")) {
-      // Create a span to contain the SVG
       const iconSpan = document.createElement("span");
-      iconSpan.id = "infoSvgIcon"; // Adding an ID to prevent duplicate icons
+      iconSpan.id = "infoSvgIcon";
       iconSpan.innerHTML = svgHTML;
       iconSpan.style.display = "inline-block";
       iconSpan.style.verticalAlign = "top";
@@ -3813,10 +3812,8 @@ window.addEventListener("load", function () {
       iconSpan.style.marginLeft = "10px";
       iconSpan.style.overflow = "visible";
 
-      // Append the span with SVG next to the globe button
       globeButton.parentNode.insertBefore(iconSpan, globeButton.nextSibling);
 
-      // Add click event to open a window with placeholder text
       iconSpan.addEventListener("click", function () {
         const checkbox1 = document.querySelector("#incidentAmbulanceCalled");
         const checkbox2 = document.querySelector("#callerDetails13Surf");
@@ -4034,6 +4031,425 @@ window.addEventListener("load", function () {
                     <option value="no">No</option>
                 </select>
             </label><br>
+                        <label>Activity at time of incident <span style="color: red;">*</span>
+                <select name="activity" required>
+                    <option value="">Select...</option>
+                    <option value="swimming">Swimming</option>
+                    <option value="boating">Boating</option>
+                    <option value="tsunami">Tsunami</option>
+                    <option value="crowdControl">Crowd Control</option>
+                    <option value="debris">Debris</option>
+                    <option value="divingSnorkelling">Diving/Snorkelling</option>
+                    <option value="suicideSelfHarm">Suicide/Self Harm</option>
+                    <option value="environmental">Environmental</option>
+                    <option value="floodAssistance">Flood assistance</option>
+                    <option value="other">Other</option>
+                    <option value="rockFishing">Rockfishing</option>
+                    <option value="missingPersonLand">Missing Person - Land</option>
+                    <option value="sup">Surfcraft (non-powered) - SUP</option>
+                    <option value="kayak">Surfcraft (non-powered) - Kayak</option>
+                    <option value="surfing">Surfcraft (non-powered) - Surfing</option>
+                    <option value="windsurfer">Surfcraft (non-powered) - Windsurfer</option>
+                    <option value="parachuteParasail">Other - Parachute/parasail</option>
+                    <option value="lightAircraftCrash">Other - Light aircraft crash</option>
+                    <option value="landBasedObservation">Other - land based observation</option>
+                    <option value="aerialBasedObservation">Other - aerial based observation</option>
+                    <option value="rockCliffRelated">Rock/Cliff related</option>
+                    <option value="unknown">Unknown</option>
+                </select>
+            </label><br>
+            <label>Informant Unit <span style="color: red;">*</span>
+                <select name="informantUnit" required>
+                    <option value="">Select...</option>
+                    <option value="VKG Oak Flats">VKG Oak Flats</option>
+                    <option value="VKG Newcastle">VKG Newcastle</option>
+                    <option value="VKG Sydney">VKG Sydney</option>
+                    <option value="VKG Penrith">VKG Penrith</option>
+                    <option value="Marine Area Command">Marine Area Command</option>
+                    <option value="Police Station">Police Station</option>
+                    <option value="NSW Ambulance">NSW Ambulance</option>
+                    <option value="Marine Rescue">Marine Rescue</option>
+                    <option value="SLS - Club">SLS - Club</option>
+                    <option value="SLS - Duty Officer">SLS - Duty Officer</option>
+                    <option value="SLS - UAV">SLS - UAV</option>
+                    <option value="SLS - Offshore boat or PWC">SLS - Offshore boat or PWC</option>
+                    <option value="ALS">ALS</option>
+                    <option value="Lifeguard (Council)">Lifeguard (Council)</option>
+                    <option value="Public">Public</option>
+                    <option value="LS21">LS21</option>
+                    <option value="LS23">LS23</option>
+                    <option value="Westpac Helicopter">Westpac Helicopter</option>
+                    <option value="DPI Helicopter">DPI Helicopter</option>
+                    <option value="Other">Other</option>
+                    <option value="Water Police Tweed">Water Police Tweed</option>
+                    <option value="Water Police Coffs Harbour">Water Police Coffs Harbour</option>
+                    <option value="Water Police Port Stephens">Water Police Port Stephens</option>
+                    <option value="Water Police Newcastle">Water Police Newcastle</option>
+                    <option value="Water Police Broken Bay">Water Police Broken Bay</option>
+                    <option value="Water Police Botany Bay">Water Police Botany Bay</option>
+                    <option value="Water Police Port Kembla">Water Police Port Kembla</option>
+                    <option value="Water Police Eden">Water Police Eden</option>
+                    <option value="SES">SES</option>
+                    <option value="QLD Police">QLD Police</option>
+                    <option value="Police RCO">Police RCO</option>
+                    <option value="FR NSW">FR NSW</option>
+                    <option value="Nil">Nil</option>
+                </select>
+            </label><br>
+            <label>Secondary Informant Unit <span style="color: red;">*</span>
+                <select name="secondaryInformantUnit" required>
+                    <option value="">Select...</option>
+                    <option value="VKG Oak Flats">VKG Oak Flats</option>
+                    <option value="VKG Newcastle">VKG Newcastle</option>
+                    <option value="VKG Sydney">VKG Sydney</option>
+                    <option value="VKG Penrith">VKG Penrith</option>
+                    <option value="Marine Area Command">Marine Area Command</option>
+                    <option value="Police Station">Police Station</option>
+                    <option value="NSW Ambulance">NSW Ambulance</option>
+                    <option value="Marine Rescue">Marine Rescue</option>
+                    <option value="SLS - Club">SLS - Club</option>
+                    <option value="SLS - Duty Officer">SLS - Duty Officer</option>
+                    <option value="SLS - UAV">SLS - UAV</option>
+                    <option value="SLS - Offshore boat or PWC">SLS - Offshore boat or PWC</option>
+                    <option value="ALS">ALS</option>
+                    <option value="Lifeguard (Council)">Lifeguard (Council)</option>
+                    <option value="Public">Public</option>
+                    <option value="LS21">LS21</option>
+                    <option value="LS23">LS23</option>
+                    <option value="Westpac Helicopter">Westpac Helicopter</option>
+                    <option value="DPI Helicopter">DPI Helicopter</option>
+                    <option value="Other">Other</option>
+                    <option value="Water Police Tweed">Water Police Tweed</option>
+                    <option value="Water Police Coffs Harbour">Water Police Coffs Harbour</option>
+                    <option value="Water Police Port Stephens">Water Police Port Stephens</option>
+                    <option value="Water Police Newcastle">Water Police Newcastle</option>
+                    <option value="Water Police Broken Bay">Water Police Broken Bay</option>
+                    <option value="Water Police Botany Bay">Water Police Botany Bay</option>
+                    <option value="Water Police Port Kembla">Water Police Port Kembla</option>
+                    <option value="Water Police Eden">Water Police Eden</option>
+                    <option value="SES">SES</option>
+                    <option value="QLD Police">QLD Police</option>
+                    <option value="Police RCO">Police RCO</option>
+                    <option value="FR NSW">FR NSW</option>
+                    <option value="Nil">Nil</option>
+                    <option value="N/A">N/A</option>
+                </select>
+            </label><br>
+            <label>Incident Category <span style="color: red;">*</span>
+                <select name="incidentCategory" required>
+                    <option value="">Select...</option>
+                    <option value="Person/s in distress (in water)">Person/s in distress (in water)</option>
+                    <option value="Vessel in distress">Vessel in distress</option>
+                    <option value="Vessel broken down/damaged">Vessel broken down/damaged</option>
+                    <option value="Unknown object in water">Unknown object in water</option>
+                    <option value="Person/s injured/stranded/missing on land">Person/s injured/stranded/missing on land</option>
+                    <option value="Shark sighting">Shark sighting</option>
+                    <option value="Shark attack">Shark attack</option>
+                    <option value="Other animal incident">Other animal incident</option>
+                    <option value="Drowning/death">Drowning/death</option>
+                    <option value="Other">Other</option>
+                    <option value="Possible drowning/death">Possible drowning/death</option>
+                </select>
+            </label><br>
+            <label>First Club Responded <span style="color: red;">*</span>
+                <select name="firstClubResponded" required>
+                    <option value="">Select...</option>
+                    <option value="N/A">N/A</option>
+                    <option value="Nil">Nil</option>
+                    <option value="Fingal Rovers">Fingal Rovers</option>
+                    <option value="Cudgen Headland">Cudgen Headland</option>
+                    <option value="Salt">Salt</option>
+                    <option value="Cabarita Beach">Cabarita Beach</option>
+                    <option value="Brunswick">Brunswick</option>
+                    <option value="Byron Bay">Byron Bay</option>
+                    <option value="Lennox Head">Lennox Head</option>
+                    <option value="Ballina">Ballina</option>
+                    <option value="Evans Head">Evans Head</option>
+                    <option value="Yamba">Yamba</option>
+                    <option value="Minnie Water - Wooli">Minnie Water - Wooli</option>
+                    <option value="Red Rock">Red Rock</option>
+                    <option value="Woolgoolga">Woolgoolga</option>
+                    <option value="Coffs Harbour">Coffs Harbour</option>
+                    <option value="Sawtell">Sawtell</option>
+                    <option value="Bellinger Valley">Bellinger Valley</option>
+                    <option value="Urunga">Urunga</option>
+                    <option value="Nambucca Heads">Nambucca Heads</option>
+                    <option value="Macksville Scotts Head">Macksville Scotts Head</option>
+                    <option value="South West Rocks">South West Rocks</option>
+                    <option value="Hat Head">Hat Head</option>
+                    <option value="Kempsey Crescent Head">Kempsey Crescent Head</option>
+                    <option value="Port Macquarie">Port Macquarie</option>
+                    <option value="Tacking Point">Tacking Point</option>
+                    <option value="Wauchope Bonny Hills">Wauchope Bonny Hills</option>
+                    <option value="Camden Haven">Camden Haven</option>
+                    <option value="Crowdy Head">Crowdy Head</option>
+                    <option value="Taree Old Bar">Taree Old Bar</option>
+                    <option value="Black Head">Black Head</option>
+                    <option value="Forster">Forster</option>
+                    <option value="Cape Hawke">Cape Hawke</option>
+                    <option value="Pacific Palms">Pacific Palms</option>
+                    <option value="Tea Gardens / Hawks Nest">Tea Gardens / Hawks Nest</option>
+                    <option value="Fingal Beach">Fingal Beach</option>
+                    <option value="Birubi Point">Birubi Point</option>
+                    <option value="Stockton">Stockton</option>
+                    <option value="Nobby's">Nobby's</option>
+                    <option value="Newcastle">Newcastle</option>
+                    <option value="Cooks Hill">Cooks Hill</option>
+                    <option value="Dixon Park">Dixon Park</option>
+                    <option value="Merewether">Merewether</option>
+                    <option value="Red Head">Red Head</option>
+                    <option value="Swansea Belmont">Swansea Belmont</option>
+                    <option value="Caves Beach">Caves Beach</option>
+                    <option value="Catherine Hill Bay">Catherine Hill Bay</option>
+                    <option value="The Lakes">The Lakes</option>
+                    <option value="Soldiers Beach">Soldiers Beach</option>
+                    <option value="North Entrance">North Entrance</option>
+                    <option value="The Entrance">The Entrance</option>
+                    <option value="Toowoon Bay">Toowoon Bay</option>
+                    <option value="Shelly Beach">Shelly Beach</option>
+                    <option value="Wamberal">Wamberal</option>
+                    <option value="Terrigal">Terrigal</option>
+                    <option value="North Avoca">North Avoca</option>
+                    <option value="Avoca Beach">Avoca Beach</option>
+                    <option value="Copacabana">Copacabana</option>
+                    <option value="Macmasters">Macmasters</option>
+                    <option value="Killcare">Killcare</option>
+                    <option value="Ocean Beach">Ocean Beach</option>
+                    <option value="Umina">Umina</option>
+                    <option value="North Palm Beach">North Palm Beach</option>
+                    <option value="Palm Beach">Palm Beach</option>
+                    <option value="Whale Beach">Whale Beach</option>
+                    <option value="Avalon Beach">Avalon Beach</option>
+                    <option value="Bilgola">Bilgola</option>
+                    <option value="Newport">Newport</option>
+                    <option value="Bungan Beach">Bungan Beach</option>
+                    <option value="Mona Vale">Mona Vale</option>
+                    <option value="Warriewood">Warriewood</option>
+                    <option value="North Narrabeen">North Narrabeen</option>
+                    <option value="Narrabeen">Narrabeen</option>
+                    <option value="South Narrabeen">South Narrabeen</option>
+                    <option value="Collaroy">Collaroy</option>
+                    <option value="Long Reef">Long Reef</option>
+                    <option value="Dee Why">Dee Why</option>
+                    <option value="North Curl Curl">North Curl Curl</option>
+                    <option value="South Curl Curl">South Curl Curl</option>
+                    <option value="Freshwater">Freshwater</option>
+                    <option value="Queenscliff">Queenscliff</option>
+                    <option value="North Steyne">North Steyne</option>
+                    <option value="Manly">Manly</option>
+                    <option value="North Bondi">North Bondi</option>
+                    <option value="Bondi">Bondi</option>
+                    <option value="Tamarama">Tamarama</option>
+                    <option value="Bronte">Bronte</option>
+                    <option value="Clovelly">Clovelly</option>
+                    <option value="Coogee">Coogee</option>
+                    <option value="Maroubra">Maroubra</option>
+                    <option value="South Maroubra">South Maroubra</option>
+                    <option value="Wanda">Wanda</option>
+                    <option value="Elouera">Elouera</option>
+                    <option value="North Cronulla">North Cronulla</option>
+                    <option value="Cronulla">Cronulla</option>
+                    <option value="Garie">Garie</option>
+                    <option value="Era">Era</option>
+                    <option value="Burning Palms">Burning Palms</option>
+                    <option value="Helensburgh Stanwell Park">Helensburgh Stanwell Park</option>
+                    <option value="Coalcliff">Coalcliff</option>
+                    <option value="Scarborough Wombarra">Scarborough Wombarra</option>
+                    <option value="Coledale">Coledale</option>
+                    <option value="Austinmer">Austinmer</option>
+                    <option value="Thirroul">Thirroul</option>
+                    <option value="Sandon Point">Sandon Point</option>
+                    <option value="Bulli">Bulli</option>
+                    <option value="Woonona">Woonona</option>
+                    <option value="Bellambi">Bellambi</option>
+                    <option value="Corrimal">Corrimal</option>
+                    <option value="Towradgi">Towradgi</option>
+                    <option value="Fairy Meadow">Fairy Meadow</option>
+                    <option value="North Wollongong">North Wollongong</option>
+                    <option value="Wollongong City">Wollongong City</option>
+                    <option value="Port Kembla">Port Kembla</option>
+                    <option value="Windang">Windang</option>
+                    <option value="Warilla Barrack Point">Warilla Barrack Point</option>
+                    <option value="Shellharbour">Shellharbour</option>
+                    <option value="Kiama Downs">Kiama Downs</option>
+                    <option value="Kiama">Kiama</option>
+                    <option value="Gerringong">Gerringong</option>
+                    <option value="Shoalhaven Heads">Shoalhaven Heads</option>
+                    <option value="Nowra Culburra">Nowra Culburra</option>
+                    <option value="Sussex Inlet">Sussex Inlet</option>
+                    <option value="Mollymook">Mollymook</option>
+                    <option value="Batemans Bay">Batemans Bay</option>
+                    <option value="Broulee Surfers">Broulee Surfers</option>
+                    <option value="Moruya">Moruya</option>
+                    <option value="Narooma">Narooma</option>
+                    <option value="Bermagui">Bermagui</option>
+                    <option value="Tathra">Tathra</option>
+                    <option value="Pambula">Pambula</option>
+                </select>
+            </label><br>
+            <label>Subsequent Clubs Responded (Multiple Choice) <span style="color: red;">*</span>
+                <select name="subsequentClubsResponded" multiple required>
+                    <option value="">Select...</option>
+                    <option value="N/A">N/A</option>
+                    <option value="Nil">Nil</option>
+                    <option value="Fingal Rovers">Fingal Rovers</option>
+                    <option value="Cudgen Headland">Cudgen Headland</option>
+                    <option value="Salt">Salt</option>
+                    <option value="Cabarita Beach">Cabarita Beach</option>
+                    <option value="Brunswick">Brunswick</option>
+                    <option value="Byron Bay">Byron Bay</option>
+                    <option value="Lennox Head">Lennox Head</option>
+                    <option value="Ballina">Ballina</option>
+                    <option value="Evans Head">Evans Head</option>
+                    <option value="Yamba">Yamba</option>
+                    <option value="Minnie Water - Wooli">Minnie Water - Wooli</option>
+                    <option value="Red Rock">Red Rock</option>
+                    <option value="Woolgoolga">Woolgoolga</option>
+                    <option value="Coffs Harbour">Coffs Harbour</option>
+                    <option value="Sawtell">Sawtell</option>
+                    <option value="Bellinger Valley">Bellinger Valley</option>
+                    <option value="Urunga">Urunga</option>
+                    <option value="Nambucca Heads">Nambucca Heads</option>
+                    <option value="Macksville Scotts Head">Macksville Scotts Head</option>
+                    <option value="South West Rocks">South West Rocks</option>
+                    <option value="Hat Head">Hat Head</option>
+                    <option value="Kempsey Crescent Head">Kempsey Crescent Head</option>
+                    <option value="Port Macquarie">Port Macquarie</option>
+                    <option value="Tacking Point">Tacking Point</option>
+                    <option value="Wauchope Bonny Hills">Wauchope Bonny Hills</option>
+                    <option value="Camden Haven">Camden Haven</option>
+                    <option value="Crowdy Head">Crowdy Head</option>
+                    <option value="Taree Old Bar">Taree Old Bar</option>
+                    <option value="Black Head">Black Head</option>
+                    <option value="Forster">Forster</option>
+                    <option value="Cape Hawke">Cape Hawke</option>
+                    <option value="Pacific Palms">Pacific Palms</option>
+                    <option value="Tea Gardens / Hawks Nest">Tea Gardens / Hawks Nest</option>
+                    <option value="Fingal Beach">Fingal Beach</option>
+                    <option value="Birubi Point">Birubi Point</option>
+                    <option value="Stockton">Stockton</option>
+                    <option value="Nobby's">Nobby's</option>
+                    <option value="Newcastle">Newcastle</option>
+                    <option value="Cooks Hill">Cooks Hill</option>
+                    <option value="Dixon Park">Dixon Park</option>
+                    <option value="Merewether">Merewether</option>
+                    <option value="Red Head">Red Head</option>
+                    <option value="Swansea Belmont">Swansea Belmont</option>
+                    <option value="Caves Beach">Caves Beach</option>
+                    <option value="Catherine Hill Bay">Catherine Hill Bay</option>
+                    <option value="The Lakes">The Lakes</option>
+                    <option value="Soldiers Beach">Soldiers Beach</option>
+                    <option value="North Entrance">North Entrance</option>
+                    <option value="The Entrance">The Entrance</option>
+                    <option value="Toowoon Bay">Toowoon Bay</option>
+                    <option value="Shelly Beach">Shelly Beach</option>
+                    <option value="Wamberal">Wamberal</option>
+                    <option value="Terrigal">Terrigal</option>
+                    <option value="North Avoca">North Avoca</option>
+                    <option value="Avoca Beach">Avoca Beach</option>
+                    <option value="Copacabana">Copacabana</option>
+                    <option value="Macmasters">Macmasters</option>
+                    <option value="Killcare">Killcare</option>
+                    <option value="Ocean Beach">Ocean Beach</option>
+                    <option value="Umina">Umina</option>
+                    <option value="North Palm Beach">North Palm Beach</option>
+                    <option value="Palm Beach">Palm Beach</option>
+                    <option value="Whale Beach">Whale Beach</option>
+                    <option value="Avalon Beach">Avalon Beach</option>
+                    <option value="Bilgola">Bilgola</option>
+                    <option value="Newport">Newport</option>
+                    <option value="Bungan Beach">Bungan Beach</option>
+                    <option value="Mona Vale">Mona Vale</option>
+                    <option value="Warriewood">Warriewood</option>
+                    <option value="North Narrabeen">North Narrabeen</option>
+                    <option value="Narrabeen">Narrabeen</option>
+                    <option value="South Narrabeen">South Narrabeen</option>
+                    <option value="Collaroy">Collaroy</option>
+                    <option value="Long Reef">Long Reef</option>
+                    <option value="Dee Why">Dee Why</option>
+                    <option value="North Curl Curl">North Curl Curl</option>
+                    <option value="South Curl Curl">South Curl Curl</option>
+                    <option value="Freshwater">Freshwater</option>
+                    <option value="Queenscliff">Queenscliff</option>
+                    <option value="North Steyne">North Steyne</option>
+                    <option value="Manly">Manly</option>
+                    <option value="North Bondi">North Bondi</option>
+                    <option value="Bondi">Bondi</option>
+                    <option value="Tamarama">Tamarama</option>
+                    <option value="Bronte">Bronte</option>
+                    <option value="Clovelly">Clovelly</option>
+                    <option value="Coogee">Coogee</option>
+                    <option value="Maroubra">Maroubra</option>
+                    <option value="South Maroubra">South Maroubra</option>
+                    <option value="Wanda">Wanda</option>
+                    <option value="Elouera">Elouera</option>
+                    <option value="North Cronulla">North Cronulla</option>
+                    <option value="Cronulla">Cronulla</option>
+                    <option value="Garie">Garie</option>
+                    <option value="Era">Era</option>
+                    <option value="Burning Palms">Burning Palms</option>
+                    <option value="Helensburgh Stanwell Park">Helensburgh Stanwell Park</option>
+                    <option value="Coalcliff">Coalcliff</option>
+                    <option value="Scarborough Wombarra">Scarborough Wombarra</option>
+                    <option value="Coledale">Coledale</option>
+                    <option value="Austinmer">Austinmer</option>
+                    <option value="Thirroul">Thirroul</option>
+                    <option value="Sandon Point">Sandon Point</option>
+                    <option value="Bulli">Bulli</option>
+                    <option value="Woonona">Woonona</option>
+                    <option value="Bellambi">Bellambi</option>
+                    <option value="Corrimal">Corrimal</option>
+                    <option value="Towradgi">Towradgi</option>
+                    <option value="Fairy Meadow">Fairy Meadow</option>
+                    <option value="North Wollongong">North Wollongong</option>
+                    <option value="Wollongong City">Wollongong City</option>
+                    <option value="Port Kembla">Port Kembla</option>
+                    <option value="Windang">Windang</option>
+                    <option value="Warilla Barrack Point">Warilla Barrack Point</option>
+                    <option value="Shellharbour">Shellharbour</option>
+                    <option value="Kiama Downs">Kiama Downs</option>
+                    <option value="Kiama">Kiama</option>
+                    <option value="Gerringong">Gerringong</option>
+                    <option value="Shoalhaven Heads">Shoalhaven Heads</option>
+                    <option value="Nowra Culburra">Nowra Culburra</option>
+                    <option value="Sussex Inlet">Sussex Inlet</option>
+                    <option value="Mollymook">Mollymook</option>
+                    <option value="Batemans Bay">Batemans Bay</option>
+                    <option value="Broulee Surfers">Broulee Surfers</option>
+                    <option value="Moruya">Moruya</option>
+                    <option value="Narooma">Narooma</option>
+                    <option value="Bermagui">Bermagui</option>
+                    <option value="Tathra">Tathra</option>
+                    <option value="Pambula">Pambula</option>
+                </select>
+            </label><br>
+            <label>Persons found (-2 if N/A, -1 if Unknown) <span style="color: red;">*</span>
+                <input type="number" name="personsFound" min="-2" required/>
+            </label><br>
+            <label>Self Rescued (-2 if N/A, -1 if Unknown) <span style="color: red;">*</span>
+                <input type="number" name="selfRescued" min="-2" required/>
+            </label><br>
+            <label>Rescued by Others (-2 if N/A, -1 if Unknown) <span style="color: red;">*</span>
+                <input type="number" name="rescuedByOthers" min="-2" required/>
+            </label><br>
+            <label>Did SLS Respond? <span style="color: red;">*</span>
+                <select name="slsRespond" required>
+                    <option value="">Select...</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </label><br>
+            <label>Medical Incident <span style="color: red;">*</span>
+                <select name="medicalIncident" required>
+                    <option value="">Select...</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </label><br>
+            <label>Other details as required <span style="color: red;">*</span>
+                
+            <textarea name="otherDetails" required>Nil Further</textarea>
+            </label><br>
           `;
         }
 
@@ -4066,7 +4482,7 @@ window.addEventListener("load", function () {
               if (input) input.value = value;
             });
 
-            matchFound = true; // Stop after finding the first match
+            matchFound = true;
           }
         });
 
@@ -4077,7 +4493,18 @@ window.addEventListener("load", function () {
           formData.forEach((value, key) => {
             newData += `${key}: ${value}, `;
           });
-          newData = newData.slice(0, -2) + "}}}";
+
+          const sdoMatch = document
+            .querySelector("#incidentSLSContact")
+            .value.match(/([^ ]+) \(SDO\)/g);
+          const incidentSDO = sdoMatch ? sdoMatch.map(sdo => sdo.split(" ")[0]).join(" | ") : "unknown SDO";
+
+          const userMatch = document
+            .querySelector(".dropdown-menu .dropdown-item p")
+            .innerHTML.match(/\| <small>([^@]+)@/);
+          const completedBy = userMatch ? userMatch[1].trim() : "unknown user";
+
+          newData += `incidentSDO: ${incidentSDO}, completedBy: ${completedBy}}}}`;
 
           let existingText = textArea.value;
           existingText = regex.test(existingText)
@@ -4103,12 +4530,9 @@ window.addEventListener("load", function () {
             console.error("'To' dropdown not found");
           }
 
-          // Trigger the 'Record' button click and then clear the text area
           let recordButton = document.querySelector("#post_comment");
           if (recordButton) {
             recordButton.click();
-
-            // Clear the text area after a short delay
           }
 
           popup.close();
@@ -4118,7 +4542,6 @@ window.addEventListener("load", function () {
     }
   }
 
-  // Function to observe changes and add the icon if either or both checkboxes are checked
   function observeCheckboxes() {
     const checkbox1 = document.querySelector("#incidentAmbulanceCalled");
     const checkbox2 = document.querySelector("#callerDetails13Surf");
@@ -4137,13 +4560,13 @@ window.addEventListener("load", function () {
       observer.observe(checkbox1, { attributes: true });
       observer.observe(checkbox2, { attributes: true });
 
-      // Check if either or both checkboxes are already checked on load
       checkAndAddIcon();
     }
   }
 
   observeCheckboxes();
 });
+
 
 
 
