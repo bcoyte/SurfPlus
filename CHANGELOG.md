@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.4](https://github.com/rporteous1/SurfPlus/compare/v2.11.3...v2.11.4) (2024-06-15)
+
+
+### Bug Fixes
+
+* :construction_worker: fixed missing questions in 13surf popup ([1647288](https://github.com/rporteous1/SurfPlus/commit/16472884ebcfc72d7c9a3b84a833ea8d8db6b484))
+
 ## [2.11.3](https://github.com/rporteous1/SurfPlus/compare/v2.11.2...v2.11.3) (2024-06-14)
 
 
