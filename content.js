@@ -6268,10 +6268,10 @@ function updateLocationField() {
   }
 }
 
-// Run the check on window load
-window.addEventListener('load', function () {
-  updateLocationField();
-});
+// // Run the check on window load
+// window.addEventListener('load', function () {
+//   updateLocationField();
+// });
 
 // Add event listener for the button click
 document.querySelector('.btn.btn-app.check-incident-status').addEventListener('click', function () {
