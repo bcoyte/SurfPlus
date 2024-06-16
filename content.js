@@ -1087,21 +1087,18 @@ function BulkSignOffBoxes() {
         bulkSignOffButton.disabled = true;
 
         function updateButtonState() {
-          const anyChecked =
-            document.querySelectorAll(".signoff-checkbox:checked").length > 0;
+          const anyChecked = document.querySelectorAll(".signoff-checkbox:checked").length > 0;
           bulkSignOffButton.disabled = !anyChecked;
           bulkSignOffButton.classList.toggle("btn-disabled", !anyChecked);
         }
 
         bulkSignOffButton.addEventListener("click", function () {
           const urls = [];
-          document
-            .querySelectorAll(".signoff-checkbox:checked")
-            .forEach((checkbox) => {
-              let href = checkbox.getAttribute("data-href");
-              href += "&bulkSupportOpsSignOff";
-              urls.push(href);
-            });
+          document.querySelectorAll(".signoff-checkbox:checked").forEach((checkbox) => {
+            let href = checkbox.getAttribute("data-href");
+            href += "&bulkSupportOpsSignOff";
+            urls.push(href);
+          });
 
           // Send a message to the background script to open the tabs
           chrome.runtime.sendMessage({ action: "openTabs", urls: urls });
@@ -1126,9 +1123,7 @@ function BulkSignOffBoxes() {
       const tbody = document.querySelector("#supportServicesTable tbody");
       tbody.querySelectorAll("tr").forEach((row) => {
         if (!row.querySelector(".signoff-checkbox-container")) {
-          const signOffLink = row.querySelector(
-            'a[href^="https://surfcom.sls.com.au/log-service-off?log_id="]'
-          );
+          const signOffLink = row.querySelector('a[href^="https://surfcom.sls.com.au/log-service-off?log_id="]');
           const td = document.createElement("td");
           td.className = "signoff-checkbox-container";
           td.style.textAlign = "center";
@@ -3782,6 +3777,19 @@ window.addEventListener("load", function () {
   updateETATimes();
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 window.addEventListener("load", function () {
   const svgHTML = `
   <svg xmlns="http://www.w3.org/2000/svg" fill="cadetblue" class="bi bi-info-circle-fill" viewBox="0 0 16 17" style="cursor: pointer; vertical-align: top; display: block;">
@@ -3925,7 +3933,7 @@ window.addEventListener("load", function () {
             </label><br>
             <div id="taskingIssuesDetails" style="display:none;">
                 <label>Please describe the tasking issues: <span style="color: red;">*</span>
-                    <textarea name="taskingIssuesDetails" required></textarea>
+                    <textarea name="taskingIssuesDetails"></textarea>
                 </label><br>
             </div>
             <label>Activity at time of incident <span style="color: red;">*</span>
@@ -4453,13 +4461,10 @@ window.addEventListener("load", function () {
         const popup = window.open("", "", "width=600,height=600");
         popup.document.write(formHTML);
 
-        const taskingIssuesSelect =
-          popup.document.getElementById("taskingIssues");
-        const taskingIssuesDetailsDiv = popup.document.getElementById(
-          "taskingIssuesDetails"
-        );
+        const taskingIssuesSelect = popup.document.getElementById("taskingIssues");
+        const taskingIssuesDetailsDiv = popup.document.getElementById("taskingIssuesDetails");
 
-        taskingIssuesSelect.addEventListener("change", function () {
+        taskingIssuesSelect.addEventListener("change", function() {
           if (taskingIssuesSelect.value === "yes") {
             taskingIssuesDetailsDiv.style.display = "block";
           } else {
@@ -4502,10 +4507,7 @@ window.addEventListener("load", function () {
           formData.forEach((value, key) => {
             if (key === "subsequentClubsResponded") {
               if (newData.includes("subsequentClubsResponded")) {
-                newData = newData.replace(
-                  /subsequentClubsResponded: (.*),/,
-                  `subsequentClubsResponded: $1 | ${value},`
-                );
+                newData = newData.replace(/subsequentClubsResponded: (.*),/, `subsequentClubsResponded: $1 | ${value},`);
               } else {
                 newData += `${key}: ${value}, `;
               }
@@ -4514,12 +4516,18 @@ window.addEventListener("load", function () {
             }
           });
 
+          const taskingIssues = formData.get("taskingIssues");
+          if (taskingIssues === "yes") {
+            const taskingIssuesDetails = formData.get("taskingIssuesDetails");
+            newData += `taskingIssues: yes | ${taskingIssuesDetails}, `;
+          } else {
+            newData += `taskingIssues: no tasking issues, `;
+          }
+
           const sdoMatch = document
             .querySelector("#incidentSLSContact")
             .value.match(/([^ ]+) \(SDO\)/g);
-          const incidentSDO = sdoMatch
-            ? sdoMatch.map((sdo) => sdo.split(" ")[0]).join(" | ")
-            : "unknown SDO";
+          const incidentSDO = sdoMatch ? sdoMatch.map(sdo => sdo.split(" ")[0]).join(" | ") : "unknown SDO";
 
           const userMatch = document
             .querySelector(".dropdown-menu .dropdown-item p")
@@ -4588,6 +4596,19 @@ window.addEventListener("load", function () {
 
   observeCheckboxes();
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 window.addEventListener("load", function () {
   const checkbox = document.querySelector("#callerDetails13Surf");
@@ -4821,10 +4842,7 @@ function messageToPoliceMACExists() {
     ".direct-chat-msg .direct-chat-name"
   );
   for (let msg of chatMessages) {
-    if (
-      msg.textContent.includes("Surfcom to Police - Marine Area Command") ||
-      msg.textContent.includes("Police - Marine Area Command to Surfcom")
-    ) {
+    if (msg.textContent.includes("Surfcom to Police - Marine Area Command") || msg.textContent.includes("Police - Marine Area Command to Surfcom")) {
       return true;
     }
   }
@@ -5463,7 +5481,10 @@ function extractUsername() {
 function promptForUsername() {
   let firstInitial;
   do {
-    firstInitial = prompt("Please enter first initial:").replace(/\s+/g, "");
+    firstInitial = prompt("Please enter first initial:").replace(
+      /\s+/g,
+      ""
+    );
   } while (!firstInitial || firstInitial.length !== 1);
 
   let surname = prompt("Please enter surname:").replace(/\s+/g, "");
@@ -5571,12 +5592,11 @@ function insertRoleButtons() {
 
     let formGroupDiv = document.createElement("div");
     formGroupDiv.className = "form-group";
-
+    
     let label = document.createElement("label");
     label.htmlFor = "role-buttons";
-    label.innerHTML =
-      "Add user: <span style='font-size: small; font-style: italic;'>left-click for self, right-click for others</span>";
-
+    label.innerHTML = "Add user: <span style='font-size: small; font-style: italic;'>left-click for self, right-click for others</span>";
+    
     formGroupDiv.appendChild(label);
     formGroupDiv.appendChild(addButtonContainer);
     newColDiv.appendChild(formGroupDiv);
