@@ -2903,6 +2903,9 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
       : "Not available";
 
     const swellDirection = forecastDays[0].hour[0].swell_dir_16_point;
+    const swellHeightFt = forecastDays[0].hour[0].swell_ht_ft;
+    const swellHeightMt = forecastDays[0].hour[0].swell_ht_mt;
+    const swellPeriod = forecastDays[0].hour[0].swell_period_secs;
     const swellDirectionFull = convertCompassPoint(swellDirection);
 
     const sunriseTime = forecastData.forecast.forecastday[0].astro.sunrise;
@@ -2912,6 +2915,7 @@ function displayWeatherAndMarineData(weatherData, marineData, forecastData) {
           <div class="weather-detail"><strong>Current Temperature:</strong> <a href="#" style="color: blue;">${weatherData.current.temp_c}°C</a></div>
           <div class="weather-detail"><strong>Current Wind:</strong> <a href="#" style="color: blue;">${weatherData.current.wind_kph} kph</a></div>
           <div class="weather-detail"><strong>Swell Direction:</strong> <a href="#" style="color: blue;">${swellDirectionFull}</a></div>
+          <div class="weather-detail"><strong>Swell Height:</strong> <a href="#" style="color: blue;">${swellHeightFt}ft/${swellHeightMt}m @ ${swellPeriod}s</a></div>
           <div class="weather-detail"><strong>Current Tide:</strong> <a href="#" style="color: blue;">${currentTideInfo}</a></div>
           <div class="weather-detail"><strong>Next Tide:</strong> <a href="#" style="color: blue;">${nextTideInfo}</a></div>
           <div class="weather-detail"><strong>Sunrise:</strong> <a href="#" style="color: blue;">${sunriseTime}</a></div>
@@ -4035,33 +4039,6 @@ window.addEventListener("load", function () {
                     <option value="no">No</option>
                 </select>
             </label><br>
-            <label>Activity at time of incident <span style="color: red;">*</span>
-                <select name="activity" required>
-                    <option value="">Select...</option>
-                    <option value="swimming">Swimming</option>
-                    <option value="boating">Boating</option>
-                    <option value="tsunami">Tsunami</option>
-                    <option value="crowdControl">Crowd Control</option>
-                    <option value="debris">Debris</option>
-                    <option value="divingSnorkelling">Diving/Snorkelling</option>
-                    <option value="suicideSelfHarm">Suicide/Self Harm</option>
-                    <option value="environmental">Environmental</option>
-                    <option value="floodAssistance">Flood assistance</option>
-                    <option value="other">Other</option>
-                    <option value="rockFishing">Rockfishing</option>
-                    <option value="missingPersonLand">Missing Person - Land</option>
-                    <option value="sup">Surfcraft (non-powered) - SUP</option>
-                    <option value="kayak">Surfcraft (non-powered) - Kayak</option>
-                    <option value="surfing">Surfcraft (non-powered) - Surfing</option>
-                    <option value="windsurfer">Surfcraft (non-powered) - Windsurfer</option>
-                    <option value="parachuteParasail">Other - Parachute/parasail</option>
-                    <option value="lightAircraftCrash">Other - Light aircraft crash</option>
-                    <option value="landBasedObservation">Other - land based observation</option>
-                    <option value="aerialBasedObservation">Other - aerial based observation</option>
-                    <option value="rockCliffRelated">Rock/Cliff related</option>
-                    <option value="unknown">Unknown</option>
-                </select>
-            </label><br>
             <label>Informant Unit <span style="color: red;">*</span>
                 <select name="informantUnit" required>
                     <option value="">Select...</option>
@@ -4451,6 +4428,7 @@ window.addEventListener("load", function () {
                 </select>
             </label><br>
             <label>Other details as required <span style="color: red;">*</span>
+                <h5 style="margin-top: 2px; margin-bottom: 10px;">Include any other details that may be relevant to the incident, areas for improvement etc.</h5>
                 <textarea name="otherDetails" required style="width: 319px; height: 80px;">Nil Further</textarea>
             </label><br>
           `;
