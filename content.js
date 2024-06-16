@@ -1078,37 +1078,41 @@ function BulkSignOffBoxes() {
     const targetDiv = document.querySelector(targetDivSelector);
 
     if (targetDiv) {
-      // Check for the existence of the bulk sign-off button to prevent duplicates
       if (!document.querySelector(".bulk-sign-off-button")) {
         const bulkSignOffButton = document.createElement("button");
         bulkSignOffButton.innerText = "Bulk Sign Off Selected";
-        bulkSignOffButton.className = "btn btn-warning bulk-sign-off-button"; // Added class for identification
+        bulkSignOffButton.className = "btn btn-warning bulk-sign-off-button";
         bulkSignOffButton.style.marginTop = "10px";
         bulkSignOffButton.style.marginLeft = "10px";
-        bulkSignOffButton.disabled = true; // Initially disabled
+        bulkSignOffButton.disabled = true;
 
         function updateButtonState() {
-          const anyChecked =
-            document.querySelectorAll(".signoff-checkbox:checked").length > 0;
+          const anyChecked = document.querySelectorAll(".signoff-checkbox:checked").length > 0;
           bulkSignOffButton.disabled = !anyChecked;
           bulkSignOffButton.classList.toggle("btn-disabled", !anyChecked);
         }
 
         bulkSignOffButton.addEventListener("click", function () {
-          document
-            .querySelectorAll(".signoff-checkbox:checked")
-            .forEach((checkbox) => {
-              let href = checkbox.getAttribute("data-href");
-              href += "&bulkSupportOpsSignOff"; // Append the query parameter
-              window.open(href, "_blank");
-            });
+          const urls = [];
+          document.querySelectorAll(".signoff-checkbox:checked").forEach((checkbox) => {
+            let href = checkbox.getAttribute("data-href");
+            href += "&bulkSupportOpsSignOff";
+            urls.push(href);
+          });
+
+          // Send a message to the background script to open the tabs
+          chrome.runtime.sendMessage({ action: "openTabs", urls: urls });
+
+          // Refresh the page after the bulk sign-off process
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000); // Reload the page after 3 seconds
         });
 
         targetDiv.appendChild(bulkSignOffButton);
       }
 
       const thead = document.querySelector("#supportServicesTable thead tr");
-      // Ensure the "Sign Off" column is added only if it does not already exist
       if (!thead.querySelector(".select-checkbox-header")) {
         const th = document.createElement("th");
         th.innerText = "Sign Off";
@@ -1118,14 +1122,10 @@ function BulkSignOffBoxes() {
 
       const tbody = document.querySelector("#supportServicesTable tbody");
       tbody.querySelectorAll("tr").forEach((row) => {
-        // Only add checkbox or dash if it does not already exist
         if (!row.querySelector(".signoff-checkbox-container")) {
-          // Use a container div for identification
-          const signOffLink = row.querySelector(
-            'a[href^="https://surfcom.sls.com.au/log-service-off?log_id="]'
-          );
+          const signOffLink = row.querySelector('a[href^="https://surfcom.sls.com.au/log-service-off?log_id="]');
           const td = document.createElement("td");
-          td.className = "signoff-checkbox-container"; // Added class for identification
+          td.className = "signoff-checkbox-container";
           td.style.textAlign = "center";
 
           if (signOffLink) {
@@ -1144,16 +1144,12 @@ function BulkSignOffBoxes() {
         }
       });
 
-      // Update button state initially
       updateButtonState();
-    } else {
     }
   }
 }
 
-// Attach BulkSignOffBoxes to both load and click events as needed
 window.addEventListener("load", BulkSignOffBoxes);
-// Example of attaching to a specific clickable element, replace 'yourClickableElementSelector' with your actual selector
 document.addEventListener("click", BulkSignOffBoxes);
 
 // Function to replace "Organisation" with "Org"
@@ -3944,7 +3940,7 @@ window.addEventListener("load", function () {
                     <option value="crowdControl">Crowd Control</option>
                     <option value="debris">Debris</option>
                     <option value="divingSnorkelling">Diving/Snorkelling</option>
-                    <option value="suicideSelfHarm">Suicide/Self Harm</option>
+                    <option value="suicideSelfHarm">Mental Health/Suicide/Self Harm</option>
                     <option value="environmental">Environmental</option>
                     <option value="floodAssistance">Flood assistance</option>
                     <option value="other">Other</option>
@@ -4493,7 +4489,15 @@ window.addEventListener("load", function () {
           const formData = new FormData(this);
           let newData = "{{{";
           formData.forEach((value, key) => {
-            newData += `${key}: ${value}, `;
+            if (key === "subsequentClubsResponded") {
+              if (newData.includes("subsequentClubsResponded")) {
+                newData = newData.replace(/subsequentClubsResponded: (.*),/, `subsequentClubsResponded: $1 | ${value},`);
+              } else {
+                newData += `${key}: ${value}, `;
+              }
+            } else {
+              newData += `${key}: ${value}, `;
+            }
           });
 
           const sdoMatch = document
@@ -4568,6 +4572,7 @@ window.addEventListener("load", function () {
 
   observeCheckboxes();
 });
+
 
 
 

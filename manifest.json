@@ -27,7 +27,7 @@
     "128": "images/icon128.png"
   },
   "host_permissions": ["https://api.weatherapi.com/*"],
-  "permissions": ["sidePanel"],
+  "permissions": ["sidePanel", "tabs"],
   "side_panel": {
     "default_path": "sidepanel.html"
   },

@@ -1,6 +1,17 @@
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-  if (message.action == "openTab") {
-    chrome.tabs.create({ url: message.url });
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "openTabs" && message.urls) {
+    message.urls.forEach((url) => {
+      chrome.tabs.create({
+        url: url,
+        pinned: true,
+        active: false // Ensure the new tabs do not take focus
+      }, (tab) => {
+        // Set a timeout to close the tab after 5 seconds
+        setTimeout(() => {
+          chrome.tabs.remove(tab.id);
+        }, 10000);
+      });
+    });
   }
 });
 
