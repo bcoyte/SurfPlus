@@ -6241,3 +6241,39 @@ window.addEventListener("load", function () {
   applyToggleButtons2();
   observeMessageLog4();
 });
+
+function updateLocationField() {
+  const latInput = document.getElementById('incidentLatitude');
+  const lonInput = document.getElementById('incidentLongitude');
+  const locationInput = document.getElementById('incidentLocation');
+
+  if (latInput && lonInput && locationInput) {
+    const lat = latInput.value;
+    const lon = lonInput.value;
+
+    chrome.runtime.sendMessage({ type: 'getCouncil', lat: lat, lon: lon }, (response) => {
+      if (response && response.location) {
+        let currentText = locationInput.value;
+        const regex = / - \[.*\]$/;
+
+        if (regex.test(currentText)) {
+          currentText = currentText.replace(regex, ` - [${response.location}]`);
+        } else {
+          currentText += ` - [${response.location}]`;
+        }
+
+        locationInput.value = currentText;
+      }
+    });
+  }
+}
+
+// Run the check on window load
+window.addEventListener('load', function () {
+  updateLocationField();
+});
+
+// Add event listener for the button click
+document.querySelector('.btn.btn-app.check-incident-status').addEventListener('click', function () {
+  updateLocationField();
+});

@@ -85,3 +85,26 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     sendResponse({ version });
   }
 });
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === 'getCouncil') {
+    const apiKey = 'a72468e1e3234dc3b0543634242403';
+    const url = `https://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${message.lat},${message.lon}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          sendResponse({ location: data[0].name });
+        } else {
+          sendResponse({ location: 'No location found' });
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        sendResponse({ location: 'Error fetching data' });
+      });
+
+    return true;  // Will respond asynchronously.
+  }
+});
