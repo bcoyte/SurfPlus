@@ -1087,18 +1087,21 @@ function BulkSignOffBoxes() {
         bulkSignOffButton.disabled = true;
 
         function updateButtonState() {
-          const anyChecked = document.querySelectorAll(".signoff-checkbox:checked").length > 0;
+          const anyChecked =
+            document.querySelectorAll(".signoff-checkbox:checked").length > 0;
           bulkSignOffButton.disabled = !anyChecked;
           bulkSignOffButton.classList.toggle("btn-disabled", !anyChecked);
         }
 
         bulkSignOffButton.addEventListener("click", function () {
           const urls = [];
-          document.querySelectorAll(".signoff-checkbox:checked").forEach((checkbox) => {
-            let href = checkbox.getAttribute("data-href");
-            href += "&bulkSupportOpsSignOff";
-            urls.push(href);
-          });
+          document
+            .querySelectorAll(".signoff-checkbox:checked")
+            .forEach((checkbox) => {
+              let href = checkbox.getAttribute("data-href");
+              href += "&bulkSupportOpsSignOff";
+              urls.push(href);
+            });
 
           // Send a message to the background script to open the tabs
           chrome.runtime.sendMessage({ action: "openTabs", urls: urls });
@@ -1123,7 +1126,9 @@ function BulkSignOffBoxes() {
       const tbody = document.querySelector("#supportServicesTable tbody");
       tbody.querySelectorAll("tr").forEach((row) => {
         if (!row.querySelector(".signoff-checkbox-container")) {
-          const signOffLink = row.querySelector('a[href^="https://surfcom.sls.com.au/log-service-off?log_id="]');
+          const signOffLink = row.querySelector(
+            'a[href^="https://surfcom.sls.com.au/log-service-off?log_id="]'
+          );
           const td = document.createElement("td");
           td.className = "signoff-checkbox-container";
           td.style.textAlign = "center";
@@ -3777,19 +3782,6 @@ window.addEventListener("load", function () {
   updateETATimes();
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 window.addEventListener("load", function () {
   const svgHTML = `
   <svg xmlns="http://www.w3.org/2000/svg" fill="cadetblue" class="bi bi-info-circle-fill" viewBox="0 0 16 17" style="cursor: pointer; vertical-align: top; display: block;">
@@ -3838,7 +3830,7 @@ window.addEventListener("load", function () {
                 display: block;
                 margin-bottom: 10px;
             }
-            select, input[type="number"] {
+            select, input[type="number"], textarea {
                 width: calc(100% - 22px);
                 padding: 10px;
                 margin-top: 6px;
@@ -3925,12 +3917,17 @@ window.addEventListener("load", function () {
           formHTML += `
             <h2>Extra Information for 13SURF Database</h2>
             <label>Tasking Issues? <span style="color: red;">*</span>
-                <select name="taskingIssues" required>
+                <select name="taskingIssues" id="taskingIssues" required>
                     <option value="">Select...</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                 </select>
             </label><br>
+            <div id="taskingIssuesDetails" style="display:none;">
+                <label>Please describe the tasking issues: <span style="color: red;">*</span>
+                    <textarea name="taskingIssuesDetails" required></textarea>
+                </label><br>
+            </div>
             <label>Activity at time of incident <span style="color: red;">*</span>
                 <select name="activity" required>
                     <option value="">Select...</option>
@@ -4030,7 +4027,7 @@ window.addEventListener("load", function () {
                     <option value="no">No</option>
                 </select>
             </label><br>
-                        <label>Activity at time of incident <span style="color: red;">*</span>
+            <label>Activity at time of incident <span style="color: red;">*</span>
                 <select name="activity" required>
                     <option value="">Select...</option>
                     <option value="swimming">Swimming</option>
@@ -4456,6 +4453,20 @@ window.addEventListener("load", function () {
         const popup = window.open("", "", "width=600,height=600");
         popup.document.write(formHTML);
 
+        const taskingIssuesSelect =
+          popup.document.getElementById("taskingIssues");
+        const taskingIssuesDetailsDiv = popup.document.getElementById(
+          "taskingIssuesDetails"
+        );
+
+        taskingIssuesSelect.addEventListener("change", function () {
+          if (taskingIssuesSelect.value === "yes") {
+            taskingIssuesDetailsDiv.style.display = "block";
+          } else {
+            taskingIssuesDetailsDiv.style.display = "none";
+          }
+        });
+
         const textArea = document.querySelector(
           '.form-control[name="message"]'
         );
@@ -4491,7 +4502,10 @@ window.addEventListener("load", function () {
           formData.forEach((value, key) => {
             if (key === "subsequentClubsResponded") {
               if (newData.includes("subsequentClubsResponded")) {
-                newData = newData.replace(/subsequentClubsResponded: (.*),/, `subsequentClubsResponded: $1 | ${value},`);
+                newData = newData.replace(
+                  /subsequentClubsResponded: (.*),/,
+                  `subsequentClubsResponded: $1 | ${value},`
+                );
               } else {
                 newData += `${key}: ${value}, `;
               }
@@ -4503,7 +4517,9 @@ window.addEventListener("load", function () {
           const sdoMatch = document
             .querySelector("#incidentSLSContact")
             .value.match(/([^ ]+) \(SDO\)/g);
-          const incidentSDO = sdoMatch ? sdoMatch.map(sdo => sdo.split(" ")[0]).join(" | ") : "unknown SDO";
+          const incidentSDO = sdoMatch
+            ? sdoMatch.map((sdo) => sdo.split(" ")[0]).join(" | ")
+            : "unknown SDO";
 
           const userMatch = document
             .querySelector(".dropdown-menu .dropdown-item p")
@@ -4572,18 +4588,6 @@ window.addEventListener("load", function () {
 
   observeCheckboxes();
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 window.addEventListener("load", function () {
   const checkbox = document.querySelector("#callerDetails13Surf");
@@ -4817,7 +4821,10 @@ function messageToPoliceMACExists() {
     ".direct-chat-msg .direct-chat-name"
   );
   for (let msg of chatMessages) {
-    if (msg.textContent.includes("Surfcom to Police - Marine Area Command") || msg.textContent.includes("Police - Marine Area Command to Surfcom")) {
+    if (
+      msg.textContent.includes("Surfcom to Police - Marine Area Command") ||
+      msg.textContent.includes("Police - Marine Area Command to Surfcom")
+    ) {
       return true;
     }
   }
@@ -5456,10 +5463,7 @@ function extractUsername() {
 function promptForUsername() {
   let firstInitial;
   do {
-    firstInitial = prompt("Please enter first initial:").replace(
-      /\s+/g,
-      ""
-    );
+    firstInitial = prompt("Please enter first initial:").replace(/\s+/g, "");
   } while (!firstInitial || firstInitial.length !== 1);
 
   let surname = prompt("Please enter surname:").replace(/\s+/g, "");
@@ -5567,11 +5571,12 @@ function insertRoleButtons() {
 
     let formGroupDiv = document.createElement("div");
     formGroupDiv.className = "form-group";
-    
+
     let label = document.createElement("label");
     label.htmlFor = "role-buttons";
-    label.innerHTML = "Add user: <span style='font-size: small; font-style: italic;'>left-click for self, right-click for others</span>";
-    
+    label.innerHTML =
+      "Add user: <span style='font-size: small; font-style: italic;'>left-click for self, right-click for others</span>";
+
     formGroupDiv.appendChild(label);
     formGroupDiv.appendChild(addButtonContainer);
     newColDiv.appendChild(formGroupDiv);
