@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.13.0](https://github.com/rporteous1/SurfPlus/compare/v2.12.0...v2.13.0) (2024-06-16)
+
+
+### Features
+
+* :sparkles: added council to auto append to location field ([09e10f4](https://github.com/rporteous1/SurfPlus/commit/09e10f41e1b40203efa8bbc94cb3d70e379aa868))
+
 ## [2.12.0](https://github.com/rporteous1/SurfPlus/compare/v2.11.4...v2.12.0) (2024-06-16)
 
 
