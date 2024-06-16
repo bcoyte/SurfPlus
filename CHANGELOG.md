@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.12.0](https://github.com/rporteous1/SurfPlus/compare/v2.11.4...v2.12.0) (2024-06-16)
+
+
+### Features
+
+* :sparkles: added qol functionality to bulk sign off ([b6f63da](https://github.com/rporteous1/SurfPlus/commit/b6f63daf0e697f5376ef5ded4d9de8a6b2b3a9c5))
+* :sparkles: added swell height and period to weather display ([b82e9e5](https://github.com/rporteous1/SurfPlus/commit/b82e9e503bec9942e066dc48431d5fc25d86261a))
+
+
+### Bug Fixes
+
+* :construction_worker: qol changes for 13surf popup ([8991467](https://github.com/rporteous1/SurfPlus/commit/89914678a2d5f83df57d615c9b0a2fc969b8df8e))
+
 ## [2.11.4](https://github.com/rporteous1/SurfPlus/compare/v2.11.3...v2.11.4) (2024-06-15)
 
 
