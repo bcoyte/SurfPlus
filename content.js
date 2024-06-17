@@ -6752,6 +6752,8 @@ window.addEventListener("load", function () {
       matchingUnit: "Woonona",
     },
     { mailingGroup: "Yamba Emergency Call Out Team", matchingUnit: "Yamba" },
+    { mailingGroup: "SurfPlus Testing", matchingUnit: "Test NSW Lifeguards" },
+    { mailingGroup: "SOC DEMO Notifications", matchingUnit: "Test NSW Club" },
   ];
 
   // Function to check if any of the mailingGroup items exist in the table with "Attending" in the same row
@@ -6832,4 +6834,245 @@ window.addEventListener("load", function () {
 
   // Run the check function
   checkForMailingGroup();
+});
+
+window.addEventListener("load", function () {
+  const pairing = [
+    { matchingUnit: "Austinmer", irb: "* - IRB (Austinmer)" },
+    { matchingUnit: "Avalon Beach", irb: "* - IRB (Avalon Beach)" },
+    { matchingUnit: "Avoca Beach", irb: "* - IRB (Avoca Beach)" },
+    {
+      matchingUnit: "Ballina Lighthouse and Lismore SLSC",
+      irb: "* - IRB (Ballina Lighthouse and Lismore SLSC)",
+    },
+    { matchingUnit: "Batemans Bay", irb: "* - IRB (Batemans Bay)" },
+    { matchingUnit: "Bellambi", irb: "* - IRB (Bellambi)" },
+    {
+      matchingUnit: "Bellinger Valley-North Beach SLSC",
+      irb: "* - IRB (Bellinger Valley-North Beach SLSC)",
+    },
+    { matchingUnit: "Bermagui", irb: "* - IRB (Bermagui)" },
+    { matchingUnit: "Bilgola Beach", irb: "* - IRB (Bilgola Beach)" },
+    { matchingUnit: "Birubi Point", irb: "* - IRB (Birubi Point)" },
+    { matchingUnit: "Black Head", irb: "* - IRB (Black Head)" },
+    { matchingUnit: "Bondi", irb: "* - IRB (Bondi)" },
+    { matchingUnit: "Bonny Hills", irb: "* - IRB (Bonny Hills)" },
+    { matchingUnit: "Bronte", irb: "* - IRB (Bronte)" },
+    { matchingUnit: "Broulee Surfers", irb: "* - IRB (Broulee Surfers)" },
+    { matchingUnit: "Brunswick", irb: "* - IRB (Brunswick)" },
+    { matchingUnit: "Bulli", irb: "* - IRB (Bulli)" },
+    { matchingUnit: "Bungan Beach", irb: "* - IRB (Bungan Beach)" },
+    { matchingUnit: "Burning Palms", irb: "* - IRB (Burning Palms)" },
+    { matchingUnit: "Byron Bay", irb: "* - IRB (Byron Bay)" },
+    { matchingUnit: "Cabarita Beach", irb: "* - IRB (Cabarita Beach)" },
+    { matchingUnit: "Camden Haven", irb: "* - IRB (Camden Haven)" },
+    { matchingUnit: "Cape Hawke", irb: "* - IRB (Cape Hawke)" },
+    { matchingUnit: "Catherine Hill Bay", irb: "* - IRB (Catherine Hill Bay)" },
+    { matchingUnit: "Caves Beach", irb: "* - IRB (Caves Beach)" },
+    { matchingUnit: "Clovelly", irb: "* - IRB (Clovelly)" },
+    { matchingUnit: "Coalcliff", irb: "* - IRB (Coalcliff)" },
+    { matchingUnit: "Coffs Harbour", irb: "* - IRB (Coffs Harbour)" },
+    { matchingUnit: "Coledale", irb: "* - IRB (Coledale)" },
+    { matchingUnit: "Collaroy", irb: "* - IRB (Collaroy)" },
+    { matchingUnit: "Coogee (NSW)", irb: "* - IRB (Coogee)" },
+    { matchingUnit: "Cooks Hill", irb: "* - IRB (Cooks Hill)" },
+    { matchingUnit: "Copacabana", irb: "* - IRB (Copacabana)" },
+    { matchingUnit: "Corrimal", irb: "* - IRB (Corrimal)" },
+    { matchingUnit: "Cronulla", irb: "* - IRB (Cronulla)" },
+    { matchingUnit: "Crowdy Head", irb: "* - IRB (Crowdy Head)" },
+    { matchingUnit: "Cudgen Headland", irb: "* - IRB (Cudgen Headland)" },
+    { matchingUnit: "Dee Why", irb: "* - IRB (Dee Why)" },
+    { matchingUnit: "Dixon Park", irb: "* - IRB (Dixon Park)" },
+    { matchingUnit: "Elouera", irb: "* - IRB (Elouera)" },
+    { matchingUnit: "Era", irb: "* - IRB (Era)" },
+    {
+      matchingUnit: "Evans Head/Casino SLSC",
+      irb: "* - IRB (Evans Head/Casino SLSC)",
+    },
+    { matchingUnit: "Fairy Meadow", irb: "* - IRB (Fairy Meadow)" },
+    { matchingUnit: "Fingal Beach", irb: "* - IRB (Fingal Beach)" },
+    { matchingUnit: "Fingal Rovers", irb: "* - IRB (Fingal Rovers)" },
+    { matchingUnit: "Forster", irb: "* - IRB (Forster)" },
+    { matchingUnit: "Freshwater", irb: "* - IRB (Freshwater)" },
+    { matchingUnit: "Garie", irb: "* - IRB (Garie)" },
+    { matchingUnit: "Gerringong", irb: "* - IRB (Gerringong)" },
+    { matchingUnit: "Hat Head", irb: "* - IRB (Hat Head)" },
+    {
+      matchingUnit: "Helensburgh Stanwell Park",
+      irb: "* - IRB (Helensburgh Stanwell Park)",
+    },
+    {
+      matchingUnit: "Kempsey Crescent Head",
+      irb: "* - IRB (Kempsey Crescent Head)",
+    },
+    { matchingUnit: "Kiama Downs", irb: "* - IRB (Kiama Downs)" },
+    { matchingUnit: "Kiama", irb: "* - IRB (Kiama)" },
+    { matchingUnit: "Killcare", irb: "* - IRB (Killcare)" },
+    {
+      matchingUnit: "Lake Cathie Beach (Lifeguards)",
+      irb: "* - IRB (Lake Cathie Beach)",
+    },
+    {
+      matchingUnit: "Lennox Head Alstonville",
+      irb: "* - IRB (Lennox Head Alstonville)",
+    },
+    { matchingUnit: "Long Reef", irb: "* - IRB (Long Reef)" },
+    { matchingUnit: "MacMasters", irb: "* - IRB (MacMasters)" },
+    {
+      matchingUnit: "Macksville-Scotts Head",
+      irb: "* - IRB (Macksville-Scotts Head)",
+    },
+    { matchingUnit: "Manly", irb: "* - IRB (Manly)" },
+    { matchingUnit: "Maroubra", irb: "* - IRB (Maroubra)" },
+    { matchingUnit: "Merewether", irb: "* - IRB (Merewether)" },
+    { matchingUnit: "Minnie Water Wooli", irb: "* - IRB (Minnie Water Wooli)" },
+    { matchingUnit: "Mollymook", irb: "* - IRB (Mollymook)" },
+    { matchingUnit: "Mona Vale", irb: "* - IRB (Mona Vale)" },
+    { matchingUnit: "Moruya", irb: "* - IRB (Moruya)" },
+    { matchingUnit: "Nambucca Heads", irb: "* - IRB (Nambucca Heads)" },
+    { matchingUnit: "Narooma", irb: "* - IRB (Narooma)" },
+    { matchingUnit: "Narrabeen", irb: "* - IRB (Narrabeen)" },
+    { matchingUnit: "Newcastle", irb: "* - IRB (Newcastle)" },
+    { matchingUnit: "Newport", irb: "* - IRB (Newport)" },
+    { matchingUnit: "Nobbys (NSW)", irb: "* - IRB (Nobbys)" },
+    { matchingUnit: "North Avoca", irb: "* - IRB (North Avoca)" },
+    { matchingUnit: "North Bondi", irb: "* - IRB (North Bondi)" },
+    { matchingUnit: "North Cronulla", irb: "* - IRB (North Cronulla)" },
+    { matchingUnit: "North Curl Curl", irb: "* - IRB (North Curl Curl)" },
+    { matchingUnit: "North Entrance", irb: "* - IRB (North Entrance)" },
+    { matchingUnit: "North Narrabeen", irb: "* - IRB (North Narrabeen)" },
+    { matchingUnit: "North Palm Beach", irb: "* - IRB (North Palm Beach)" },
+    { matchingUnit: "North Steyne", irb: "* - IRB (North Steyne)" },
+    { matchingUnit: "North Wollongong", irb: "* - IRB (North Wollongong)" },
+    { matchingUnit: "Nowra Culburra", irb: "* - IRB (Nowra Culburra)" },
+    { matchingUnit: "Ocean Beach", irb: "* - IRB (Ocean Beach)" },
+    { matchingUnit: "Pacific Palms", irb: "* - IRB (Pacific Palms)" },
+    { matchingUnit: "Palm Beach", irb: "* - IRB (Palm Beach)" },
+    { matchingUnit: "Pambula", irb: "* - IRB (Pambula)" },
+    { matchingUnit: "Port Kembla", irb: "* - IRB (Port Kembla)" },
+    { matchingUnit: "Port Macquarie", irb: "* - IRB (Port Macquarie)" },
+    { matchingUnit: "Queenscliff", irb: "* - IRB (Queenscliff)" },
+    { matchingUnit: "Red Rock Corindi", irb: "* - IRB (Red Rock Corindi)" },
+    { matchingUnit: "Redhead", irb: "* - IRB (Redhead)" },
+    { matchingUnit: "Salt", irb: "* - IRB (Salt)" },
+    { matchingUnit: "Sandon Point", irb: "* - IRB (Sandon Point)" },
+    { matchingUnit: "Sawtell", irb: "* - IRB (Sawtell)" },
+    {
+      matchingUnit: "Scarborough Wombarra",
+      irb: "* - IRB (Scarborough Wombarra)",
+    },
+    { matchingUnit: "Shellharbour", irb: "* - IRB (Shellharbour)" },
+    { matchingUnit: "Shelly Beach", irb: "* - IRB (Shelly Beach)" },
+    { matchingUnit: "Soldiers Beach", irb: "* - IRB (Soldiers Beach)" },
+    { matchingUnit: "South Curl Curl", irb: "* - IRB (South Curl Curl)" },
+    { matchingUnit: "South Maroubra", irb: "* - IRB (South Maroubra)" },
+    { matchingUnit: "South Narrabeen", irb: "* - IRB (South Narrabeen)" },
+    { matchingUnit: "South West Rocks", irb: "* - IRB (South West Rocks)" },
+    { matchingUnit: "Stockton", irb: "* - IRB (Stockton)" },
+    { matchingUnit: "Sussex Inlet", irb: "* - IRB (Sussex Inlet)" },
+    { matchingUnit: "Swansea Belmont", irb: "* - IRB (Swansea Belmont)" },
+    { matchingUnit: "Tacking Point", irb: "* - IRB (Tacking Point)" },
+    { matchingUnit: "Tamarama", irb: "* - IRB (Tamarama)" },
+    { matchingUnit: "Taree Old Bar", irb: "* - IRB (Taree Old Bar)" },
+    { matchingUnit: "Tathra", irb: "* - IRB (Tathra)" },
+    {
+      matchingUnit: "Tea Gardens Hawks Nest",
+      irb: "* - IRB (Tea Gardens Hawks Nest)",
+    },
+    { matchingUnit: "Terrigal", irb: "* - IRB (Terrigal)" },
+    { matchingUnit: "The Entrance", irb: "* - IRB (The Entrance)" },
+    { matchingUnit: "The Lakes", irb: "* - IRB (The Lakes)" },
+    { matchingUnit: "Thirroul", irb: "* - IRB (Thirroul)" },
+    { matchingUnit: "Toowoon Bay", irb: "* - IRB (Toowoon Bay)" },
+    { matchingUnit: "Town Beach (Lifeguards)", irb: "* - IRB (Town Beach)" },
+    { matchingUnit: "Towradgi", irb: "* - IRB (Towradgi)" },
+    {
+      matchingUnit: "Tuross Heads (Lifeguards)",
+      irb: "* - IRB (Tuross Heads)",
+    },
+    { matchingUnit: "Umina", irb: "* - IRB (Umina)" },
+    { matchingUnit: "Urunga", irb: "* - IRB (Urunga)" },
+    { matchingUnit: "Wamberal", irb: "* - IRB (Wamberal)" },
+    { matchingUnit: "Wanda", irb: "* - IRB (Wanda)" },
+    {
+      matchingUnit: "Warilla Barrack Point",
+      irb: "* - IRB (Warilla Barrack Point)",
+    },
+    { matchingUnit: "Warriewood", irb: "* - IRB (Warriewood)" },
+    {
+      matchingUnit: "Wauchope Bonny Hills",
+      irb: "* - IRB (Wauchope Bonny Hills)",
+    },
+    { matchingUnit: "Whale Beach", irb: "* - IRB (Whale Beach)" },
+    { matchingUnit: "Windang", irb: "* - IRB (Windang)" },
+    { matchingUnit: "Wollongong City", irb: "* - IRB (Wollongong City)" },
+    { matchingUnit: "Woolgoolga", irb: "* - IRB (Woolgoolga)" },
+    { matchingUnit: "Woonona", irb: "* - IRB (Woonona)" },
+    { matchingUnit: "Yamba", irb: "* - IRB (Yamba)" },
+    {
+      matchingUnit: "Test NSW Lifeguards",
+      irb: "* - IRB (Test NSW Lifeguards)",
+    },
+    { matchingUnit: "Test NSW Club", irb: "* - IRB (Test NSW Club)" },
+  ];
+
+  function addIRBColumn() {
+    const table = document.querySelector("#servicesTable"); // Select the table element
+    if (!table) return;
+
+    const headers = table.querySelectorAll("thead th");
+    const headerRow = headers[headers.length - 1].parentNode; // Get the header row
+
+    // Add new header for "Add IRB"
+    const addIRBHeader = document.createElement("th");
+    addIRBHeader.innerText = "Add IRB";
+    headerRow.appendChild(addIRBHeader);
+
+    // Add IRB button to each row
+    const rows = table.querySelectorAll("tbody tr");
+    rows.forEach((row) => {
+      const unitCell = row.cells[1]; // Assuming the unit name is in the second cell
+      const unitName = unitCell.innerText.trim();
+
+      // Find the matching IRB for the unit
+      const match = pairing.find((p) => p.matchingUnit === unitName);
+      if (match) {
+        const cell = document.createElement("td");
+        const button = document.createElement("button");
+
+        button.innerText = "Add IRB";
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          const selectedIRB = match.irb;
+          const addUnitDropdown = document.querySelector("#add_unit_list");
+
+          // Select the relevant IRB from the dropdown
+          for (let i = 0; i < addUnitDropdown.options.length; i++) {
+            if (
+              addUnitDropdown.options[i].text.includes(
+                selectedIRB.replace("* - ", "")
+              )
+            ) {
+              addUnitDropdown.selectedIndex = i;
+              break;
+            }
+          }
+
+          // Click the correct "Add Unit" button
+          document
+            .querySelector(".btn.btn-primary.add_unit_quick.float-right")
+            .click();
+        });
+
+        cell.appendChild(button);
+        row.appendChild(cell);
+      } else {
+        const cell = document.createElement("td");
+        row.appendChild(cell); // Add an empty cell if no match is found
+      }
+    });
+  }
+
+  addIRBColumn();
 });
