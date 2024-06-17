@@ -6262,7 +6262,7 @@ function updateLocationField() {
   }
 }
 
-// Run the check on window load
+// Run the check on window load.
 window.addEventListener("load", function () {
   updateLocationField();
 });
