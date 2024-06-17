@@ -1087,18 +1087,21 @@ function BulkSignOffBoxes() {
         bulkSignOffButton.disabled = true;
 
         function updateButtonState() {
-          const anyChecked = document.querySelectorAll(".signoff-checkbox:checked").length > 0;
+          const anyChecked =
+            document.querySelectorAll(".signoff-checkbox:checked").length > 0;
           bulkSignOffButton.disabled = !anyChecked;
           bulkSignOffButton.classList.toggle("btn-disabled", !anyChecked);
         }
 
         bulkSignOffButton.addEventListener("click", function () {
           const urls = [];
-          document.querySelectorAll(".signoff-checkbox:checked").forEach((checkbox) => {
-            let href = checkbox.getAttribute("data-href");
-            href += "&bulkSupportOpsSignOff";
-            urls.push(href);
-          });
+          document
+            .querySelectorAll(".signoff-checkbox:checked")
+            .forEach((checkbox) => {
+              let href = checkbox.getAttribute("data-href");
+              href += "&bulkSupportOpsSignOff";
+              urls.push(href);
+            });
 
           // Send a message to the background script to open the tabs
           chrome.runtime.sendMessage({ action: "openTabs", urls: urls });
@@ -1123,7 +1126,9 @@ function BulkSignOffBoxes() {
       const tbody = document.querySelector("#supportServicesTable tbody");
       tbody.querySelectorAll("tr").forEach((row) => {
         if (!row.querySelector(".signoff-checkbox-container")) {
-          const signOffLink = row.querySelector('a[href^="https://surfcom.sls.com.au/log-service-off?log_id="]');
+          const signOffLink = row.querySelector(
+            'a[href^="https://surfcom.sls.com.au/log-service-off?log_id="]'
+          );
           const td = document.createElement("td");
           td.className = "signoff-checkbox-container";
           td.style.textAlign = "center";
@@ -3781,19 +3786,6 @@ window.addEventListener("load", function () {
   updateETATimes();
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 window.addEventListener("load", function () {
   const svgHTML = `
   <svg xmlns="http://www.w3.org/2000/svg" fill="cadetblue" class="bi bi-info-circle-fill" viewBox="0 0 16 17" style="cursor: pointer; vertical-align: top; display: block;">
@@ -4439,10 +4431,13 @@ window.addEventListener("load", function () {
         const popup = window.open("", "", "width=600,height=600");
         popup.document.write(formHTML);
 
-        const taskingIssuesSelect = popup.document.getElementById("taskingIssues");
-        const taskingIssuesDetailsDiv = popup.document.getElementById("taskingIssuesDetails");
+        const taskingIssuesSelect =
+          popup.document.getElementById("taskingIssues");
+        const taskingIssuesDetailsDiv = popup.document.getElementById(
+          "taskingIssuesDetails"
+        );
 
-        taskingIssuesSelect.addEventListener("change", function() {
+        taskingIssuesSelect.addEventListener("change", function () {
           if (taskingIssuesSelect.value === "yes") {
             taskingIssuesDetailsDiv.style.display = "block";
           } else {
@@ -4485,7 +4480,10 @@ window.addEventListener("load", function () {
           formData.forEach((value, key) => {
             if (key === "subsequentClubsResponded") {
               if (newData.includes("subsequentClubsResponded")) {
-                newData = newData.replace(/subsequentClubsResponded: (.*),/, `subsequentClubsResponded: $1 | ${value},`);
+                newData = newData.replace(
+                  /subsequentClubsResponded: (.*),/,
+                  `subsequentClubsResponded: $1 | ${value},`
+                );
               } else {
                 newData += `${key}: ${value}, `;
               }
@@ -4505,7 +4503,9 @@ window.addEventListener("load", function () {
           const sdoMatch = document
             .querySelector("#incidentSLSContact")
             .value.match(/([^ ]+) \(SDO\)/g);
-          const incidentSDO = sdoMatch ? sdoMatch.map(sdo => sdo.split(" ")[0]).join(" | ") : "unknown SDO";
+          const incidentSDO = sdoMatch
+            ? sdoMatch.map((sdo) => sdo.split(" ")[0]).join(" | ")
+            : "unknown SDO";
 
           const userMatch = document
             .querySelector(".dropdown-menu .dropdown-item p")
@@ -4574,19 +4574,6 @@ window.addEventListener("load", function () {
 
   observeCheckboxes();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 window.addEventListener("load", function () {
   const checkbox = document.querySelector("#callerDetails13Surf");
@@ -4820,7 +4807,10 @@ function messageToPoliceMACExists() {
     ".direct-chat-msg .direct-chat-name"
   );
   for (let msg of chatMessages) {
-    if (msg.textContent.includes("Surfcom to Police - Marine Area Command") || msg.textContent.includes("Police - Marine Area Command to Surfcom")) {
+    if (
+      msg.textContent.includes("Surfcom to Police - Marine Area Command") ||
+      msg.textContent.includes("Police - Marine Area Command to Surfcom")
+    ) {
       return true;
     }
   }
@@ -5459,10 +5449,7 @@ function extractUsername() {
 function promptForUsername() {
   let firstInitial;
   do {
-    firstInitial = prompt("Please enter first initial:").replace(
-      /\s+/g,
-      ""
-    );
+    firstInitial = prompt("Please enter first initial:").replace(/\s+/g, "");
   } while (!firstInitial || firstInitial.length !== 1);
 
   let surname = prompt("Please enter surname:").replace(/\s+/g, "");
@@ -5570,11 +5557,12 @@ function insertRoleButtons() {
 
     let formGroupDiv = document.createElement("div");
     formGroupDiv.className = "form-group";
-    
+
     let label = document.createElement("label");
     label.htmlFor = "role-buttons";
-    label.innerHTML = "Add user: <span style='font-size: small; font-style: italic;'>left-click for self, right-click for others</span>";
-    
+    label.innerHTML =
+      "Add user: <span style='font-size: small; font-style: italic;'>left-click for self, right-click for others</span>";
+
     formGroupDiv.appendChild(label);
     formGroupDiv.appendChild(addButtonContainer);
     newColDiv.appendChild(formGroupDiv);
@@ -6243,37 +6231,605 @@ window.addEventListener("load", function () {
 });
 
 function updateLocationField() {
-  const latInput = document.getElementById('incidentLatitude');
-  const lonInput = document.getElementById('incidentLongitude');
-  const locationInput = document.getElementById('incidentLocation');
+  const latInput = document.getElementById("incidentLatitude");
+  const lonInput = document.getElementById("incidentLongitude");
+  const locationInput = document.getElementById("incidentLocation");
 
   if (latInput && lonInput && locationInput) {
     const lat = latInput.value;
     const lon = lonInput.value;
 
-    chrome.runtime.sendMessage({ type: 'getCouncil', lat: lat, lon: lon }, (response) => {
-      if (response && response.location) {
-        let currentText = locationInput.value;
-        const regex = / - \[.*\]$/;
+    chrome.runtime.sendMessage(
+      { type: "getCouncil", lat: lat, lon: lon },
+      (response) => {
+        if (response && response.location) {
+          let currentText = locationInput.value;
+          const regex = / - \[.*\]$/;
 
-        if (regex.test(currentText)) {
-          currentText = currentText.replace(regex, ` - [${response.location}]`);
-        } else {
-          currentText += ` - [${response.location}]`;
+          if (regex.test(currentText)) {
+            currentText = currentText.replace(
+              regex,
+              ` - [${response.location}]`
+            );
+          } else {
+            currentText += ` - [${response.location}]`;
+          }
+
+          locationInput.value = currentText;
         }
-
-        locationInput.value = currentText;
       }
-    });
+    );
   }
 }
 
-// // Run the check on window load
-// window.addEventListener('load', function () {
-//   updateLocationField();
-// });
-
-// Add event listener for the button click
-document.querySelector('.btn.btn-app.check-incident-status').addEventListener('click', function () {
+// Run the check on window load
+window.addEventListener("load", function () {
   updateLocationField();
+});
+
+window.addEventListener("load", function () {
+  const pairing = [
+    {
+      mailingGroup: "Austinmer Emergency Call Out Team",
+      matchingUnit: "Austinmer",
+    },
+    {
+      mailingGroup: "Avalon Beach Emergency Call Out Team",
+      matchingUnit: "Avalon Beach",
+    },
+    {
+      mailingGroup: "Avoca Beach Emergency Call Out Team",
+      matchingUnit: "Avoca Beach",
+    },
+    {
+      mailingGroup: "Ballina Lighthouse Emergency Call Out Team",
+      matchingUnit: "Ballina Lighthouse and Lismore SLSC",
+    },
+    {
+      mailingGroup: "Batemans Bay Emergency Call Out Team",
+      matchingUnit: "Batemans Bay",
+    },
+    {
+      mailingGroup: "Bellambi Emergency Call Out Team",
+      matchingUnit: "Bellambi",
+    },
+    {
+      mailingGroup: "Bellinger Valley-North Beach Emergency Call Out Team",
+      matchingUnit: "Bellinger Valley-North Beach SLSC",
+    },
+    {
+      mailingGroup: "Bermagui Emergency Call Out Team",
+      matchingUnit: "Bermagui",
+    },
+    {
+      mailingGroup: "Bilgola Beach Emergency Call Out Team",
+      matchingUnit: "Bilgola Beach",
+    },
+    {
+      mailingGroup: "Birubi Emergency Call Out Team",
+      matchingUnit: "Birubi Point",
+    },
+    { mailingGroup: "Black Head Call Out Team", matchingUnit: "Black Head" },
+    { mailingGroup: "Bondi Emergency Call Out Team", matchingUnit: "Bondi" },
+    {
+      mailingGroup: "Bonny Hills Lifeguard RWCCall Out Team",
+      matchingUnit: "Bonny Hills",
+    },
+    { mailingGroup: "Bronte Emergency Call Out Team", matchingUnit: "Bronte" },
+    {
+      mailingGroup: "Broulee Surfers Emergency Call Out Team",
+      matchingUnit: "Broulee Surfers",
+    },
+    {
+      mailingGroup: "Brunswick Emergency Call Out Team",
+      matchingUnit: "Brunswick",
+    },
+    { mailingGroup: "Bulli Emergency Call Out Team", matchingUnit: "Bulli" },
+    {
+      mailingGroup: "Bungan Beach Emergency Call Out Team",
+      matchingUnit: "Bungan Beach",
+    },
+    {
+      mailingGroup: "Burning Palms Emergency Call Out Team",
+      matchingUnit: "Burning Palms",
+    },
+    {
+      mailingGroup: "Byron Bay Emergency Call Out Team",
+      matchingUnit: "Byron Bay",
+    },
+    {
+      mailingGroup: "Cabarita Beach Emergency Call Out Team",
+      matchingUnit: "Cabarita Beach",
+    },
+    {
+      mailingGroup: "Camden Haven Emergency Call Out Team",
+      matchingUnit: "Camden Haven",
+    },
+    {
+      mailingGroup: "Cape Hawke Emergency Call Out Team",
+      matchingUnit: "Cape Hawke",
+    },
+    {
+      mailingGroup: "Catherine Hill Bay Emergency Call Out Team",
+      matchingUnit: "Catherine Hill Bay",
+    },
+    {
+      mailingGroup: "Caves Beach Emergency Call Out Team",
+      matchingUnit: "Caves Beach",
+    },
+    {
+      mailingGroup: "Clovelly Emergency Call Out Team",
+      matchingUnit: "Clovelly",
+    },
+    {
+      mailingGroup: "Coalcliff Emergency Call Out Team",
+      matchingUnit: "Coalcliff",
+    },
+    {
+      mailingGroup: "Coffs Harbour Emergency Call Out Team",
+      matchingUnit: "Coffs Harbour",
+    },
+    {
+      mailingGroup: "Coledale Emergency Call Out Team",
+      matchingUnit: "Coledale",
+    },
+    {
+      mailingGroup: "Collaroy Emergency Call Out Team",
+      matchingUnit: "Collaroy",
+    },
+    {
+      mailingGroup: "Coogee Emergency Call Out Team",
+      matchingUnit: "Coogee (NSW)",
+    },
+    {
+      mailingGroup: "Cooks Hill Emergency Call Out Team",
+      matchingUnit: "Cooks Hill",
+    },
+    {
+      mailingGroup: "Copacabana Emergency Call Out Team",
+      matchingUnit: "Copacabana",
+    },
+    {
+      mailingGroup: "Corrimal Emergency Call Out Team",
+      matchingUnit: "Corrimal",
+    },
+    {
+      mailingGroup: "Cronulla Emergency Call Out Team",
+      matchingUnit: "Cronulla",
+    },
+    {
+      mailingGroup: "Crowdy Head Emergency Call Out Team",
+      matchingUnit: "Crowdy Head",
+    },
+    {
+      mailingGroup: "Cudgen Headland Emergency Call Out Team",
+      matchingUnit: "Cudgen Headland",
+    },
+    {
+      mailingGroup: "Dee Why Emergency Call Out Team",
+      matchingUnit: "Dee Why",
+    },
+    {
+      mailingGroup: "Dixon Park Emergency Call Out Team",
+      matchingUnit: "Dixon Park",
+    },
+    {
+      mailingGroup: "Elouera Emergency Call Out Team",
+      matchingUnit: "Elouera",
+    },
+    { mailingGroup: "Era Emergency Call Out Team", matchingUnit: "Era" },
+    {
+      mailingGroup: "Evans Head/Casino Emergency Call Out Team",
+      matchingUnit: "Evans Head/Casino SLSC",
+    },
+    {
+      mailingGroup: "Fairy Meadow Emergency Call Out Team",
+      matchingUnit: "Fairy Meadow",
+    },
+    {
+      mailingGroup: "Fingal Beach Emergency Call Out Team",
+      matchingUnit: "Fingal Beach",
+    },
+    {
+      mailingGroup: "Fingal Rovers Emergency Call Out Team",
+      matchingUnit: "Fingal Rovers",
+    },
+    {
+      mailingGroup: "Forster Emergency Call Out Team",
+      matchingUnit: "Forster",
+    },
+    {
+      mailingGroup: "Freshwater Emergency Call Out Team",
+      matchingUnit: "Freshwater",
+    },
+    { mailingGroup: "Garie Emergency Call Out Team", matchingUnit: "Garie" },
+    {
+      mailingGroup: "Gerringong Emergency Call Out Team",
+      matchingUnit: "Gerringong",
+    },
+    {
+      mailingGroup: "Hat Head Emergency Call Out Team",
+      matchingUnit: "Hat Head",
+    },
+    {
+      mailingGroup: "Helensburgh Stanwell Park Emergency Call Out Team",
+      matchingUnit: "Helensburgh Stanwell Park",
+    },
+    {
+      mailingGroup: "Kempsey Crescent Head Emergency Call Out Team",
+      matchingUnit: "Kempsey Crescent Head",
+    },
+    {
+      mailingGroup: "Kiama Downs Emergency Call Out Team",
+      matchingUnit: "Kiama Downs",
+    },
+    { mailingGroup: "Kiama Emergency Call Out Team", matchingUnit: "Kiama" },
+    {
+      mailingGroup: "Killcare Emergency Call Out Team",
+      matchingUnit: "Killcare",
+    },
+    {
+      mailingGroup: "Lake Cathie LG Emergency Call Out Team",
+      matchingUnit: "Lake Cathie Beach (Lifeguards)",
+    },
+    {
+      mailingGroup: "Lennox Head Alstonville Emergency Call Out Team",
+      matchingUnit: "Lennox Head Alstonville",
+    },
+    {
+      mailingGroup: "Long Reef Emergency Call Out Team",
+      matchingUnit: "Long Reef",
+    },
+    {
+      mailingGroup: "MacMasters Emergency Call Out Team",
+      matchingUnit: "MacMasters",
+    },
+    {
+      mailingGroup: "Macksville Scotts Head Emergency Call Out Team",
+      matchingUnit: "Macksville-Scotts Head",
+    },
+    { mailingGroup: "Manly Emergency Call Out Team", matchingUnit: "Manly" },
+    {
+      mailingGroup: "Maroubra Emergency Call Out Team",
+      matchingUnit: "Maroubra",
+    },
+    {
+      mailingGroup: "Merewether Emergency Call Out Team",
+      matchingUnit: "Merewether",
+    },
+    {
+      mailingGroup: "Minnie Water Wooli Emergency Call Out Team",
+      matchingUnit: "Minnie Water Wooli",
+    },
+    {
+      mailingGroup: "Mollymook Emergency Call Out Team",
+      matchingUnit: "Mollymook",
+    },
+    {
+      mailingGroup: "Mona Vale Emergency Call Out Team",
+      matchingUnit: "Mona Vale",
+    },
+    { mailingGroup: "Moruya Emergency Call Out Team", matchingUnit: "Moruya" },
+    {
+      mailingGroup: "Nambucca Heads Emergency Call Out Team",
+      matchingUnit: "Nambucca Heads",
+    },
+    {
+      mailingGroup: "Narooma Emergency Call Out Team",
+      matchingUnit: "Narooma",
+    },
+    {
+      mailingGroup: "Narrabeen Emergency Call Out Team",
+      matchingUnit: "Narrabeen",
+    },
+    {
+      mailingGroup: "Newcastle Emergency Call Out Team",
+      matchingUnit: "Newcastle",
+    },
+    {
+      mailingGroup: "Newport Emergency Call Out Team",
+      matchingUnit: "Newport",
+    },
+    {
+      mailingGroup: "Nobbys Emergency Call Out Team",
+      matchingUnit: "Nobbys (NSW)",
+    },
+    {
+      mailingGroup: "North Avoca Emergency Call Out Team",
+      matchingUnit: "North Avoca",
+    },
+    {
+      mailingGroup: "North Bondi Emergency Call Out Team",
+      matchingUnit: "North Bondi",
+    },
+    {
+      mailingGroup: "North Cronulla Emergency Call Out Team",
+      matchingUnit: "North Cronulla",
+    },
+    {
+      mailingGroup: "North Curl Curl Emergency Call Out Team",
+      matchingUnit: "North Curl Curl",
+    },
+    {
+      mailingGroup: "North Entrance Emergency Call Out Team",
+      matchingUnit: "North Entrance",
+    },
+    {
+      mailingGroup: "North Narrabeen Emergency Call Out Team",
+      matchingUnit: "North Narrabeen",
+    },
+    {
+      mailingGroup: "North Palm Beach Emergency Call Out Team",
+      matchingUnit: "North Palm Beach",
+    },
+    {
+      mailingGroup: "North Steyne Emergency Call Out Team",
+      matchingUnit: "North Steyne",
+    },
+    {
+      mailingGroup: "North Wollongong Emergency Call Out Team",
+      matchingUnit: "North Wollongong",
+    },
+    {
+      mailingGroup: "Nowra-Culburra Emergency Callout Team",
+      matchingUnit: "Nowra Culburra",
+    },
+    {
+      mailingGroup: "Ocean Beach Emergency Call Out List",
+      matchingUnit: "Ocean Beach",
+    },
+    {
+      mailingGroup: "Pacific Palms Emergency Call Out Team",
+      matchingUnit: "Pacific Palms",
+    },
+    {
+      mailingGroup: "Palm Beach Emergency Call Out Team",
+      matchingUnit: "Palm Beach",
+    },
+    {
+      mailingGroup: "Pambula Emergency Call Out Team",
+      matchingUnit: "Pambula",
+    },
+    {
+      mailingGroup: "Port Kembla Emergency Call Out Team",
+      matchingUnit: "Port Kembla",
+    },
+    {
+      mailingGroup: "Port Macquarie Emergency Call Out Team",
+      matchingUnit: "Port Macquarie",
+    },
+    {
+      mailingGroup: "Queenscliff Emergency Call Out Team",
+      matchingUnit: "Queenscliff",
+    },
+    {
+      mailingGroup: "Red Rock Corindi Emergency Call Out Team",
+      matchingUnit: "Red Rock Corindi",
+    },
+    {
+      mailingGroup: "Redhead Emergency Call Out Team",
+      matchingUnit: "Redhead",
+    },
+    { mailingGroup: "Salt Emergency Call Out Team", matchingUnit: "Salt" },
+    {
+      mailingGroup: "Sandon Point Emergency Call Out Team",
+      matchingUnit: "Sandon Point",
+    },
+    {
+      mailingGroup: "Sawtell Emergency Call Out Team",
+      matchingUnit: "Sawtell",
+    },
+    {
+      mailingGroup: "Scarborough Wombarra Emergency Call Out Team",
+      matchingUnit: "Scarborough Wombarra",
+    },
+    {
+      mailingGroup: "Shellharbour Emergency Call Out Team",
+      matchingUnit: "Shellharbour",
+    },
+    {
+      mailingGroup: "Shelly Beach Emergency Call Out Team",
+      matchingUnit: "Shelly Beach",
+    },
+    {
+      mailingGroup: "Soldiers Beach Emergency Call Out Team",
+      matchingUnit: "Soldiers Beach",
+    },
+    {
+      mailingGroup: "South Curl Curl Emergency Call Out Team",
+      matchingUnit: "South Curl Curl",
+    },
+    {
+      mailingGroup: "South Maroubra Emergency Call Out Team",
+      matchingUnit: "South Maroubra",
+    },
+    {
+      mailingGroup: "South Narrabeen Emergency Call Out Team",
+      matchingUnit: "South Narrabeen",
+    },
+    {
+      mailingGroup: "South West Rocks Emergency Call Out Team",
+      matchingUnit: "South West Rocks",
+    },
+    {
+      mailingGroup: "Stockton Emergency Call Out Team",
+      matchingUnit: "Stockton",
+    },
+    {
+      mailingGroup: "Sussex Inlet Emergency Call Out Team",
+      matchingUnit: "Sussex Inlet",
+    },
+    {
+      mailingGroup: "Swansea Belmont Emergency Call Out Team",
+      matchingUnit: "Swansea Belmont",
+    },
+    {
+      mailingGroup: "Tacking Point Emergency Call Out Team",
+      matchingUnit: "Tacking Point",
+    },
+    {
+      mailingGroup: "Tamarama Emergency Call Out Team",
+      matchingUnit: "Tamarama",
+    },
+    {
+      mailingGroup: "Taree Old Bar Emergency Call Out Team",
+      matchingUnit: "Taree Old Bar",
+    },
+    { mailingGroup: "Tathra Emergency Call Out Team", matchingUnit: "Tathra" },
+    {
+      mailingGroup: "Tea Gardens Hawks Nest Emergency Call Out Team",
+      matchingUnit: "Tea Gardens Hawks Nest",
+    },
+    {
+      mailingGroup: "Terrigal Emergency Call Out Team",
+      matchingUnit: "Terrigal",
+    },
+    {
+      mailingGroup: "The Entrance Emergency Call Out Team",
+      matchingUnit: "The Entrance",
+    },
+    {
+      mailingGroup: "The Lakes Emergency Call out Team",
+      matchingUnit: "The Lakes",
+    },
+    {
+      mailingGroup: "Thirroul Emergency Call Out Team",
+      matchingUnit: "Thirroul",
+    },
+    {
+      mailingGroup: "Toowoon Bay Emergency Call Out Team",
+      matchingUnit: "Toowoon Bay",
+    },
+    {
+      mailingGroup: "Town Beach LG Emergency Call Out Team",
+      matchingUnit: "Town Beach (Lifeguards)",
+    },
+    {
+      mailingGroup: "Towradgi Emergency Call Out Team",
+      matchingUnit: "Towradgi",
+    },
+    {
+      mailingGroup: "Tuross Emergency Call Out Team",
+      matchingUnit: "Tuross Heads (Lifeguards)",
+    },
+    { mailingGroup: "Umina Emergency Call Out Team", matchingUnit: "Umina" },
+    { mailingGroup: "Urunga Emergency Call Out Team", matchingUnit: "Urunga" },
+    {
+      mailingGroup: "Wamberal Emergency Call Out Team",
+      matchingUnit: "Wamberal",
+    },
+    { mailingGroup: "Wanda Emergency Call Out Team", matchingUnit: "Wanda" },
+    {
+      mailingGroup: "Warilla Barrack Point Emergency Call Out Team",
+      matchingUnit: "Warilla Barrack Point",
+    },
+    {
+      mailingGroup: "Warriewood Emergency Call Out Team",
+      matchingUnit: "Warriewood",
+    },
+    {
+      mailingGroup: "Wauchope Bonny Hills Emergency Call Out Team",
+      matchingUnit: "Wauchope Bonny Hills",
+    },
+    {
+      mailingGroup: "Whale Beach Emergency Call Out Team",
+      matchingUnit: "Whale Beach",
+    },
+    {
+      mailingGroup: "Windang Emergency Call Out Team",
+      matchingUnit: "Windang",
+    },
+    {
+      mailingGroup: "Wollongong City Emergency Call Out Team",
+      matchingUnit: "Wollongong City",
+    },
+    {
+      mailingGroup: "Woolgoolga Emergency Call Out Team",
+      matchingUnit: "Woolgoolga",
+    },
+    {
+      mailingGroup: "Woonona Emergency Call Out Team",
+      matchingUnit: "Woonona",
+    },
+    { mailingGroup: "Yamba Emergency Call Out Team", matchingUnit: "Yamba" },
+  ];
+
+  // Function to check if any of the mailingGroup items exist in the table with "Attending" in the same row
+  function checkForMailingGroup() {
+    const tableRows = document.querySelectorAll("#sms-members-content tr");
+    for (const row of tableRows) {
+      for (const pair of pairing) {
+        if (
+          row.innerText.includes(pair.mailingGroup) &&
+          row.innerText.includes("Attending")
+        ) {
+          if (
+            !unitExists(pair.matchingUnit) &&
+            !unitRemoved(pair.matchingUnit)
+          ) {
+            selectMatchingUnit(pair.matchingUnit);
+          }
+        }
+      }
+    }
+  }
+
+  // Function to check if the unit already exists in the servicesTable
+  function unitExists(unitName) {
+    const unitRows = document.querySelectorAll("#servicesTable tbody tr");
+    for (const unitRow of unitRows) {
+      if (unitRow.innerText.includes(unitName)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Function to check if the unit has been removed from the incident in the chat area
+  function unitRemoved(unitName) {
+    const chatMessages = document.querySelectorAll(".direct-chat-text");
+    for (const message of chatMessages) {
+      if (
+        message.innerText.includes(
+          `Unit Clear :: Unit ${unitName} has been removed from Incident`
+        )
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Function to select the matching unit from the dropdown
+  function selectMatchingUnit(matchingUnit) {
+    const dropdown = document.querySelector("#add_unit_list");
+    for (const option of dropdown.options) {
+      if (option.text === matchingUnit) {
+        dropdown.value = option.value;
+        triggerEvent(dropdown, "change");
+        clickAddUnitButton();
+        break;
+      }
+    }
+  }
+
+  // Function to trigger an event
+  function triggerEvent(element, eventName) {
+    const event = new Event(eventName, {
+      bubbles: true,
+      cancelable: true,
+    });
+    element.dispatchEvent(event);
+  }
+
+  // Function to click the "Add Unit" button
+  function clickAddUnitButton() {
+    const addButton = document.querySelector(".btn.btn-primary.add_unit_quick");
+    if (addButton) {
+      addButton.click();
+    }
+  }
+
+  // Run the check function
+  checkForMailingGroup();
 });
