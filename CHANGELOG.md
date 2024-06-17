@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.14.0](https://github.com/rporteous1/SurfPlus/compare/v2.13.0...v2.14.0) (2024-06-17)
+
+
+### Features
+
+* :sparkles: added an "add irb" button to the responding services table for services that have one ([b842848](https://github.com/rporteous1/SurfPlus/commit/b842848fc91ebc908875b98d0bc72b6a0bb8fdf0))
+* :sparkles: added auto-add/enroute of relevant club once ecot are attending ([0bebbab](https://github.com/rporteous1/SurfPlus/commit/0bebbaba2441833fc234ac4ea776aaf62f4d438e))
+
+
+### Bug Fixes
+
+* :bug: fixed location suburb not properly saving on window load ([fe64586](https://github.com/rporteous1/SurfPlus/commit/fe645869f716d47215347f8472db19cc9f38e71d))
+
 ## [2.13.0](https://github.com/rporteous1/SurfPlus/compare/v2.12.0...v2.13.0) (2024-06-16)
 
 
